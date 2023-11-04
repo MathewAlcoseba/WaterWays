@@ -1,61 +1,20 @@
 import 'package:flutter/material.dart';
 
-/// Flutter code sample for [FloatingActionButton].
+import 'src/app.dart';
+import 'src/settings/settings_controller.dart';
+import 'src/settings/settings_service.dart';
 
-void main() {
-  runApp(const FloatingActionButtonExampleApp());
-}
+void main() async {
+  // Set up the SettingsController, which will glue user settings to multiple
+  // Flutter Widgets.
+  final settingsController = SettingsController(SettingsService());
 
-class FloatingActionButtonExampleApp extends StatelessWidget {
-  const FloatingActionButtonExampleApp({super.key});
+  // Load the user's preferred theme while the splash screen is displayed.
+  // This prevents a sudden theme change when the app is first displayed.
+  await settingsController.loadSettings();
 
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      theme: ThemeData(useMaterial3: true),
-      home: const FloatingActionButtonExample(),
-    );
-  }
-}
-
-class FloatingActionButtonExample extends StatefulWidget {
-  const FloatingActionButtonExample({super.key});
-
-  @override
-  State<FloatingActionButtonExample> createState() =>
-      _FloatingActionButtonExampleState();
-}
-
-class _FloatingActionButtonExampleState
-    extends State<FloatingActionButtonExample> {
-  // The FAB's foregroundColor, backgroundColor, and shape
-  static const List<(Color?, Color? background, ShapeBorder?)> customizations =
-      <(Color?, Color?, ShapeBorder?)>[
-    (null, null, null), // The FAB uses its default for null parameters.
-    (null, Colors.green, null),
-    (Colors.white, Colors.green, null),
-    (Colors.white, Colors.green, CircleBorder()),
-  ];
-  int index = 0; // Selects the customization.
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('FloatingActionButton Sample'),
-      ),
-      body: const Center(child: Text('Press the button below!')),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          setState(() {
-            index = (index + 1) % customizations.length;
-          });
-        },
-        foregroundColor: customizations[index].$1,
-        backgroundColor: customizations[index].$2,
-        shape: customizations[index].$3,
-        child: const Icon(Icons.navigation),
-      ),
-    );
-  }
+  // Run the app and pass in the SettingsController. The app listens to the
+  // SettingsController for changes, then passes it further down to the
+  // SettingsView.
+  runApp(MyApp(settingsController: settingsController));
 }

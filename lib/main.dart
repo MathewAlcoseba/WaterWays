@@ -8,6 +8,6 @@ void main() async {
   final settingsController = SettingsController(SettingsService());
 
   await settingsController.loadSettings();
-
+  // random comment here
   runApp(MyApp(settingsController: settingsController));
 }

@@ -1,13 +1,27 @@
+// ignore_for_file: prefer_const_constructors
+
 import 'package:flutter/material.dart';
+import 'package:waterways/LoadingScreen/loading_screen.dart';
+import 'package:waterways/LoginFlow/login_create_account.dart';
 
-import 'src/app.dart';
-import 'src/settings/settings_controller.dart';
-import 'src/settings/settings_service.dart';
+void main() {
+  runApp(const MyApp());
+}
 
-void main() async {
-  final settingsController = SettingsController(SettingsService());
+class MyApp extends StatelessWidget {
+  const MyApp({Key? key}) : super(key: key);
 
-  await settingsController.loadSettings();
-  // random comment here
-  runApp(MyApp(settingsController: settingsController));
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'WaterWays',
+      debugShowCheckedModeBanner: false,
+      home: Scaffold(
+        backgroundColor: const Color(0xffF8F8F8),
+        body: SafeArea(
+          child: LoginOrCreate(),
+        ),
+      ),
+    );
+  }
 }

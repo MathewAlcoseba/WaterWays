@@ -14,7 +14,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'WaterWays',
+      title: 'WaterWays Ilong',
       debugShowCheckedModeBanner: false,
       home: Scaffold(
         backgroundColor: const Color(0xffF8F8F8),

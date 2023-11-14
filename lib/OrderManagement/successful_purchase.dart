@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:waterways/OrderManagement/purchase_history.dart';
 
 void main() {
-  runApp(const OrderPageThree(
+  runApp(const SuccessfulPurchase(
     title: '',
   ));
 }
 
-class OrderPageThree extends StatelessWidget {
-  const OrderPageThree({Key? key, required this.title}) : super(key: key);
+class SuccessfulPurchase extends StatelessWidget {
+  const SuccessfulPurchase({Key? key, required this.title}) : super(key: key);
 
   final String title;
 
@@ -54,10 +55,25 @@ class OrderPageThree extends StatelessWidget {
                 ),
               ),
               Positioned(
-                top: 685,
-                left: 190,
-                child: Container(
-                  child: clipboard(),
+                top: 440,
+                left: 0,
+                child: SizedBox(
+                  width: 410,
+                  height: 510,
+                  child: GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) =>
+                              PurchaseHistory(title: 'Your Title'),
+                        ),
+                      );
+                    },
+                    child: Container(
+                      child: clipboard(),
+                    ),
+                  ),
                 ),
               ),
               Positioned(

@@ -16,21 +16,51 @@ class BottomNavBar extends StatelessWidget {
   Widget build(BuildContext context) {
     final navBarIcons = <Widget>[
       selectedIndex == 0
-          ? Image.asset('assets/NavBar-Icons/home-selected.png', width: 40)
-          : Image.asset('assets/NavBar-Icons/home-unselected.png', width: 40),
+          ? Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Image.asset('assets/NavBar-Icons/home-selected.png',
+                  width: 28),
+            )
+          : Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Image.asset('assets/NavBar-Icons/home-unselected.png',
+                  width: 28),
+            ),
       selectedIndex == 1
-          ? Image.asset('assets/NavBar-Icons/favorites-selected.png', width: 40)
-          : Image.asset('assets/NavBar-Icons/favorites-unselected.png',
-              width: 40),
+          ? Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Image.asset('assets/NavBar-Icons/favorites-selected.png',
+                  width: 28),
+            )
+          : Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Image.asset('assets/NavBar-Icons/favorites-unselected.png',
+                  width: 28),
+            ),
       selectedIndex == 2
-          ? Image.asset('assets/NavBar-Icons/notification-selected.png',
-              width: 40)
-          : Image.asset('assets/NavBar-Icons/notification-unselected.png',
-              width: 40),
+          ? Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Image.asset(
+                  'assets/NavBar-Icons/notification-selected.png',
+                  width: 28),
+            )
+          : Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Image.asset(
+                  'assets/NavBar-Icons/notification-unselected.png',
+                  width: 28),
+            ),
       selectedIndex == 3
-          ? Image.asset('assets/NavBar-Icons/profile-selected.png', width: 40)
-          : Image.asset('assets/NavBar-Icons/profile-unselected.png',
-              width: 40),
+          ? Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Image.asset('assets/NavBar-Icons/profile-selected.png',
+                  width: 28),
+            )
+          : Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Image.asset('assets/NavBar-Icons/profile-unselected.png',
+                  width: 28),
+            ),
     ];
 
     return CurvedNavigationBar(

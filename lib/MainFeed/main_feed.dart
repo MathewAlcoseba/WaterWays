@@ -25,9 +25,10 @@ class MainFeedState extends State<MainFeed> {
           extendBody: true,
           backgroundColor: AppStyles.colorScheme.background,
           appBar: AppBar(
-            title: const Text('Bottom Navigation Bar'),
+            title: SizedBox(
+                height: 40, child: Image.asset('assets/WaterWaysIcon.png')),
+            toolbarHeight: 75,
             elevation: 0,
-            centerTitle: true,
           ),
           body: Center(
             child: Text(

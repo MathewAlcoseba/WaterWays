@@ -228,7 +228,7 @@ Undrinkable but usable
           ),
         ),
       ),
-      bottomNavigationBar: BottomNavBar(),
+      //bottomNavigationBar: BottomNavBar(),
     );
   }
 

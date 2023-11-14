@@ -16,12 +16,13 @@ dependencies:
   flutter_localizations:
     sdk: flutter
   google_fonts: ^6.1.0
+  curved_navigation_bar: ^1.0.3
 
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
-
+  
   flutter_lints: ^2.0.0
 
 flutter:

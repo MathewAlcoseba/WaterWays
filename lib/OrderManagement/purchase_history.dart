@@ -80,7 +80,7 @@ class PurchaseHistory extends StatelessWidget {
             ),
           ),
         ),
-        bottomNavigationBar: BottomNavBar(),
+        //bottomNavigationBar: BottomNavBar(),
       ),
     );
   }

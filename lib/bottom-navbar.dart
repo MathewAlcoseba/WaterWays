@@ -39,6 +39,8 @@ class BottomNavBar extends StatelessWidget {
       buttonBackgroundColor: AppStyles.colorScheme.primary,
       index: selectedIndex,
       items: navBarIcons,
+      animationCurve: Curves.easeInOut,
+      animationDuration: const Duration(milliseconds: 400),
       onTap: onItemTapped,
     );
   }

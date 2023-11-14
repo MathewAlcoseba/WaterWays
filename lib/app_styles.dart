@@ -14,7 +14,7 @@ class AppStyles {
       ColorScheme.fromSeed(seedColor: const Color(0xffFFFFFF)).copyWith(
     primary: const Color(0xffFFFFFF),
     secondary: const Color(0xff007AFF),
-    tertiary: const Color(0xff8ECAE6),
+    tertiary: const Color(0xffB3B3B3),
     inversePrimary: const Color(0xff313144),
     background: const Color(0xffF8F8F8),
   );
@@ -55,7 +55,7 @@ class AppStyles {
   );
 
   static final TextStyle bodyText3 = GoogleFonts.poppins(
-    fontSize: 14,
+    fontSize: 12,
     fontWeight: FontWeight.w400, //regular
     color: colorScheme.inversePrimary, //black
   );

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:waterways/OrderManagement/checkout.dart';
-import 'package:waterways/navbar.dart';
+import 'package:waterways/bottom-navbar.dart';
 
 void main() {
   runApp(const OrderDetails(
@@ -228,7 +228,7 @@ Undrinkable but usable
           ),
         ),
       ),
-      bottomNavigationBar: NavBar(),
+      bottomNavigationBar: BottomNavBar(),
     );
   }
 

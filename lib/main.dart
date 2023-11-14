@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:waterways/LoadingScreen/loading_screen.dart';
 import 'package:waterways/LoginFlow/login_create_account.dart';
+import 'package:waterways/bottom-navbar.dart';
 
 void main() {
   runApp(const MyApp());
@@ -19,7 +20,7 @@ class MyApp extends StatelessWidget {
       home: Scaffold(
         backgroundColor: const Color(0xffF8F8F8),
         body: SafeArea(
-          child: LoginOrCreate(),
+          child: BottomNavBar(),
         ),
       ),
     );

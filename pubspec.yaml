@@ -33,6 +33,7 @@ flutter:
   assets:
     # Add assets from the images directory to the application.
     - assets/
+    - assets/NavBar-Icons/
     - assets/Login/
     - assets/Order/
     - assets/Main/

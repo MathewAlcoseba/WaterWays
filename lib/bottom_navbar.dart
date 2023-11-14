@@ -70,7 +70,7 @@ class BottomNavBar extends StatelessWidget {
       index: selectedIndex,
       items: navBarIcons,
       animationCurve: Curves.easeInOut,
-      animationDuration: const Duration(milliseconds: 400),
+      animationDuration: const Duration(milliseconds: 500),
       onTap: onItemTapped,
     );
   }

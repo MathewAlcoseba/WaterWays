@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:waterways/app_styles.dart';
-import 'package:waterways/bottom-navbar.dart';
+import 'package:waterways/bottom_navbar.dart';
+import 'package:waterways/custom_appbar.dart';
 
 class MainFeed extends StatefulWidget {
   const MainFeed({super.key});
@@ -24,11 +25,9 @@ class MainFeedState extends State<MainFeed> {
       child: Scaffold(
           extendBody: true,
           backgroundColor: AppStyles.colorScheme.background,
-          appBar: AppBar(
-            title: SizedBox(
-                height: 40, child: Image.asset('assets/WaterWaysIcon.png')),
-            toolbarHeight: 75,
-            elevation: 0,
+          appBar: const PreferredSize(
+            preferredSize: Size.fromHeight(75.0),
+            child: CustomAppBar(),
           ),
           body: Center(
             child: Text(

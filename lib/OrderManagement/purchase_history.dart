@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:waterways/OrderManagement/order_status.dart';
-import 'package:waterways/bottom-navbar.dart';
+import 'package:waterways/bottom_navbar.dart';
 
 void main() {
   runApp(PurchaseHistory(title: 'Purchase History'));

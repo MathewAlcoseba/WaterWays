@@ -5,7 +5,7 @@ import 'package:waterways/LoadingScreen/loading_screen.dart';
 import 'package:waterways/LoginFlow/login_create_account.dart';
 import 'package:waterways/MainFeed/main_feed.dart';
 import 'package:waterways/app_styles.dart';
-import 'package:waterways/bottom-navbar.dart';
+import 'package:waterways/bottom_navbar.dart';
 
 void main() {
   runApp(const MyApp());

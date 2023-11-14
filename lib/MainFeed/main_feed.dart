@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:waterways/app_styles.dart';
 import 'package:waterways/bottom-navbar.dart';
 
 class MainFeed extends StatefulWidget {
@@ -22,7 +23,7 @@ class MainFeedState extends State<MainFeed> {
     return SafeArea(
       child: Scaffold(
           extendBody: true,
-          backgroundColor: const Color(0xff4EA3FF),
+          backgroundColor: AppStyles.colorScheme.background,
           appBar: AppBar(
             title: const Text('Bottom Navigation Bar'),
             elevation: 0,
@@ -32,7 +33,7 @@ class MainFeedState extends State<MainFeed> {
             child: Text(
               '$selectedIndex',
               style: const TextStyle(
-                  color: Colors.white,
+                  color: Colors.black,
                   fontSize: 120.0,
                   fontWeight: FontWeight.bold),
             ),

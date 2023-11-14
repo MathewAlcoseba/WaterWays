@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:waterways/LoadingScreen/loading_screen.dart';
 import 'package:waterways/LoginFlow/login_create_account.dart';
 import 'package:waterways/MainFeed/main_feed.dart';
+import 'package:waterways/app_styles.dart';
 import 'package:waterways/bottom-navbar.dart';
 
 void main() {
@@ -16,10 +17,14 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'WaterWays Delivery App',
       debugShowCheckedModeBanner: false,
+      title: 'WaterWays Delivery App',
+      theme: ThemeData(
+        useMaterial3: true,
+        colorScheme: AppStyles.colorScheme,
+      ),
       home: Scaffold(
-        backgroundColor: const Color(0xffF8F8F8),
+        backgroundColor: AppStyles.colorScheme.background,
         body: SafeArea(
           child: MainFeed(),
         ),

@@ -1,5 +1,6 @@
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:waterways/app_styles.dart';
 
 class BottomNavBar extends StatelessWidget {
   final int selectedIndex;
@@ -14,15 +15,28 @@ class BottomNavBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final navBarIcons = <Widget>[
-      Image.asset('assets/NavBar-Icons/home.png', width: 40),
-      Image.asset('assets/NavBar-Icons/heart.png', width: 40),
-      Image.asset('assets/NavBar-Icons/search.png', width: 40),
-      Image.asset('assets/NavBar-Icons/profile.png', width: 40),
+      selectedIndex == 0
+          ? Image.asset('assets/NavBar-Icons/home-selected.png', width: 40)
+          : Image.asset('assets/NavBar-Icons/home-unselected.png', width: 40),
+      selectedIndex == 1
+          ? Image.asset('assets/NavBar-Icons/favorites-selected.png', width: 40)
+          : Image.asset('assets/NavBar-Icons/favorites-unselected.png',
+              width: 40),
+      selectedIndex == 2
+          ? Image.asset('assets/NavBar-Icons/notification-selected.png',
+              width: 40)
+          : Image.asset('assets/NavBar-Icons/notification-unselected.png',
+              width: 40),
+      selectedIndex == 3
+          ? Image.asset('assets/NavBar-Icons/profile-selected.png', width: 40)
+          : Image.asset('assets/NavBar-Icons/profile-unselected.png',
+              width: 40),
     ];
 
     return CurvedNavigationBar(
       height: 60,
       backgroundColor: Colors.transparent,
+      buttonBackgroundColor: AppStyles.colorScheme.primary,
       index: selectedIndex,
       items: navBarIcons,
       onTap: onItemTapped,

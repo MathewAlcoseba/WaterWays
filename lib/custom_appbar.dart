@@ -7,7 +7,7 @@ class CustomAppBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return PhysicalShape(
-      color: AppStyles.colorScheme.background,
+      color: AppStyles.colorScheme.primary,
       elevation: 2,
       clipper: const ShapeBorderClipper(
         shape: RoundedRectangleBorder(

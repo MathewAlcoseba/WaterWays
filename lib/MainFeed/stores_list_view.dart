@@ -9,7 +9,7 @@ class AvailableStoresListView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-        height: 545,
+        height: 540,
         child: ListView.builder(
             physics: const BouncingScrollPhysics(
                 decelerationRate: ScrollDecelerationRate.normal),
@@ -140,6 +140,15 @@ class AvailableStoresListView extends StatelessWidget {
                     child: Icon(
                       Icons.arrow_forward_rounded,
                       color: AppStyles.colorScheme.inversePrimary,
+                      size: 28,
+                    ),
+                  ),
+                  Positioned(
+                    left: MediaQuery.of(context).size.width - 80,
+                    top: 146,
+                    child: Icon(
+                      Icons.favorite_outline_rounded,
+                      color: AppStyles.colorScheme.primary,
                       size: 28,
                     ),
                   )

@@ -33,23 +33,30 @@ class MainFeedState extends State<MainFeed> {
       ),
       body: const Padding(
         padding: EdgeInsets.all(16.0),
-        child: SingleChildScrollView(
-          child: Column(
-            children: [
-              CustomSearchBar(),
-              SizedBox(height: 16.0),
-              AvailableStoresListView(),
-              // Text(
-              //   '$selectedIndex',
-              //   style: const TextStyle(
-              //       color: Colors.black,
-              //       fontSize: 120.0,
-              //       fontWeight: FontWeight.bold),
-              // ),
-            ],
-          ),
+        child: Column(
+          children: [
+            CustomSearchBar(),
+            SizedBox(height: 16.0),
+            AvailableStoresListView(),
+            // Text(
+            //   '$selectedIndex',
+            //   style: const TextStyle(
+            //       color: Colors.black,
+            //       fontSize: 120.0,
+            //       fontWeight: FontWeight.bold),
+            // ),
+          ],
         ),
       ),
+      floatingActionButton: FloatingActionButton(
+          onPressed: () {},
+          backgroundColor: AppStyles.colorScheme.secondary,
+          shape: const RoundedRectangleBorder(
+              borderRadius: BorderRadius.only(
+                  bottomLeft: Radius.circular(50),
+                  topLeft: Radius.circular(50),
+                  topRight: Radius.circular(50))),
+          child: Image.asset('assets/Main/chat-message.png')),
       bottomNavigationBar: Theme(
           data: ThemeData(
             splashColor: Colors.transparent,

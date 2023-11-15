@@ -1,4 +1,3 @@
-import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:waterways/app_styles.dart';
 
@@ -14,64 +13,70 @@ class BottomNavBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final navBarIcons = <Widget>[
-      selectedIndex == 0
-          ? Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Image.asset('assets/NavBar-Icons/home-selected.png',
-                  width: 28),
-            )
-          : Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Image.asset('assets/NavBar-Icons/home-unselected.png',
-                  width: 28),
-            ),
-      selectedIndex == 1
-          ? Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Image.asset('assets/NavBar-Icons/favorites-selected.png',
-                  width: 28),
-            )
-          : Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Image.asset('assets/NavBar-Icons/favorites-unselected.png',
-                  width: 28),
-            ),
-      selectedIndex == 2
-          ? Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Image.asset(
-                  'assets/NavBar-Icons/notification-selected.png',
-                  width: 28),
-            )
-          : Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Image.asset(
-                  'assets/NavBar-Icons/notification-unselected.png',
-                  width: 28),
-            ),
-      selectedIndex == 3
-          ? Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Image.asset('assets/NavBar-Icons/profile-selected.png',
-                  width: 28),
-            )
-          : Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Image.asset('assets/NavBar-Icons/profile-unselected.png',
-                  width: 28),
-            ),
+    final navBarIcons = <BottomNavigationBarItem>[
+      BottomNavigationBarItem(
+        icon: Center(
+          child: selectedIndex == 0
+              ? Image.asset('assets/NavBar-Icons/home-selected.png', width: 24)
+              : Image.asset('assets/NavBar-Icons/home-unselected.png',
+                  width: 24),
+        ),
+        label: '',
+      ),
+      BottomNavigationBarItem(
+        icon: Center(
+          child: selectedIndex == 1
+              ? Image.asset('assets/NavBar-Icons/favorites-selected.png',
+                  width: 24)
+              : Image.asset('assets/NavBar-Icons/favorites-unselected.png',
+                  width: 24),
+        ),
+        label: '',
+      ),
+      BottomNavigationBarItem(
+        icon: Center(
+          child: selectedIndex == 2
+              ? Image.asset('assets/NavBar-Icons/notification-selected.png',
+                  width: 24)
+              : Image.asset('assets/NavBar-Icons/notification-unselected.png',
+                  width: 24),
+        ),
+        label: '',
+      ),
+      BottomNavigationBarItem(
+        icon: Center(
+          child: selectedIndex == 3
+              ? Image.asset('assets/NavBar-Icons/profile-selected.png',
+                  width: 24)
+              : Image.asset('assets/NavBar-Icons/profile-unselected.png',
+                  width: 24),
+        ),
+        label: '',
+      ),
     ];
 
-    return CurvedNavigationBar(
-      height: 60,
-      backgroundColor: Colors.transparent,
-      buttonBackgroundColor: AppStyles.colorScheme.primary,
-      index: selectedIndex,
-      items: navBarIcons,
-      animationCurve: Curves.easeInOut,
-      animationDuration: const Duration(milliseconds: 500),
-      onTap: onItemTapped,
+    return SizedBox(
+      height: 75,
+      child: BottomNavigationBar(
+        type: BottomNavigationBarType.fixed,
+        elevation: 1.5,
+        backgroundColor: AppStyles.colorScheme.primary,
+        items: navBarIcons,
+        currentIndex: selectedIndex,
+        onTap: onItemTapped,
+        showSelectedLabels: false,
+        showUnselectedLabels: false,
+      ),
     );
   }
 }
+
+//Curved Navigation Bar Config
+      // height: 60,
+      // backgroundColor: Colors.transparent,
+      // buttonBackgroundColor: AppStyles.colorScheme.primary,
+      // index: selectedIndex,
+      // items: navBarIcons,
+      // animationCurve: Curves.easeInOut,
+      // animationDuration: const Duration(milliseconds: 500),
+      // onTap: onItemTapped,

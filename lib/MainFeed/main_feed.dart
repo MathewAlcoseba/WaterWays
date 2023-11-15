@@ -24,37 +24,42 @@ class MainFeedState extends State<MainFeed> {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-      child: Scaffold(
-          extendBody: true,
-          backgroundColor: AppStyles.colorScheme.background,
-          appBar: const PreferredSize(
-            preferredSize: Size.fromHeight(75.0),
-            child: CustomAppBar(),
+        child: Scaffold(
+      extendBody: true,
+      backgroundColor: AppStyles.colorScheme.background,
+      appBar: const PreferredSize(
+        preferredSize: Size.fromHeight(75.0),
+        child: CustomAppBar(),
+      ),
+      body: const Padding(
+        padding: EdgeInsets.all(16.0),
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              CustomSearchBar(),
+              SizedBox(height: 16.0),
+              AvailableStoresListView(),
+              // Text(
+              //   '$selectedIndex',
+              //   style: const TextStyle(
+              //       color: Colors.black,
+              //       fontSize: 120.0,
+              //       fontWeight: FontWeight.bold),
+              // ),
+            ],
           ),
-          body: const Padding(
-            padding: EdgeInsets.all(16.0),
-            child: SingleChildScrollView(
-              child: Column(
-                children: [
-                  CustomSearchBar(),
-                  SizedBox(height: 16.0),
-                  AvailableStoresListView(),
-                  // Text(
-                  //   '$selectedIndex',
-                  //   style: const TextStyle(
-                  //       color: Colors.black,
-                  //       fontSize: 120.0,
-                  //       fontWeight: FontWeight.bold),
-                  // ),
-                ],
-              ),
-            ),
+        ),
+      ),
+      bottomNavigationBar: Theme(
+          data: ThemeData(
+            splashColor: Colors.transparent,
+            highlightColor: Colors.transparent,
           ),
-          bottomNavigationBar: BottomNavBar(
+          child: BottomNavBar(
             selectedIndex: selectedIndex,
             onItemTapped: onItemTapped,
           )),
-    );
+    ));
   }
 }
 
@@ -64,7 +69,7 @@ class AvailableStoresListView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-        height: 700,
+        height: 545,
         child: ListView.builder(
             physics: const BouncingScrollPhysics(
                 decelerationRate: ScrollDecelerationRate.normal),
@@ -173,7 +178,7 @@ class AvailableStoresListView extends StatelessWidget {
                     ]),
                   ),
                   Positioned(
-                    left: 326,
+                    left: MediaQuery.of(context).size.width - 86,
                     top: 16,
                     child: Container(
                       decoration: BoxDecoration(
@@ -190,7 +195,7 @@ class AvailableStoresListView extends StatelessWidget {
                     ),
                   ),
                   Positioned(
-                    left: 332,
+                    left: MediaQuery.of(context).size.width - 80,
                     top: 224,
                     child: Icon(
                       Icons.arrow_forward_rounded,

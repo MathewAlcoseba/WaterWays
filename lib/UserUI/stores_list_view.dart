@@ -1,6 +1,7 @@
 import 'package:currency_symbols/currency_symbols.dart';
 import 'package:flutter/material.dart';
-import 'package:waterways/MainFeed/main_feed.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:waterways/UserUI/user_home_page.dart';
 import 'package:waterways/app_styles.dart';
 
 class AvailableStoresListView extends StatelessWidget {
@@ -8,8 +9,7 @@ class AvailableStoresListView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-        height: 540,
+    return Expanded(
         child: ListView.builder(
             physics: const BouncingScrollPhysics(
                 decelerationRate: ScrollDecelerationRate.normal),
@@ -20,7 +20,6 @@ class AvailableStoresListView extends StatelessWidget {
                 padding: const EdgeInsets.only(bottom: 20),
                 child: Stack(children: [
                   Container(
-                    height: 290,
                     decoration: BoxDecoration(
                       color: AppStyles.colorScheme.primary,
                       borderRadius: BorderRadius.circular(16),
@@ -101,12 +100,11 @@ class AvailableStoresListView extends StatelessWidget {
                                     color: AppStyles.colorScheme.tertiary,
                                     fontWeight: FontWeight.w400),
                               ),
-                              Text(
-                                '${cSymbol("PHP")}' '0.014/Liter',
-                                style: AppStyles.bodyText2.copyWith(
-                                    color: AppStyles.colorScheme.tertiary,
-                                    fontWeight: FontWeight.w400),
-                              ),
+                              Text('${cSymbol("PHP")}' '0.014/Liter',
+                                  style: GoogleFonts.roboto(
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.w400,
+                                      color: AppStyles.colorScheme.tertiary)),
                             ],
                           ),
                           const SizedBox(
@@ -118,22 +116,26 @@ class AvailableStoresListView extends StatelessWidget {
                     ]),
                   ),
                   Positioned(
-                    left: MediaQuery.of(context).size.width - 86,
-                    top: 16,
-                    child: Container(
-                      decoration: BoxDecoration(
-                          color:
-                              AppStyles.colorScheme.primary.withOpacity(0.75),
-                          shape: BoxShape.circle),
-                      child: const Padding(
-                        padding: EdgeInsets.all(8.0),
-                        child: Icon(
-                          Icons.more_horiz_rounded,
-                          size: 24,
-                        ),
-                      ),
-                    ),
-                  ),
+                      left: MediaQuery.of(context).size.width - 80,
+                      top: 14,
+                      child: Container(
+                          width: 28,
+                          decoration: BoxDecoration(
+                            color:
+                                AppStyles.colorScheme.primary.withOpacity(0.60),
+                            shape: BoxShape.circle,
+                          ),
+                          child: IconButton(
+                            padding: const EdgeInsets.all(4),
+                            icon: Icon(
+                              Icons.more_horiz_rounded,
+                              color: AppStyles.colorScheme.inversePrimary,
+                              size: 20,
+                            ),
+                            onPressed: () {
+                              print('IconButton pressed!');
+                            }, //handle onPressed here
+                          ))),
                   Positioned(
                     left: MediaQuery.of(context).size.width - 80,
                     top: 224,
@@ -144,12 +146,17 @@ class AvailableStoresListView extends StatelessWidget {
                     ),
                   ),
                   Positioned(
-                    left: MediaQuery.of(context).size.width - 80,
-                    top: 146,
-                    child: Icon(
-                      Icons.favorite_outline_rounded,
-                      color: AppStyles.colorScheme.primary,
-                      size: 28,
+                    left: MediaQuery.of(context).size.width - 90,
+                    top: 140,
+                    child: IconButton(
+                      icon: Icon(
+                        Icons.favorite_outline_rounded,
+                        color: AppStyles.colorScheme.primary,
+                        size: 28,
+                      ),
+                      onPressed: () {
+                        print('IconButton pressed!');
+                      }, // handle onPressed here
                     ),
                   )
                 ]),

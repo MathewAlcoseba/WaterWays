@@ -14,7 +14,7 @@ class LoginOrCreate extends StatelessWidget {
         child: Column(children: [
           SizedBox(height: 176),
           Image.asset(
-            'WaterWaysIconBig.png',
+            'assets/WaterWaysIconBig.png',
             height: 180,
             width: 430,
           ),

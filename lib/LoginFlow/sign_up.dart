@@ -49,22 +49,22 @@ class SignUp extends StatelessWidget {
               SignUpField(
                 fieldHeader: 'Email',
                 hintTxt: 'example@gmail.com',
-                icon: '/Login/blankeye.png',
+                icon: 'assets/Login/blankeye.png',
               ),
               SignUpField(
                 fieldHeader: 'Phone Number',
                 hintTxt: '+63',
-                icon: '/Login/blankeye.png',
+                icon: 'assets/Login/blankeye.png',
               ),
               SignUpField(
                 fieldHeader: 'Create a password',
                 hintTxt: 'must be 8 characters',
-                icon: '/Login/eyeopen.png',
+                icon: 'assets/Login/eyeopen.png',
               ),
               SignUpField(
                 fieldHeader: 'Confirm password',
                 hintTxt: 'repeat password',
-                icon: '/Login/eyeopen.png',
+                icon: 'assets/Login/eyeopen.png',
               ),
               SizedBox(height: 38),
               ElevatedButton(

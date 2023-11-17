@@ -24,7 +24,7 @@ class SignUpAs extends StatelessWidget {
                       alignment: Alignment.centerRight,
                       widthFactor: 0.85,
                       child: Image.asset(
-                        'WaterWaysIcon.png',
+                        'assets/WaterWaysIcon.png',
                         height: 80,
                         width: 191,
                       ),
@@ -69,7 +69,7 @@ class SignUpAs extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
                             Image.asset(
-                              'assets/login/customer.png',
+                              'assets/Login/customer.png',
                               height: 58,
                               width: 58,
                             ),
@@ -112,7 +112,7 @@ class SignUpAs extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
                             Image.asset(
-                              'assets/login/delivery.png',
+                              'assets/Login/delivery.png',
                               height: 75,
                               width: 75,
                             ),
@@ -155,7 +155,7 @@ class SignUpAs extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
                             Image.asset(
-                              'assets/login/shop.png',
+                              'assets/Login/shop.png',
                               height: 62,
                               width: 62,
                             ),

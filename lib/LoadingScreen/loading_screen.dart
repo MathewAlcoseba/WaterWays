@@ -10,7 +10,7 @@ class LoadingScreen extends StatelessWidget {
     return Scaffold(
       body: Center(
         child: Image.asset(
-          'WaterWaysIcon.png',
+          'assets/WaterWaysIcon.png',
           width: 280,
           height: 103,
         ),

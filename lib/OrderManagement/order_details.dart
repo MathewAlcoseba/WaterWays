@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:waterways/OrderManagement/orderpagetwo.dart';
+import 'package:waterways/OrderManagement/checkout.dart';
+import 'package:waterways/navbar.dart';
 
 void main() {
-  runApp(const OrderPageOne(
+  runApp(const OrderDetails(
     title: '',
   ));
 }
 
-class OrderPageOne extends StatelessWidget {
-  const OrderPageOne({Key? key, required this.title}) : super(key: key);
+class OrderDetails extends StatelessWidget {
+  const OrderDetails({Key? key, required this.title}) : super(key: key);
 
   final String title;
 
@@ -174,7 +175,7 @@ Undrinkable but usable
                   ),
                 ),
                 Positioned(
-                  bottom: 100,
+                  bottom: 20,
                   left: 110,
                   child: ElevatedButton(
                     onPressed: () {
@@ -185,7 +186,7 @@ Undrinkable but usable
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(100.0),
                       ),
-                      minimumSize: Size(196.0, 56.0),
+                      minimumSize: Size(196.0, 66.0),
                     ),
                     child: Text(
                       "BUY",
@@ -198,19 +199,10 @@ Undrinkable but usable
                   ),
                 ),
                 Positioned(
-                  bottom: 100,
+                  bottom: 20,
                   right: 20,
                   child: Container(
                     child: chat(),
-                  ),
-                ),
-                Positioned(
-                  bottom: -10,
-                  left: -50,
-                  child: Container(
-                    height: 90,
-                    width: 600,
-                    color: Color.fromARGB(255, 255, 255, 255),
                   ),
                 ),
                 Stack(
@@ -227,43 +219,7 @@ Undrinkable but usable
                         ),
                       ),
                     ),
-                    Positioned(
-                      bottom: -10,
-                      left: -50,
-                      child: Container(
-                        height: 90,
-                        width: 600,
-                        color: Color.fromARGB(255, 255, 255, 255),
-                      ),
-                    ),
-                    Positioned(
-                      bottom: 20,
-                      left: 30,
-                      child: Container(
-                        child: home(),
-                      ),
-                    ),
-                    Positioned(
-                      bottom: 20,
-                      left: 130,
-                      child: Container(
-                        child: notifications(),
-                      ),
-                    ),
-                    Positioned(
-                      bottom: 20,
-                      left: 230,
-                      child: Container(
-                        child: search(),
-                      ),
-                    ),
-                    Positioned(
-                      bottom: 20,
-                      left: 330,
-                      child: Container(
-                        child: profile(),
-                      ),
-                    ),
+
                     // Add other widgets on top of or below this stack as needed
                   ],
                 )
@@ -272,6 +228,7 @@ Undrinkable but usable
           ),
         ),
       ),
+      bottomNavigationBar: NavBar(),
     );
   }
 
@@ -347,7 +304,7 @@ Undrinkable but usable
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => OrderPageTwo(
+                            builder: (context) => Checkout(
                               title: '',
                             ),
                           ),

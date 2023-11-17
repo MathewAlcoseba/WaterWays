@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:waterways/UserUI/search_bar.dart';
 import 'package:waterways/UserUI/stores_list_view.dart';
 import 'package:waterways/app_styles.dart';
+import 'package:waterways/custom_appbar.dart';
 
 class UserHomePage extends StatelessWidget {
   const UserHomePage({super.key});
@@ -10,22 +10,25 @@ class UserHomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
         child: Scaffold(
-      extendBody: true,
-      backgroundColor: AppStyles.colorScheme.background,
-      body: const Padding(
-        padding: EdgeInsets.only(top: 16.0, left: 16.0, right: 16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Tag(),
-            SizedBox(
-              height: 16.0,
+            extendBody: true,
+            backgroundColor: AppStyles.colorScheme.background,
+            appBar: const PreferredSize(
+              preferredSize: Size.fromHeight(75.0),
+              child: CustomAppBar(),
             ),
-            AvailableStoresListView(),
-          ],
-        ),
-      ),
-    ));
+            body: const Padding(
+              padding: EdgeInsets.only(top: 16.0, left: 16.0, right: 16.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Tag(),
+                  SizedBox(
+                    height: 16.0,
+                  ),
+                  AvailableStoresListView(),
+                ],
+              ),
+            )));
   }
 }
 

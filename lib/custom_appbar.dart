@@ -19,31 +19,48 @@ class CustomAppBar extends StatelessWidget {
       ),
       child: SizedBox(
           height: 75,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Padding(
-                padding: const EdgeInsets.only(left: 16.0),
-                child: Image.asset(
+          child: Padding(
+            padding: const EdgeInsets.only(left: 16.0, right: 16.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Image.asset(
                   'assets/WaterWaysIcon.png',
                   height: 40,
                 ),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(right: 14.0),
-                child: Container(
-                  decoration: BoxDecoration(
-                      color: AppStyles.colorScheme.tertiary.withOpacity(0.15),
-                      shape: BoxShape.circle),
-                  child: IconButton(
-                    onPressed: () {},
-                    icon: Image.asset(
-                      'assets/Main/search2.png',
+                Row(
+                  children: [
+                    Container(
+                      decoration: BoxDecoration(
+                          color:
+                              AppStyles.colorScheme.tertiary.withOpacity(0.15),
+                          shape: BoxShape.circle),
+                      child: IconButton(
+                        onPressed: () {},
+                        icon: Image.asset(
+                          'assets/Main/appbar-search.png',
+                          width: 20,
+                        ),
+                      ),
                     ),
-                  ),
+                    const SizedBox(width: 10),
+                    Container(
+                      decoration: BoxDecoration(
+                          color:
+                              AppStyles.colorScheme.tertiary.withOpacity(0.15),
+                          shape: BoxShape.circle),
+                      child: IconButton(
+                        onPressed: () {},
+                        icon: Image.asset(
+                          'assets/Main/appbar-chat.png',
+                          width: 24,
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
-              ),
-            ],
+              ],
+            ),
           )),
     );
   }

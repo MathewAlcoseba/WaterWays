@@ -9,50 +9,74 @@ class UserProfileDrawer extends StatelessWidget {
     return Drawer(
       width: 280,
       child: ListView(
-        // Important: Remove any padding from the ListView.
         padding: EdgeInsets.zero,
         children: <Widget>[
           DrawerHeader(
               decoration: BoxDecoration(
                 color: AppStyles.colorScheme.secondary,
+                image: const DecorationImage(
+                  image: AssetImage('assets/Main/sample-profile-cover.png'),
+                  fit: BoxFit.cover,
+                ),
               ),
-              child: Row(
+              padding: EdgeInsets.zero,
+              child: Stack(
                 children: [
                   Container(
-                    width: 70,
-                    height: 70,
                     decoration: BoxDecoration(
-                        color: AppStyles.colorScheme.primary,
-                        shape: BoxShape.circle,
-                        image: const DecorationImage(
-                          image: AssetImage(
-                            'assets/Main/sample-profile.png',
-                          ),
-                        )),
+                      gradient: LinearGradient(
+                        begin: Alignment.topCenter,
+                        end: Alignment.bottomCenter,
+                        colors: [
+                          Colors.transparent,
+                          Colors.black.withOpacity(0.85),
+                        ],
+                      ),
+                    ),
                   ),
-                  const SizedBox(width: 10.0),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text('Boss AAh',
-                          style: AppStyles.headline2.copyWith(
-                              fontSize: 26,
-                              fontWeight: FontWeight.w600,
-                              color: AppStyles.colorScheme.primary),
-                          overflow: TextOverflow.ellipsis),
-                      Text('09950066821',
-                          style: AppStyles.bodyText3
-                              .copyWith(color: AppStyles.colorScheme.primary)),
-                      Text(
-                        'bossaamigo@gmail.com',
-                        style: AppStyles.bodyText3
-                            .copyWith(color: AppStyles.colorScheme.primary),
-                        maxLines: 2,
-                        overflow: TextOverflow.ellipsis,
-                      )
-                    ],
-                  )
+                  Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: [
+                        Container(
+                          width: 70,
+                          height: 70,
+                          decoration: BoxDecoration(
+                              color: AppStyles.colorScheme.primary,
+                              shape: BoxShape.circle,
+                              image: const DecorationImage(
+                                image: AssetImage(
+                                  'assets/Main/sample-profile.png',
+                                ),
+                              )),
+                        ),
+                        const SizedBox(width: 10.0),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            Text('Boss AAh',
+                                style: AppStyles.headline2.copyWith(
+                                    fontSize: 26,
+                                    fontWeight: FontWeight.w600,
+                                    color: AppStyles.colorScheme.primary),
+                                overflow: TextOverflow.ellipsis),
+                            Text('09950066821',
+                                style: AppStyles.bodyText3.copyWith(
+                                    color: AppStyles.colorScheme.primary)),
+                            Text(
+                              'bossaamigo@gmail.com',
+                              style: AppStyles.bodyText3.copyWith(
+                                  color: AppStyles.colorScheme.primary),
+                              maxLines: 2,
+                              overflow: TextOverflow.ellipsis,
+                            )
+                          ],
+                        )
+                      ],
+                    ),
+                  ),
                 ],
               )),
           const EditProfile(),
@@ -151,10 +175,13 @@ class EditProfileState extends State<EditProfile> {
           style: isExpanded
               ? AppStyles.headline3.copyWith(fontSize: 20)
               : AppStyles.bodyText2),
-      leading: Icon(
-        Icons.edit_outlined,
-        color: AppStyles.colorScheme.secondary,
-      ),
+      leading: isExpanded
+          ? Icon(
+              Icons.edit_outlined,
+              color: AppStyles.colorScheme.secondary,
+            )
+          : Icon(Icons.account_circle_outlined,
+              color: AppStyles.colorScheme.secondary),
       children: <Widget>[
         ListTile(
           title: Text(

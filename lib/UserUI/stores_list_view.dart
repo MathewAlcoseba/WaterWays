@@ -26,10 +26,10 @@ class AvailableStoresListView extends StatelessWidget {
                       boxShadow: [
                         BoxShadow(
                           color: AppStyles.colorScheme.inversePrimary
-                              .withOpacity(0.12),
+                              .withOpacity(0.05),
                           offset: const Offset(0.0, 2.0),
-                          blurRadius: 1.5,
-                          spreadRadius: 0.0,
+                          blurRadius: 2,
+                          spreadRadius: 0.5,
                         )
                       ],
                     ),
@@ -102,7 +102,7 @@ class AvailableStoresListView extends StatelessWidget {
                               ),
                               Text('${cSymbol("PHP")}' '0.014/Liter',
                                   style: GoogleFonts.roboto(
-                                      fontSize: 14,
+                                      fontSize: 15,
                                       fontWeight: FontWeight.w400,
                                       color: AppStyles.colorScheme.tertiary)),
                             ],

@@ -7,6 +7,8 @@ class UserProfileDrawer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Drawer(
+      backgroundColor: AppStyles.colorScheme.background,
+      surfaceTintColor: AppStyles.colorScheme.background,
       width: 280,
       child: ListView(
         padding: EdgeInsets.zero,
@@ -171,13 +173,13 @@ class EditProfileState extends State<EditProfile> {
           isExpanded = expanded;
         });
       },
-      title: Text(isExpanded ? 'Edit Profile' : 'Profile',
+      title: Text(isExpanded ? 'User Profile' : 'Profile',
           style: isExpanded
               ? AppStyles.headline3.copyWith(fontSize: 20)
               : AppStyles.bodyText2),
       leading: isExpanded
           ? Icon(
-              Icons.edit_outlined,
+              Icons.account_circle_rounded,
               color: AppStyles.colorScheme.secondary,
             )
           : Icon(Icons.account_circle_outlined,
@@ -185,7 +187,7 @@ class EditProfileState extends State<EditProfile> {
       children: <Widget>[
         ListTile(
           title: Text(
-            'Edit Username',
+            'Username',
             style: AppStyles.bodyText2,
           ),
           subtitle: Text(
@@ -195,7 +197,7 @@ class EditProfileState extends State<EditProfile> {
         ),
         ListTile(
           title: Text(
-            'Edit Phone No.',
+            'Phone No.',
             style: AppStyles.bodyText2,
           ),
           subtitle: Text(
@@ -205,7 +207,7 @@ class EditProfileState extends State<EditProfile> {
         ),
         ListTile(
           title: Text(
-            'Edit Email',
+            'Email',
             style: AppStyles.bodyText2,
           ),
           subtitle: Text(
@@ -215,7 +217,7 @@ class EditProfileState extends State<EditProfile> {
         ),
         ListTile(
           title: Text(
-            'Edit Address',
+            'Address',
             style: AppStyles.bodyText2,
           ),
           subtitle: Text(

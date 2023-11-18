@@ -9,6 +9,7 @@ class CustomAppBar extends StatelessWidget {
     return PhysicalShape(
       color: AppStyles.colorScheme.primary,
       elevation: 1.5,
+      shadowColor: AppStyles.colorScheme.tertiary.withOpacity(0.2),
       clipper: const ShapeBorderClipper(
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.only(

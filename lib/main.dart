@@ -3,9 +3,10 @@
 import 'package:flutter/material.dart';
 import 'package:waterways/LoadingScreen/loading_screen.dart';
 import 'package:waterways/LoginFlow/login_create_account.dart';
-import 'package:waterways/LoginFlow/sign_up.dart';
-import 'package:waterways/LoginFlow/sign_up_as.dart';
-import 'package:waterways/OrderManagement/checkout.dart';
+import 'package:waterways/UserUI/user_home_page.dart';
+import 'package:waterways/UserUI/user_main_page.dart';
+import 'package:waterways/app_styles.dart';
+import 'package:waterways/bottom_navbar.dart';
 
 void main() {
   runApp(const MyApp());
@@ -17,12 +18,15 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'WaterWays Ilong',
       debugShowCheckedModeBanner: false,
+      title: 'WaterWays Delivery App',
+      theme: ThemeData(
+        useMaterial3: true,
+      ),
       home: Scaffold(
-        backgroundColor: const Color(0xffF8F8F8),
+        backgroundColor: AppStyles.colorScheme.background,
         body: SafeArea(
-          child: SignUp(),
+          child: UserMainPage(),
         ),
       ),
     );

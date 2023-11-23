@@ -30,7 +30,7 @@ class UserNotificationsPage extends StatelessWidget {
                   const SizedBox(
                     height: 8,
                   ),
-                  Text('Today',
+                  Text('About Us',
                       style: AppStyles.bodyText1
                           .copyWith(fontWeight: FontWeight.w600)),
                   const SizedBox(

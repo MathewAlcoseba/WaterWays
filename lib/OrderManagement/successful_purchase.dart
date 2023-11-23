@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:waterways/OrderManagement/purchase_history.dart';
+import 'package:waterways/OrderManagement/order_status.dart';
 
 void main() {
   runApp(const SuccessfulPurchase(
@@ -9,99 +9,97 @@ void main() {
 }
 
 class SuccessfulPurchase extends StatelessWidget {
-  const SuccessfulPurchase({Key? key, required this.title}) : super(key: key);
-
-  final String title;
+  const SuccessfulPurchase({Key? key, required String title}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-        child: Container(
-          color: Color(0xFF007AFF), // Set the background color to blue
-          width: 500,
-          height: 1100,
-          child: Stack(
-            children: <Widget>[
-              Positioned(
-                top: 40,
-                right: 23,
-                child: GestureDetector(
-                  onTap: () {
-                    Navigator.pop(context);
-                  },
-                  child: Container(
-                    child: close(),
+      body: Stack(
+        children: [
+          Center(
+            child: Container(
+              color: AppColors.primaryBlue, // Use a defined constant
+              width: 500,
+              height: 1100,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  _buildCheckIcon(),
+                  SizedBox(
+                    height: 30,
                   ),
-                ),
-              ),
-              Positioned(
-                top: 450,
-                left: 23,
-                child: Text(
-                  'Payment Successful',
-                  style: GoogleFonts.poppins(
-                    color: Color(0xFFFFFFFF),
-                    fontSize: 36,
-                    fontWeight: FontWeight.w600,
+                  _buildPaymentSuccessfulText(),
+                  SizedBox(
+                    height: 30,
                   ),
-                ),
-              ),
-              Positioned(
-                top: 300,
-                left: 140,
-                child: Container(
-                  child: check(),
-                ),
-              ),
-              Positioned(
-                top: 440,
-                left: 0,
-                child: SizedBox(
-                  width: 410,
-                  height: 510,
-                  child: GestureDetector(
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) =>
-                              PurchaseHistory(title: 'Your Title'),
-                        ),
-                      );
-                    },
-                    child: Container(
-                      child: clipboard(),
-                    ),
+                  _buildViewOrderDetailsText(),
+                  SizedBox(
+                    height: 20,
                   ),
-                ),
+                  _buildViewOrderDetailsButton(context),
+                ],
               ),
-              Positioned(
-                top: 650,
-                left: 121,
-                child: Text(
-                  'view past transactions',
-                  style: GoogleFonts.poppins(
-                    color: Color(0xFFFFFFFF),
-                    fontSize: 16,
-                    fontWeight: FontWeight.w300,
-                  ),
-                ),
-              ),
-            ],
+            ),
           ),
-        ),
+          Align(
+            alignment: Alignment.topRight,
+            child: _buildCloseButton(context),
+          ),
+        ],
       ),
     );
   }
 
-  Widget close() => Container(
+  Widget _buildCloseButton(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(30.0),
+      child: GestureDetector(
+        onTap: () => Navigator.pop(context),
         child: Image.asset('assets/Order/Close.png'),
-      );
-  Widget check() => Container(
-        child: Image.asset('assets/Order/checked.png'),
-      );
-  Widget clipboard() => Container(
-        child: Image.asset('assets/Order/clipboardWhite 1.png'),
-      );
+      ),
+    );
+  }
+
+  Widget _buildCheckIcon() {
+    return Image.asset('assets/Order/checked.png');
+  }
+
+  Widget _buildPaymentSuccessfulText() {
+    return Text(
+      'Payment Successful',
+      style: GoogleFonts.poppins(
+        color: Colors.white,
+        fontSize: 36,
+        fontWeight: FontWeight.w600,
+      ),
+    );
+  }
+
+  Widget _buildViewOrderDetailsText() {
+    return Text(
+      'View Order Details',
+      style: GoogleFonts.poppins(
+        color: Colors.white,
+        fontSize: 16,
+        fontWeight: FontWeight.w300,
+      ),
+    );
+  }
+
+  Widget _buildViewOrderDetailsButton(BuildContext context) {
+    return GestureDetector(
+      onTap: () => Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) => OrderStatus(
+                  title: '',
+                )),
+      ),
+      child: Image.asset('assets/Order/clipboardWhite 1.png'),
+    );
+  }
+}
+
+class AppColors {
+  static const Color primaryBlue = Color(0xFF007AFF);
 }

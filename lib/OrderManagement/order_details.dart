@@ -1,368 +1,597 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:waterways/OrderManagement/checkout.dart';
-import 'package:waterways/bottom_navbar.dart';
+import 'package:waterways/OrderManagement/custom_appbar_storedetails.dart';
+import 'package:waterways/OrderManagement/store_rating.dart';
+import 'package:waterways/app_styles.dart';
 
 void main() {
-  runApp(const OrderDetails(
-    title: '',
-  ));
+  runApp(const OrderDetails(title: ''));
 }
 
-class OrderDetails extends StatelessWidget {
+class OrderDetails extends StatefulWidget {
   const OrderDetails({Key? key, required this.title}) : super(key: key);
-
   final String title;
 
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: Center(
-        child: Center(
-          child: Container(
-            width: 500,
-            height: 1100,
-            child: Stack(
-              children: <Widget>[
-                Positioned(
-                  child: Container(
-                    child: header(),
-                  ),
-                ),
-                Positioned(
-                  top: 3,
-                  left: 0,
-                  child: Container(
-                    child: logo(),
-                  ),
-                ),
-                Positioned(
-                  top: 95,
-                  left: 23,
-                  child: Text(
-                    'Aqua Atlan',
-                    style: GoogleFonts.poppins(
-                      color: Color(0xFF313144),
-                      fontSize: 32,
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
-                ),
-                Positioned(
-                  top: 143,
-                  left: 23,
-                  child: Text(
-                    'Details',
-                    style: GoogleFonts.gothicA1(
-                      color: Color(0xFF7F8184),
-                      fontSize: 20,
-                      fontWeight: FontWeight.w400,
-                    ),
-                  ),
-                ),
-                Positioned(
-                  top: 175,
-                  left: 0,
-                  child: Container(
-                    height: 1,
-                    width: 600,
-                    decoration: BoxDecoration(
-                      color: Color(0xFFEBEBEB),
-                    ),
-                  ),
-                ),
-                Positioned(
-                  top: 190,
-                  left: 20,
-                  child: Container(
-                    width: 373,
-                    height: 273,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10.0),
-                      image: DecorationImage(
-                        image: AssetImage('assets/Order/AquaAtlanCard.png'),
-                        fit: BoxFit.cover,
-                      ),
-                    ),
-                  ),
-                ),
-                Positioned(
-                  top: 205,
-                  right: 25,
-                  child: Container(
-                    child: dots(),
-                  ),
-                ),
-                Positioned(
-                  top: 480,
-                  left: 0,
-                  child: Container(
-                    height: 1,
-                    width: 600,
-                    decoration: BoxDecoration(
-                      color: Color(0xFFEBEBEB),
-                    ),
-                  ),
-                ),
-                Positioned(
-                  top: 490,
-                  left: 23,
-                  child: Text(
-                    'Aqua Atlan',
-                    style: GoogleFonts.poppins(
-                      color: Color(0xFF313144),
-                      fontSize: 16,
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
-                ),
-                Positioned(
-                  top: 515,
-                  left: 23,
-                  child: Text(
-                    'View profile rating',
-                    style: GoogleFonts.gothicA1(
-                      color: Color(0xFF7F8184),
-                      fontSize: 16,
-                      fontWeight: FontWeight.w400,
-                    ),
-                  ),
-                ),
-                Positioned(
-                  top: 545,
-                  left: 0,
-                  child: Container(
-                    height: 1,
-                    width: 600,
-                    decoration: BoxDecoration(
-                      color: Color(0xFFEBEBEB),
-                    ),
-                  ),
-                ),
-                Positioned(
-                  top: 495,
-                  right: 10,
-                  child: Container(
-                    child: right(),
-                  ),
-                ),
-                Positioned(
-                  top: 550,
-                  left: 23,
-                  child: Text(
-                    'Product Details:',
-                    style: GoogleFonts.poppins(
-                      color: Color(0xFF313144),
-                      fontSize: 24,
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
-                ),
-                Positioned(
-                  top: 590,
-                  left: 23,
-                  child: Text(
-                    '''in stock: 5000 Ltrs
-Treated waste water
-Undrinkable but usable
-''',
-                    style: GoogleFonts.gothicA1(
-                      color: Color(0xFF7F8184),
-                      fontSize: 16,
-                      fontWeight: FontWeight.w400,
-                      height: 1.5,
-                    ),
-                  ),
-                ),
-                Positioned(
-                  bottom: 20,
-                  left: 110,
-                  child: ElevatedButton(
-                    onPressed: () {
-                      _displayBottomSheet(context);
-                    },
-                    style: ElevatedButton.styleFrom(
-                      primary: Color(0xFF007AFF),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(100.0),
-                      ),
-                      minimumSize: Size(196.0, 66.0),
-                    ),
-                    child: Text(
-                      "BUY",
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 16.0,
-                        fontWeight: FontWeight.w400,
-                      ),
-                    ),
-                  ),
-                ),
-                Positioned(
-                  bottom: 20,
-                  right: 20,
-                  child: Container(
-                    child: chat(),
-                  ),
-                ),
-                Stack(
-                  children: [
-                    Positioned(
-                      top: 95,
-                      left: 23,
-                      child: Text(
-                        'Aqua Atlan',
-                        style: GoogleFonts.poppins(
-                          color: Color(0xFF313144),
-                          fontSize: 32,
-                          fontWeight: FontWeight.w600,
-                        ),
-                      ),
-                    ),
+  _OrderDetailsState createState() => _OrderDetailsState();
+}
 
-                    // Add other widgets on top of or below this stack as needed
-                  ],
-                )
-              ],
+class _OrderDetailsState extends State<OrderDetails> {
+  int selectedIndex = 0;
+  bool checkboxValue1 = false;
+  bool checkboxValue2 = false;
+  bool checkboxValue3 = false;
+  bool checkboxValue4 = false;
+  int counter = 0;
+  int radioValue = 0;
+
+  void showCupertinoPopup(BuildContext context) {
+    // Default prices for each option
+    final double pricePerGallon = 25.0;
+    final double pricePerBarrel = 300.0;
+    final double pricePerICBTank = 1000.0;
+    final double pricePerOthers = 30.0;
+    final double radioOption1Price = 25.0;
+    final double radioOption2Price = 0.0;
+
+    // Function to calculate total price
+    double calculateTotalPrice() {
+      double totalPrice = 0.0;
+      if (checkboxValue1) totalPrice += pricePerGallon;
+      if (checkboxValue2) totalPrice += pricePerBarrel;
+      if (checkboxValue3) totalPrice += pricePerICBTank;
+      if (checkboxValue4) totalPrice += pricePerOthers;
+      if (radioValue == 1) totalPrice += radioOption1Price;
+      if (radioValue == 2) totalPrice += radioOption2Price;
+
+      return totalPrice * counter; // Multiply by quantity
+    }
+
+    showCupertinoModalPopup(
+      context: context,
+      builder: (BuildContext context) {
+        return CupertinoPopupSurface(
+          child: Material(
+            child: Container(
+              padding: EdgeInsets.only(top: 15, left: 5),
+              height: MediaQuery.of(context).size.height * 0.45,
+              child: StatefulBuilder(
+                builder: (BuildContext context, StateSetter setState) {
+                  return Column(children: [
+                    Expanded(
+                      child: ListView(
+                        children: [
+                          Row(
+                            children: [
+                              Expanded(
+                                child: CheckboxListTile(
+                                  title: Text('Gallon'),
+                                  value: checkboxValue1,
+                                  onChanged: (bool? newValue) {
+                                    setState(() {
+                                      checkboxValue1 = newValue!;
+                                    });
+                                  },
+                                  controlAffinity:
+                                      ListTileControlAffinity.leading,
+                                  activeColor: Color(0XFF007AFF),
+                                ),
+                              ),
+                              Expanded(
+                                child: RadioListTile<int>(
+                                  title: const Text('Delivery'),
+                                  value: 1,
+                                  groupValue: radioValue,
+                                  onChanged: (int? newValue) {
+                                    setState(() {
+                                      radioValue = newValue!;
+                                    });
+                                  },
+                                  activeColor: Color(0XFF007AFF),
+                                ),
+                              ),
+                            ],
+                          ),
+                          Row(
+                            children: [
+                              Expanded(
+                                child: CheckboxListTile(
+                                  title: Text('Barrel'),
+                                  value: checkboxValue2,
+                                  onChanged: (bool? newValue) {
+                                    setState(() {
+                                      checkboxValue2 = newValue!;
+                                    });
+                                  },
+                                  controlAffinity:
+                                      ListTileControlAffinity.leading,
+                                  activeColor: Color(0XFF007AFF),
+                                ),
+                              ),
+                              Expanded(
+                                child: RadioListTile<int>(
+                                  title: const Text('Pick-Up'),
+                                  value: 2,
+                                  groupValue: radioValue,
+                                  onChanged: (int? newValue) {
+                                    setState(() {
+                                      radioValue = newValue!;
+                                    });
+                                  },
+                                  activeColor: Color(0XFF007AFF),
+                                ),
+                              ),
+                            ],
+                          ),
+                          Row(
+                            children: [
+                              Expanded(
+                                child: CheckboxListTile(
+                                  title: Text('ICB Tank'),
+                                  value: checkboxValue3,
+                                  onChanged: (bool? newValue) {
+                                    setState(() {
+                                      checkboxValue2 = newValue!;
+                                    });
+                                  },
+                                  controlAffinity:
+                                      ListTileControlAffinity.leading,
+                                  activeColor: Color(0XFF007AFF),
+                                ),
+                              ),
+                            ],
+                          ),
+                          Row(
+                            children: [
+                              Expanded(
+                                child: CheckboxListTile(
+                                  title: Text('Others'),
+                                  value: checkboxValue4,
+                                  onChanged: (bool? newValue) {
+                                    setState(() {
+                                      checkboxValue2 = newValue!;
+                                    });
+                                  },
+                                  controlAffinity:
+                                      ListTileControlAffinity.leading,
+                                  activeColor: Color(0XFF007AFF),
+                                ),
+                              ),
+                            ],
+                          ),
+                          SizedBox(
+                            height: 5,
+                          ),
+                          Row(
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.only(left: 25),
+                                child: Container(
+                                  width: 195,
+                                  child: Expanded(
+                                    child: Text(
+                                      "Disclaimer: The container used to deliver the water is provided solely for transportation and measurement reference.",
+                                      style: AppStyles.bodyText5,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              Padding(
+                                padding:
+                                    const EdgeInsets.only(left: 20, top: 40),
+                                child: Text(
+                                  'Total Price: \n₱${calculateTotalPrice().toStringAsFixed(2)}',
+                                  style: AppStyles.bodyText6,
+                                ),
+                              )
+                            ],
+                          ),
+                          SizedBox(
+                            height: 20,
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              Container(
+                                margin: EdgeInsets.only(
+                                    right: 10,
+                                    left:
+                                        20), // Add right margin to the first container
+                                decoration: BoxDecoration(
+                                  color: Color(
+                                      0XFF007AFF), // Set the color of the circle
+                                  shape: BoxShape.circle, // Make it circular
+                                ),
+                                child: IconButton(
+                                  icon: const Icon(Icons.remove,
+                                      color: Colors
+                                          .white), // Set icon color to white
+                                  onPressed: () {
+                                    setState(() {
+                                      if (counter > 0) counter--;
+                                    });
+                                  },
+                                ),
+                              ),
+                              Padding(
+                                padding: EdgeInsets.symmetric(
+                                    horizontal:
+                                        8), // Add horizontal padding to the text
+                                child: Text('$counter',
+                                    style: const TextStyle(fontSize: 20)),
+                              ),
+                              Container(
+                                margin: EdgeInsets.only(
+                                    left:
+                                        10), // Add left margin to the second container
+                                decoration: BoxDecoration(
+                                  color: Color(
+                                      0XFF007AFF), // Set the color of the circle
+                                  shape: BoxShape.circle, // Make it circular
+                                ),
+                                child: IconButton(
+                                  icon: const Icon(Icons.add,
+                                      color: Colors
+                                          .white), // Set icon color to white
+                                  onPressed: () {
+                                    setState(() {
+                                      counter++;
+                                    });
+                                  },
+                                ),
+                              ),
+                              SizedBox(
+                                width: 90,
+                              ),
+                              Container(
+                                width: 146,
+                                height: 42, // Set the width of the container
+                                child: ElevatedButton(
+                                  onPressed: () {
+                                    // Navigate to Checkout page when pressed
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              Checkout(title: 'Checkout')),
+                                    );
+                                  },
+                                  child: const Text('BUY',
+                                      style: TextStyle(fontSize: 20)),
+                                  style: ElevatedButton.styleFrom(
+                                    primary: const Color(0XFF007AFF),
+                                    onPrimary: Colors.white,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+                  ]);
+                },
+              ),
             ),
           ),
-        ),
-      ),
-      //bottomNavigationBar: BottomNavBar(),
-    );
-  }
-
-  Future<void> _displayBottomSheet(BuildContext context) async {
-    bool? checkBox1 = false;
-    bool? checkBox2 = false;
-    bool? checkBox3 = false;
-    bool? checkBox4 = false;
-
-    await showModalBottomSheet(
-      context: context,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.only(
-          topLeft: Radius.circular(30.0),
-          topRight: Radius.circular(30.0),
-        ),
-      ),
-      builder: (BuildContext context) {
-        return StatefulBuilder(
-          builder: (context, setState) {
-            return Container(
-              height: 350,
-              padding: EdgeInsets.all(16.0),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Text("Select Options:"),
-                  CheckboxListTile(
-                    title: Text("Gallon (3 ltrs)"),
-                    value: checkBox1 ?? false,
-                    onChanged: (value) {
-                      setState(() {
-                        checkBox1 = value;
-                      });
-                    },
-                    contentPadding: EdgeInsets.symmetric(horizontal: 0),
-                  ),
-                  CheckboxListTile(
-                    title: Text("Barrel (200 ltrs)"),
-                    value: checkBox2 ?? false,
-                    onChanged: (value) {
-                      setState(() {
-                        checkBox2 = value;
-                      });
-                    },
-                    contentPadding: EdgeInsets.zero,
-                  ),
-                  CheckboxListTile(
-                    title: Text("ICB Tank (1000 ltrs)"),
-                    value: checkBox3 ?? false,
-                    onChanged: (value) {
-                      setState(() {
-                        checkBox3 = value;
-                      });
-                    },
-                    contentPadding: EdgeInsets.zero,
-                  ),
-                  CheckboxListTile(
-                    title: Text("Others"),
-                    value: checkBox4 ?? false,
-                    onChanged: (value) {
-                      setState(() {
-                        checkBox4 = value;
-                      });
-                    },
-                    contentPadding: EdgeInsets.zero,
-                  ),
-                  Container(
-                    margin: EdgeInsets.only(top: 60.0),
-                    child: TextButton(
-                      onPressed: () {
-                        Navigator.pop(context);
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => Checkout(
-                              title: '',
-                            ),
-                          ),
-                        );
-                      },
-                      style: TextButton.styleFrom(
-                        backgroundColor: Color(0xFF007AFF),
-                        minimumSize: Size(146.0, 46.0),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(16.0),
-                        ),
-                      ),
-                      child: Text(
-                        "BUY",
-                        style: TextStyle(
-                          color: Colors.white,
-                        ),
-                      ),
-                    ),
-                  )
-                ],
-              ),
-            );
-          },
         );
       },
     );
   }
 
-  Widget logo() => Container(
-        child: Image.asset('assets/WaterWaysIcon.png'),
-        height: 118.27,
-        width: 152.31,
-      );
-  Widget header() => Container(
-        child: Image.asset('assets/Order/header.png'),
-      );
+  @override
+  Widget build(BuildContext context) {
+    double screenHeight = MediaQuery.of(context).size.height;
+    double screenWidth = MediaQuery.of(context).size.width;
 
-  Widget dots() => Container(
-        child: Image.asset('assets/Main/dots.png'),
-      );
-  Widget home() => Container(
-        child: Image.asset('assets/Main/home.png'),
-      );
-  Widget notifications() => Container(
-        child: Image.asset('assets/Main/heart.png'),
-      );
-  Widget search() => Container(
-        child: Image.asset('assets/Main/search.png'),
-      );
-  Widget profile() => Container(
-        child: Image.asset('assets/Main/profile.png'),
-      );
+    return SafeArea(
+      child: Scaffold(
+        extendBody: true,
+        backgroundColor: AppStyles.colorScheme.background,
+        appBar: const PreferredSize(
+          preferredSize: Size.fromHeight(75.0),
+          child: StoreDetailsAppBar(
+            title: 'Store Details',
+          ),
+        ),
+        body: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              buildProfileRow(screenWidth),
+              buildTextSection(
+                  screenHeight, screenWidth, 'About Us:', AppStyles.bodyText4),
+              buildTextSection(
+                screenHeight,
+                screenWidth,
+                'Aqua Atlan has been a local water refilling station for more than 7 years. We are always ready to serve you!',
+                AppStyles.bodyText5,
+              ),
+              buildRowWithTextAndButton(screenWidth, screenHeight),
+              line(screenWidth),
+              viewProfileRating(screenHeight, screenWidth, context),
+              line(screenWidth),
+              buildTextSection(screenHeight, screenWidth, 'Product Details:',
+                  AppStyles.headline5),
+              buildStockInfo(screenWidth),
+              buildDetailOne(screenWidth),
+              buildDetailTwo(screenWidth),
+              line(screenWidth),
+              buildTextSection(
+                screenHeight,
+                screenWidth,
+                'Water Volume Reference:',
+                AppStyles.headline5,
+              ),
+              buildDisclaimerBanner(screenWidth, screenHeight),
+              buildCardList(screenWidth),
+              Container(
+                  height: 100, color: const Color.fromARGB(255, 255, 255, 255)),
+            ],
+          ),
+        ),
+        floatingActionButton: SizedBox(
+          width: 200,
+          child: FloatingActionButton.extended(
+            onPressed: () => showCupertinoPopup(context),
+            label: const Text('BUY',
+                style: TextStyle(color: Color(0xfff8f8f8), fontSize: 21)),
+            backgroundColor: Color(0XFF007AFF),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(30),
+            ),
+          ),
+        ),
+        floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+      ),
+    );
+  }
 
-  Widget right() => Container(
-        child: Image.asset('assets/Main/right.png'),
-      );
-  Widget chat() => Container(
-        child: Image.asset('assets/Main/chat.png'),
-      );
+  Widget buildProfileRow(double screenWidth) {
+    double screenHeight = MediaQuery.of(context).size.height;
+
+    return Container(
+      height: screenHeight * 0.2,
+      child: Stack(
+        children: [
+          banner(),
+          Positioned(
+            top: screenHeight * 0.09,
+            left: screenWidth * 0.28,
+            child: Text('Aqua Atlan', style: AppStyles.headline6),
+          ),
+          Positioned(
+            top: screenHeight * 0.09,
+            left: screenWidth * 0.03,
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                profileIcon(),
+                SizedBox(width: screenWidth * 0.02),
+                rating(),
+                SizedBox(width: screenWidth * 0.18),
+                Column(
+                  children: [
+                    SizedBox(height: 45),
+                    ElevatedButton.icon(
+                      onPressed: () {
+                        // Define your action here
+                      },
+                      icon: Icon(Icons.mail, color: Colors.white),
+                      label: Text(
+                        'Message',
+                        style: GoogleFonts.poppins(color: Colors.white),
+                      ),
+                      style: ElevatedButton.styleFrom(
+                        primary: Color(0XFF007AFF),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget buildRowWithTextAndButton(double screenHeight, double screenWidth) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      crossAxisAlignment: CrossAxisAlignment
+          .start, // Align children to the start of the cross axis
+      children: [
+        buildTextSection(screenHeight, screenWidth, '10:00 AM - 4:30 PM',
+            AppStyles.bodyText6),
+        ElevatedButton(
+          onPressed: () {
+            // Define your action here
+          },
+          child: const Text(
+            'Open',
+            style: TextStyle(
+                color: Color(0XFF007AFF),
+                fontSize: 16), // Text color set to white
+          ),
+          style: ElevatedButton.styleFrom(
+            primary: Color(0xfff8f8f8),
+            elevation: 0,
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget buildTextSection(
+      double screenHeight, double screenWidth, String text, TextStyle style) {
+    return Padding(
+      padding: EdgeInsets.only(
+          left: 10, // Set or reduce the left padding as needed
+          top: screenHeight * 0.01),
+      child: Text(text, style: style),
+    );
+  }
+
+  Widget buildTextSection2(
+      double screenHeight, double screenWidth, String text, TextStyle style) {
+    return Padding(
+      padding: EdgeInsets.only(
+          left: 10, // Set or reduce the left padding as needed
+          top: screenHeight * 0.00),
+      child: Text(text, style: style),
+    );
+  }
+
+  Widget buildStockInfo(double screenWidth) {
+    return Padding(
+      padding: EdgeInsets.only(left: screenWidth * 0.03, top: 20),
+      child: Row(
+        children: [
+          stockIcon(),
+          SizedBox(width: screenWidth * 0.02),
+          Text('In Stock: 5000 Ltrs', style: AppStyles.bodyText1),
+        ],
+      ),
+    );
+  }
+
+  Widget buildDisclaimerBanner(double screenWidth, double screenHeight) {
+    return Stack(
+      children: [
+        Container(
+          height: 69,
+          width: screenWidth,
+          decoration: BoxDecoration(color: Color(0xFFF2F2F2)),
+        ),
+        Positioned(
+          left: screenWidth * 0.02,
+          top: screenHeight * 0.01,
+          child: Text(
+            'Disclaimer:',
+            style: AppStyles.bodyText4,
+          ),
+        ),
+        Positioned(
+          left: screenWidth * 0.02,
+          top: screenHeight * 0.03,
+          right: screenWidth * 0.02,
+          child: Text(
+            'The container used to deliver the water is provided solely for transportation and measurement reference.',
+            style: AppStyles.bodyText5,
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget buildDetailOne(double screenWidth) {
+    return Padding(
+      padding: EdgeInsets.only(left: screenWidth * 0.05, top: 20),
+      child: Row(
+        children: [
+          dot(),
+          SizedBox(width: screenWidth * 0.02),
+          Text('Treated Waste Water', style: AppStyles.bodyText1),
+        ],
+      ),
+    );
+  }
+
+  Widget buildDetailTwo(double screenWidth) {
+    return Padding(
+      padding: EdgeInsets.only(left: screenWidth * 0.05, top: 20),
+      child: Row(
+        children: [
+          dot(),
+          SizedBox(width: screenWidth * 0.02),
+          Text('Undrinkable but usable', style: AppStyles.bodyText1),
+        ],
+      ),
+    );
+  }
+
+  Widget buildCardList(double screenWidth) {
+    return Container(
+      height: 200,
+      child: ListView.builder(
+        scrollDirection: Axis.horizontal,
+        itemCount: 3,
+        itemBuilder: (BuildContext context, int index) {
+          String assetName = 'assets/Order/Card${index + 1}.png';
+          return Padding(
+            padding: EdgeInsets.symmetric(horizontal: 0.01),
+            child: Image.asset(assetName),
+          );
+        },
+      ),
+    );
+  }
+
+  Widget line(double screenWidth) {
+    return Container(
+      height: 2,
+      width: screenWidth,
+      decoration: BoxDecoration(color: Color(0xFFEBEBEB)),
+    );
+  }
+
+  Widget reviewRating(double screenHeight, double screenWidth) {
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            buildTextSection(
+                screenHeight, screenWidth, 'Aqua Atlan', AppStyles.headline5),
+            buildTextSection2(screenHeight, screenWidth, 'View profile Rating',
+                AppStyles.bodyText1),
+          ],
+        ),
+      ],
+    );
+  }
+
+  Widget viewProfileRating(
+      double screenHeight, double screenWidth, BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        reviewRating(screenHeight, screenWidth),
+        SizedBox(width: 150),
+        Row(
+          // Inner row
+          children: [
+            SizedBox(height: 50),
+            GestureDetector(
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => StoreRating(
+                            title: '',
+                          )),
+                );
+              },
+              child: right(),
+            ),
+          ],
+        ),
+      ],
+    );
+  }
+
+  Widget banner() => Image.asset('assets/Order/banner.png');
+  Widget stockIcon() => Image.asset('assets/Order/stockIcon.png');
+  Widget profileIcon() => Image.asset('assets/Order/profileIcon.png');
+  Widget rating() => Image.asset('assets/Order/yellowStars.png');
+  Widget dot() => Image.asset('assets/Order/dot.png');
+  Widget messageIcon() => Image.asset('assets/Order/messageIcon.png');
+  Widget right() => Image.asset('assets/Main/right.png');
 }

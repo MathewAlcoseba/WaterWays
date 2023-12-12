@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:waterways/UserUI/user_favorites_page.dart';
 import 'package:waterways/UserUI/user_home_page.dart';
 import 'package:waterways/UserUI/user_notifications_page.dart';
+import 'package:waterways/UserUI/user_profile_page.dart';
 import 'package:waterways/UserUI/user_profile_drawer.dart';
 import 'package:waterways/app_styles.dart';
 import 'package:waterways/bottom_navbar.dart';
@@ -20,38 +21,16 @@ class UserMainPageState extends State<UserMainPage> {
   int selectedIndex = 0;
 
   void onItemTapped(int index) {
-    if (index == 3) {
-      scaffoldKey.currentState?.openEndDrawer();
-    } else {
-      userMainPageController.jumpToPage(index);
-      setState(() {
-        selectedIndex = index;
-      });
-    }
+    userMainPageController.jumpToPage(index);
+    setState(() {
+      selectedIndex = index;
+    });
   }
 
   @override
   void dispose() {
     textController.dispose();
     super.dispose();
-  }
-
-  void showChatList() {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return Scaffold(
-          appBar: AppBar(
-              title: Text(
-            'Chats',
-            style: AppStyles.headline3,
-          )),
-          body: Placeholder(
-            color: Colors.black,
-          ),
-        );
-      },
-    );
   }
 
   @override
@@ -79,6 +58,7 @@ class UserMainPageState extends State<UserMainPage> {
               UserHomePage(),
               UserFavoritesPage(),
               UserNotificationsPage(),
+              UserProfilePage()
             ],
           ),
           // floatingActionButton: FloatingActionButton(

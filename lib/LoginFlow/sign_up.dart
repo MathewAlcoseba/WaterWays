@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:waterways/LoginFlow/login.dart';
 import 'package:waterways/LoginFlow/login_or_create.dart';
 import 'package:waterways/LoginFlow/sign_up2.dart';
 
@@ -56,136 +57,138 @@ class _SignUpState extends State<SignUp> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SingleChildScrollView(
-        child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 38),
-            child: Column(
-              children: [
-                Row(
-                  children: [
-                    SizedBox(height: 77),
-                  ],
-                ),
-                Row(
-                  children: [
-                    ClipRect(
-                      child: Align(
-                        alignment: Alignment.centerRight,
-                        widthFactor: 0.85,
-                        child: Image.asset(
-                          'assets/WaterWaysIcon.png',
-                          height: 80,
-                          width: 191,
-                        ),
-                      ),
-                    )
-                  ],
-                ),
-                SizedBox(height: 12),
-                Row(
-                  children: [
-                    Text(
-                      'Sign up',
-                      style: GoogleFonts.poppins(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 30.0,
-                        color: const Color(0xFF313144),
-                      ),
-                    ),
-                  ],
-                ),
-                SignUpField(
-                  fieldHeader: 'Email',
-                  hintTxt: 'example@gmail.com',
-                  controller: emailController,
-                ),
-                SignUpField(
-                  fieldHeader: 'Phone Number',
-                  hintTxt: 'enter 11-digit number',
-                  isPhoneNumberField: true,
-                  controller: phoneNumberController,
-                ),
-                SignUpField(
-                  fieldHeader: 'First Name',
-                  hintTxt: 'enter first name',
-                  controller: firstNameController,
-                ),
-                SignUpField(
-                  fieldHeader: 'Last Name',
-                  hintTxt: 'enter last name',
-                  controller: lastNameController,
-                ),
-                SizedBox(height: 38),
-                ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    foregroundColor: Color(0xFF313144),
-                    backgroundColor: Colors.transparent,
-                    elevation: 0,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    minimumSize: Size(10, 50),
-                  ),
-                  onPressed: isButtonEnabled
-                      ? () {
-                          Navigator.of(context).push(
-                            MaterialPageRoute(builder: (context) => SignUp2()),
-                          );
-                        }
-                      : null,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
+    return SafeArea(
+      child: Scaffold(
+        body: SingleChildScrollView(
+          child: Padding(
+              padding: EdgeInsets.symmetric(horizontal: 38),
+              child: Column(
+                children: [
+                  Row(
                     children: [
-                      Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Text(
-                            'Next',
-                            style: GoogleFonts.poppins(
-                              fontWeight: FontWeight.w400,
-                              fontSize: 15.0,
-                            ),
+                      SizedBox(height: 77),
+                    ],
+                  ),
+                  Row(
+                    children: [
+                      ClipRect(
+                        child: Align(
+                          alignment: Alignment.centerRight,
+                          widthFactor: 0.85,
+                          child: Image.asset(
+                            'assets/WaterWaysIcon.png',
+                            height: 80,
+                            width: 191,
                           ),
-                          SizedBox(width: 8),
-                          Icon(Icons.arrow_forward, size: 20.0),
-                        ],
+                        ),
+                      )
+                    ],
+                  ),
+                  SizedBox(height: 12),
+                  Row(
+                    children: [
+                      Text(
+                        'Sign up',
+                        style: GoogleFonts.poppins(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 30.0,
+                          color: const Color(0xFF313144),
+                        ),
                       ),
                     ],
                   ),
-                ),
-                SizedBox(height: 72),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      'Already have an account? ',
-                      style: GoogleFonts.inter(
-                        fontWeight: FontWeight.normal,
-                        fontSize: 14.0,
-                        color: const Color(0xFF313144),
+                  SignUpField(
+                    fieldHeader: 'Email',
+                    hintTxt: 'example@gmail.com',
+                    controller: emailController,
+                  ),
+                  SignUpField(
+                    fieldHeader: 'Phone Number',
+                    hintTxt: 'enter 11-digit number',
+                    isPhoneNumberField: true,
+                    controller: phoneNumberController,
+                  ),
+                  SignUpField(
+                    fieldHeader: 'First Name',
+                    hintTxt: 'enter first name',
+                    controller: firstNameController,
+                  ),
+                  SignUpField(
+                    fieldHeader: 'Last Name',
+                    hintTxt: 'enter last name',
+                    controller: lastNameController,
+                  ),
+                  SizedBox(height: 38),
+                  ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      foregroundColor: Color(0xFF313144),
+                      backgroundColor: Colors.transparent,
+                      elevation: 0,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10),
                       ),
+                      minimumSize: Size(10, 50),
                     ),
-                    GestureDetector(
-                      onTap: () {
-                        Navigator.of(context).push(
-                          MaterialPageRoute(
-                              builder: (context) => LoginOrCreate()),
-                        );
-                      },
-                      child: Text(
-                        'Log in',
+                    onPressed: isButtonEnabled
+                        ? () {
+                            Navigator.of(context).push(
+                              MaterialPageRoute(
+                                  builder: (context) => SignUp2()),
+                            );
+                          }
+                        : null,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Text(
+                              'Next',
+                              style: GoogleFonts.poppins(
+                                fontWeight: FontWeight.w400,
+                                fontSize: 15.0,
+                              ),
+                            ),
+                            SizedBox(width: 8),
+                            Icon(Icons.arrow_forward, size: 20.0),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
+                  SizedBox(height: 72),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        'Already have an account? ',
                         style: GoogleFonts.inter(
-                          fontWeight: FontWeight.w600,
+                          fontWeight: FontWeight.normal,
                           fontSize: 14.0,
                           color: const Color(0xFF313144),
                         ),
                       ),
-                    ),
-                  ],
-                )
-              ],
-            )),
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.of(context).push(
+                            MaterialPageRoute(builder: (context) => Login()),
+                          );
+                        },
+                        child: Text(
+                          'Log in',
+                          style: GoogleFonts.inter(
+                            fontWeight: FontWeight.w600,
+                            fontSize: 14.0,
+                            color: const Color(0xFF313144),
+                          ),
+                        ),
+                      ),
+                    ],
+                  )
+                ],
+              )),
+        ),
       ),
     );
   }

@@ -1,55 +1,43 @@
-// ignore_for_file: prefer_const_constructors
+// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:waterways/LoginFlow/login.dart';
 import 'package:waterways/LoginFlow/login_or_create.dart';
-import 'package:waterways/LoginFlow/sign_up_success.dart';
+import 'package:waterways/LoginFlow/sign_up2.dart';
 
-class SignUp2 extends StatefulWidget {
-  const SignUp2({super.key});
+class ForgotPassword extends StatefulWidget {
+  const ForgotPassword({super.key});
 
   @override
-  State<SignUp2> createState() => _SignUp2State();
+  State<ForgotPassword> createState() => _ForgotPasswordState();
 }
 
-class _SignUp2State extends State<SignUp2> {
-  final TextEditingController addressController = TextEditingController();
-  final TextEditingController passwordController = TextEditingController();
-  final TextEditingController confirmPasswordController =
-      TextEditingController();
+class _ForgotPasswordState extends State<ForgotPassword> {
+  final TextEditingController emailController = TextEditingController();
 
   @override
   void initState() {
     super.initState();
 
-    addressController.addListener(_updateButtonState);
-    passwordController.addListener(_updateButtonState);
-    confirmPasswordController.addListener(_updateButtonState);
+    emailController.addListener(_updateButtonState);
   }
 
   void _updateButtonState() {
-    if (mounted) {
-      setState(() {});
-    }
+    setState(() {});
   }
 
   @override
   void dispose() {
-    addressController.removeListener(_updateButtonState);
-    passwordController.removeListener(_updateButtonState);
-    confirmPasswordController.removeListener(_updateButtonState);
+    emailController.removeListener(_updateButtonState);
 
-    addressController.dispose();
-    passwordController.dispose();
-    confirmPasswordController.dispose();
+    emailController.dispose();
     super.dispose();
   }
 
   bool get isButtonEnabled {
-    return addressController.text.isNotEmpty &&
-        passwordController.text.isNotEmpty &&
-        confirmPasswordController.text.isNotEmpty;
+    return emailController.text.isNotEmpty;
   }
 
   @override
@@ -63,29 +51,13 @@ class _SignUp2State extends State<SignUp2> {
                 children: [
                   Row(
                     children: [
-                      SizedBox(height: 77),
+                      SizedBox(height: 135),
                     ],
                   ),
-                  Row(
-                    children: [
-                      ClipRect(
-                        child: Align(
-                          alignment: Alignment.centerRight,
-                          widthFactor: 0.85,
-                          child: Image.asset(
-                            'assets/WaterWaysIcon.png',
-                            height: 80,
-                            width: 191,
-                          ),
-                        ),
-                      )
-                    ],
-                  ),
-                  SizedBox(height: 12),
                   Row(
                     children: [
                       Text(
-                        'Sign up',
+                        'Forgot Password?',
                         style: GoogleFonts.poppins(
                           fontWeight: FontWeight.bold,
                           fontSize: 30.0,
@@ -94,24 +66,28 @@ class _SignUp2State extends State<SignUp2> {
                       ),
                     ],
                   ),
-                  SignUpField(
-                    fieldHeader: 'Address',
-                    hintTxt: 'enter address',
-                    controller: addressController,
+                  SizedBox(height: 13),
+                  Row(
+                    children: [
+                      Flexible(
+                        child: Text(
+                          'Don’t worry! It happens. Please enter the email associated with your account.',
+                          style: GoogleFonts.inter(
+                            fontWeight: FontWeight.normal,
+                            fontSize: 14.0,
+                            color: const Color(0xFF313144),
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
                   SignUpField(
-                    fieldHeader: 'Create a password',
-                    hintTxt: 'must be 8 characters',
-                    isPasswordField: true,
-                    controller: passwordController,
+                    fieldHeader: 'Email',
+                    hintTxt: 'Enter your email address',
+                    controller: emailController,
+                    isEmailField: true,
                   ),
-                  SignUpField(
-                    fieldHeader: 'Confirm password',
-                    hintTxt: 'repeat password',
-                    isPasswordField: true,
-                    controller: confirmPasswordController,
-                  ),
-                  SizedBox(height: 143),
+                  SizedBox(height: 38),
                   ElevatedButton(
                     style: ElevatedButton.styleFrom(
                       foregroundColor: Colors.white,
@@ -121,28 +97,21 @@ class _SignUp2State extends State<SignUp2> {
                       ),
                       minimumSize: Size(353, 50),
                     ),
-                    onPressed: isButtonEnabled
-                        ? () {
-                            Navigator.of(context).push(
-                              MaterialPageRoute(
-                                  builder: (context) => SignupSuccess()),
-                            );
-                          }
-                        : null,
+                    onPressed: isButtonEnabled ? () {} : null,
                     child: Text(
-                      'Sign Up',
+                      'Send Code',
                       style: GoogleFonts.inter(
                         fontWeight: FontWeight.w600,
                         fontSize: 16.0,
                       ),
                     ),
                   ),
-                  SizedBox(height: 72),
+                  SizedBox(height: 135),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
-                        'Already have an account? ',
+                        'Remember Password? ',
                         style: GoogleFonts.inter(
                           fontWeight: FontWeight.normal,
                           fontSize: 14.0,
@@ -174,32 +143,19 @@ class _SignUp2State extends State<SignUp2> {
   }
 }
 
-class SignUpField extends StatefulWidget {
-  final String fieldHeader;
-  final String hintTxt;
-  final bool isPasswordField;
-  final TextEditingController controller;
-
+class SignUpField extends StatelessWidget {
   const SignUpField({
     super.key,
     required this.fieldHeader,
     required this.hintTxt,
-    this.isPasswordField = false,
     required this.controller,
+    this.isEmailField = false,
   });
 
-  @override
-  State<SignUpField> createState() => _SignUpFieldState();
-}
-
-class _SignUpFieldState extends State<SignUpField> {
-  late bool _isObscured;
-
-  @override
-  void initState() {
-    super.initState();
-    _isObscured = widget.isPasswordField;
-  }
+  final String fieldHeader;
+  final String hintTxt;
+  final TextEditingController controller;
+  final bool isEmailField;
 
   @override
   Widget build(BuildContext context) {
@@ -209,7 +165,7 @@ class _SignUpFieldState extends State<SignUpField> {
         Row(
           children: [
             Text(
-              widget.fieldHeader,
+              fieldHeader,
               style: GoogleFonts.inter(
                 fontWeight: FontWeight.normal,
                 fontSize: 14.0,
@@ -234,10 +190,9 @@ class _SignUpFieldState extends State<SignUpField> {
                   children: [
                     Expanded(
                       child: TextField(
-                        controller: widget.controller,
-                        obscureText: widget.isPasswordField && _isObscured,
+                        controller: controller,
                         decoration: InputDecoration(
-                          hintText: widget.hintTxt,
+                          hintText: hintTxt,
                           hintStyle: GoogleFonts.inter(
                             fontWeight: FontWeight.normal,
                             fontSize: 16.0,
@@ -247,29 +202,23 @@ class _SignUpFieldState extends State<SignUpField> {
                         ),
                       ),
                     ),
-                    if (widget.isPasswordField) ...[
-                      SizedBox(width: 10),
-                      GestureDetector(
-                        onTap: () {
-                          setState(() {
-                            _isObscured = !_isObscured;
-                          });
-                        },
+                    if (isEmailField && controller.text.isNotEmpty) ...[
+                      Padding(
+                        padding: EdgeInsets.only(left: 10),
                         child: Image.asset(
-                          _isObscured
-                              ? 'assets/Login/eye.png'
-                              : 'assets/Login/eyeopen.png',
+                          'assets/Login/check.png',
                           height: 20,
                           width: 20,
                         ),
                       ),
                     ],
+                    SizedBox(width: 10),
                   ],
                 ),
               ),
             ),
           ],
-        ),
+        )
       ],
     );
   }

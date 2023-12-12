@@ -2,9 +2,11 @@
 
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:waterways/LoginFlow/login_or_create.dart';
+import 'package:waterways/LoginFlow/sign_up_as.dart';
 
-class LoginOrCreate extends StatelessWidget {
-  const LoginOrCreate({super.key});
+class SignupSuccess extends StatelessWidget {
+  const SignupSuccess({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -14,13 +16,13 @@ class LoginOrCreate extends StatelessWidget {
         child: Column(children: [
           SizedBox(height: 176),
           Image.asset(
-            'assets/WaterWaysIconBig.png',
+            'assets/login/verified.png',
             height: 180,
             width: 430,
           ),
           SizedBox(height: 44),
           Text(
-            'Test the waters',
+            'Signup Success',
             style: GoogleFonts.poppins(
               fontWeight: FontWeight.bold,
               fontSize: 32.0,
@@ -29,7 +31,7 @@ class LoginOrCreate extends StatelessWidget {
           ),
           SizedBox(height: 11),
           Text(
-            'Now your water supply is in one place and always under control',
+            'Your account has been created successfully',
             textAlign: TextAlign.center,
             style: GoogleFonts.inter(
               fontWeight: FontWeight.normal,
@@ -45,31 +47,15 @@ class LoginOrCreate extends StatelessWidget {
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(10),
               ),
-              minimumSize: Size(353, 56), // size
+              minimumSize: Size(353, 56),
             ),
-            onPressed: () {},
+            onPressed: () {
+              Navigator.of(context).push(
+                MaterialPageRoute(builder: (context) => LoginOrCreate()),
+              );
+            },
             child: Text(
               'Log In',
-              style: GoogleFonts.inter(
-                fontWeight: FontWeight.w600,
-                fontSize: 16.0,
-              ),
-            ),
-          ),
-          SizedBox(height: 14),
-          OutlinedButton(
-            style: ElevatedButton.styleFrom(
-              backgroundColor: Colors.white,
-              foregroundColor: Color(0xFF007AFF),
-              side: BorderSide(color: Color(0xFF007AFF)),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(10),
-              ),
-              minimumSize: Size(353, 56), // size
-            ),
-            onPressed: () {},
-            child: Text(
-              'Create Account',
               style: GoogleFonts.inter(
                 fontWeight: FontWeight.w600,
                 fontSize: 16.0,

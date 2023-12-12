@@ -20,17 +20,16 @@ class UserMainPageState extends State<UserMainPage> {
   final TextEditingController textController = TextEditingController();
   int selectedIndex = 0;
 
+  void onEditProfileTap() {
+    Navigator.pop(context);
+    onItemTapped(3);
+  }
+
   void onItemTapped(int index) {
     userMainPageController.jumpToPage(index);
     setState(() {
       selectedIndex = index;
     });
-  }
-
-  @override
-  void dispose() {
-    textController.dispose();
-    super.dispose();
   }
 
   @override
@@ -44,7 +43,9 @@ class UserMainPageState extends State<UserMainPage> {
           key: scaffoldKey,
           extendBody: true,
           backgroundColor: AppStyles.colorScheme.background,
-          endDrawer: const UserProfileDrawer(),
+          endDrawer: UserProfileDrawer(
+            onEditProfileTap: onEditProfileTap,
+          ),
           body: PageView(
             controller: userMainPageController,
             physics: const BouncingScrollPhysics(

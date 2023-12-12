@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:waterways/app_styles.dart';
 
 class UserProfileDrawer extends StatelessWidget {
-  const UserProfileDrawer({super.key});
+  final VoidCallback onEditProfileTap;
+
+  const UserProfileDrawer({super.key, required this.onEditProfileTap});
 
   @override
   Widget build(BuildContext context) {
@@ -98,7 +100,7 @@ class UserProfileDrawer extends StatelessWidget {
                                 size: 20,
                               ),
                               onPressed: () {
-                                print('IconButton pressed!');
+                                onEditProfileTap;
                               },
                             ),
                           ],

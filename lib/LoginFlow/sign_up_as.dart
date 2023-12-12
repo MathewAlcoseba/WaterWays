@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:waterways/LoginFlow/sign_up.dart';
 
 class SignUpAs extends StatelessWidget {
   const SignUpAs({super.key});
@@ -48,40 +49,47 @@ class SignUpAs extends StatelessWidget {
               SizedBox(height: 24),
               Row(
                 children: [
-                  Expanded(
-                    child: Container(
-                      width: 320,
-                      height: 161,
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(15),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.black12,
-                            offset: Offset(0, 5),
-                            blurRadius: 2.0,
-                            spreadRadius: 2.0,
-                          ),
-                        ],
-                      ),
-                      child: Center(
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            Image.asset(
-                              'assets/Login/customer.png',
-                              height: 58,
-                              width: 58,
-                            ),
-                            Text(
-                              'Customer',
-                              style: GoogleFonts.poppins(
-                                fontWeight: FontWeight.w600,
-                                fontSize: 16.0,
-                                color: const Color(0xFF313144),
-                              ),
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.of(context).push(
+                        MaterialPageRoute(builder: (context) => SignUp()),
+                      );
+                    },
+                    child: Expanded(
+                      child: Container(
+                        width: 315,
+                        height: 161,
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(15),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.black12,
+                              offset: Offset(0, 5),
+                              blurRadius: 2.0,
+                              spreadRadius: 2.0,
                             ),
                           ],
+                        ),
+                        child: Center(
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              Image.asset(
+                                'assets/Login/customer.png',
+                                height: 58,
+                                width: 58,
+                              ),
+                              Text(
+                                'Customer',
+                                style: GoogleFonts.poppins(
+                                  fontWeight: FontWeight.w600,
+                                  fontSize: 16.0,
+                                  color: const Color(0xFF313144),
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
                       ),
                     ),

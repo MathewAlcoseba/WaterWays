@@ -182,7 +182,7 @@ Undrinkable but usable
                       _displayBottomSheet(context);
                     },
                     style: ElevatedButton.styleFrom(
-                      primary: Color(0xFF007AFF),
+                      backgroundColor: Color(0xFF007AFF),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(100.0),
                       ),

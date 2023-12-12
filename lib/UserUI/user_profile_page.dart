@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:waterways/app_styles.dart';
+import 'dart:io';
+import 'package:image_picker/image_picker.dart';
 
 class UserProfilePage extends StatelessWidget {
-  const UserProfilePage({Key? key});
+  const UserProfilePage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -64,8 +66,9 @@ class UserProfilePage extends StatelessWidget {
                                     color: AppStyles.colorScheme.inversePrimary,
                                     size: 24,
                                   ),
-                                  onPressed: () {
-                                    print('IconButton pressed!');
+                                  onPressed: () async {
+                                    File? imageFile = await pickImage();
+                                    if (imageFile != null) {}
                                   },
                                 ),
                               ),
@@ -88,7 +91,8 @@ class UserProfilePage extends StatelessWidget {
                                 size: 20,
                               ),
                               onPressed: () {
-                                print('IconButton pressed!');
+                                showEditNameInputDialog(
+                                    context, 'Edit Account Name', (p0) => null);
                               },
                             ),
                           ],
@@ -111,7 +115,11 @@ class UserProfilePage extends StatelessWidget {
                             size: 16,
                           ),
                           onPressed: () {
-                            print('IconButton pressed!');
+                            showConfirmationDialog(
+                                context,
+                                'Update Email',
+                                'Are you sure you want to change your email?',
+                                'Email updated');
                           },
                         ),
                       ),
@@ -124,7 +132,6 @@ class UserProfilePage extends StatelessWidget {
                             'Phone',
                             'Enter new phone number',
                             (value) {
-                              // Handle the entered value
                               print('New phone number: $value');
                             },
                           );
@@ -139,7 +146,6 @@ class UserProfilePage extends StatelessWidget {
                             'Address',
                             'Enter new address',
                             (value) {
-                              // Handle the entered value
                               print('New address: $value');
                             },
                           );
@@ -157,7 +163,11 @@ class UserProfilePage extends StatelessWidget {
                             size: 16,
                           ),
                           onPressed: () {
-                            print('IconButton pressed!');
+                            showConfirmationDialog(
+                                context,
+                                'Change Password',
+                                'Are you sure you want to change your password?',
+                                'Password Changed');
                           },
                         ),
                       ),
@@ -166,7 +176,11 @@ class UserProfilePage extends StatelessWidget {
                       ),
                       OutlinedButton(
                         onPressed: () {
-                          showConfirmationDialog(context);
+                          showConfirmationDialog(
+                              context,
+                              'Delete Account',
+                              'Are you sure you want to delete this account?',
+                              'Account Deleted');
                         },
                         style: OutlinedButton.styleFrom(
                             shape: RoundedRectangleBorder(
@@ -221,8 +235,9 @@ class UserProfilePage extends StatelessWidget {
                           color: AppStyles.colorScheme.inversePrimary,
                           size: 24,
                         ),
-                        onPressed: () {
-                          print('IconButton pressed!');
+                        onPressed: () async {
+                          File? imageFile = await pickImage();
+                          if (imageFile != null) {}
                         },
                       ),
                     ),
@@ -273,10 +288,21 @@ class UserProfilePage extends StatelessWidget {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text('Edit $title'),
+          title: Text(
+            'Edit $title',
+            style: AppStyles.bodyText1.copyWith(
+                color: AppStyles.colorScheme.inversePrimary, fontSize: 20.0),
+          ),
           content: TextField(
             decoration: InputDecoration(
-                hintText: hint, labelStyle: AppStyles.bodyText2),
+              hintText: hint,
+              hintStyle: AppStyles.bodyText1.copyWith(fontSize: 14),
+              focusedBorder: UnderlineInputBorder(
+                borderSide:
+                    BorderSide(color: AppStyles.colorScheme.inversePrimary),
+              ),
+            ),
+            cursorColor: AppStyles.colorScheme.inversePrimary,
             onChanged: (value) {
               result = value;
             },
@@ -286,14 +312,14 @@ class UserProfilePage extends StatelessWidget {
               onPressed: () {
                 Navigator.of(context).pop();
               },
-              child: const Text('Cancel'),
+              child: Text('Cancel', style: AppStyles.bodyText2),
             ),
             TextButton(
               onPressed: () {
                 Navigator.of(context).pop();
                 onSubmitted(result);
               },
-              child: const Text('Save'),
+              child: Text('Save', style: AppStyles.bodyText2),
             ),
           ],
         );
@@ -301,30 +327,123 @@ class UserProfilePage extends StatelessWidget {
     );
   }
 
-  Future<void> showConfirmationDialog(BuildContext context) async {
+  Future<void> showEditNameInputDialog(
+    BuildContext context,
+    String accountName,
+    Function(String) onSubmitted,
+  ) async {
+    String result = '';
+    String newLastName = '';
+    String newFirstName = '';
+
     return showDialog(
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: const Text('Delete Account'),
-          content: const Text('Are you sure you want to delete your account?'),
+          title: Text(
+            accountName,
+            style: AppStyles.bodyText1.copyWith(
+                color: AppStyles.colorScheme.inversePrimary, fontSize: 20.0),
+          ),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              TextField(
+                decoration: InputDecoration(
+                  hintText: 'New Last Name',
+                  hintStyle: AppStyles.bodyText1.copyWith(fontSize: 14),
+                  focusedBorder: UnderlineInputBorder(
+                    borderSide:
+                        BorderSide(color: AppStyles.colorScheme.inversePrimary),
+                  ),
+                ),
+                cursorColor: AppStyles.colorScheme.inversePrimary,
+                onChanged: (value) {
+                  newLastName = value;
+                },
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              TextField(
+                decoration: InputDecoration(
+                  hintText: 'New First Name',
+                  hintStyle: AppStyles.bodyText1.copyWith(fontSize: 14),
+                  focusedBorder: UnderlineInputBorder(
+                    borderSide:
+                        BorderSide(color: AppStyles.colorScheme.inversePrimary),
+                  ),
+                ),
+                cursorColor: AppStyles.colorScheme.inversePrimary,
+                onChanged: (value) {
+                  newFirstName = value;
+                },
+              ),
+            ],
+          ),
           actions: <Widget>[
             TextButton(
               onPressed: () {
                 Navigator.of(context).pop();
               },
-              child: const Text('Cancel'),
+              child: Text('Cancel', style: AppStyles.bodyText2),
             ),
             TextButton(
               onPressed: () {
                 Navigator.of(context).pop();
-                print('Account Deleted');
+                result = '$newFirstName $newLastName';
+                onSubmitted(result);
+                print(result);
               },
-              child: const Text('Yes'),
+              child: Text('Save', style: AppStyles.bodyText2),
             ),
           ],
         );
       },
     );
+  }
+
+  Future<void> showConfirmationDialog(BuildContext context, String title,
+      String content, String message) async {
+    return showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text(title,
+              style: AppStyles.bodyText1.copyWith(
+                  color: AppStyles.colorScheme.inversePrimary, fontSize: 20.0)),
+          content: Text(
+            content,
+            style: AppStyles.bodyText2,
+          ),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: Text('Cancel', style: AppStyles.bodyText2),
+            ),
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+                print(message);
+              },
+              child: Text('Yes', style: AppStyles.bodyText2),
+            ),
+          ],
+        );
+      },
+    );
+  }
+}
+
+Future<File?> pickImage() async {
+  final ImagePicker imagePicker = ImagePicker();
+  final XFile? image = await imagePicker.pickImage(source: ImageSource.gallery);
+
+  if (image != null) {
+    return File(image.path);
+  } else {
+    return null;
   }
 }

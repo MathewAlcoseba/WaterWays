@@ -55,7 +55,7 @@ class SignupSuccess extends StatelessWidget {
               );
             },
             child: Text(
-              'Log In',
+              'Login',
               style: GoogleFonts.inter(
                 fontWeight: FontWeight.w600,
                 fontSize: 16.0,

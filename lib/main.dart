@@ -13,8 +13,18 @@ import 'package:waterways/UserUI/user_notifications_page.dart';
 import 'package:waterways/UserUI/user_profile_page.dart';
 import 'package:waterways/app_styles.dart';
 import 'package:waterways/bottom_navbar.dart';
+import 'package:firebase_core/firebase_core.dart';
 
-void main() {
+Future main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  await Firebase.initializeApp(
+      options: FirebaseOptions(
+          apiKey: "AIzaSyBmBMaNg_9-l8fZpWkyQF2OBaVojolr0js",
+          appId: "1:704742160478:android:6baad1a16273790167dccf",
+          messagingSenderId: "704742160478",
+          projectId: "waterways-7c3c8"));
+
   runApp(const MyApp());
 }
 

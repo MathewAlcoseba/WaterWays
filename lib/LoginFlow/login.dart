@@ -1,9 +1,13 @@
 // ignore_for_file: prefer_const_constructors
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:waterways/LoginFlow/forgot_password.dart';
 import 'package:waterways/LoginFlow/sign_up.dart';
+import 'package:waterways/LoginFlow/sign_up_as.dart';
+import 'package:waterways/UserUI/user_main_page.dart';
+import 'package:waterways/firebase_service.dart';
 
 class Login extends StatefulWidget {
   const Login({super.key});
@@ -13,14 +17,17 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> {
-  final TextEditingController emailcontroller = TextEditingController();
+  final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
+  String email = '';
+  String password = '';
+  bool isLoading = false;
 
   @override
   void initState() {
     super.initState();
 
-    emailcontroller.addListener(_updateButtonState);
+    emailController.addListener(_updateButtonState);
     passwordController.addListener(_updateButtonState);
   }
 
@@ -32,16 +39,16 @@ class _LoginState extends State<Login> {
 
   @override
   void dispose() {
-    emailcontroller.removeListener(_updateButtonState);
+    emailController.removeListener(_updateButtonState);
     passwordController.removeListener(_updateButtonState);
 
-    emailcontroller.dispose();
+    emailController.dispose();
     passwordController.dispose();
     super.dispose();
   }
 
   bool get isButtonEnabled {
-    return emailcontroller.text.isNotEmpty &&
+    return emailController.text.isNotEmpty &&
         passwordController.text.isNotEmpty;
   }
 
@@ -88,10 +95,10 @@ class _LoginState extends State<Login> {
                     ],
                   ),
                   SignUpField(
-                    fieldHeader: 'Email address',
+                    fieldHeader: 'Email',
                     hintTxt: 'example@gmail.com',
                     isEmailField: true,
-                    controller: emailcontroller,
+                    controller: emailController,
                   ),
                   SignUpField(
                     fieldHeader: 'Password',
@@ -125,7 +132,11 @@ class _LoginState extends State<Login> {
                       ),
                       minimumSize: Size(353, 50),
                     ),
-                    onPressed: isButtonEnabled ? () {} : null,
+                    onPressed: isButtonEnabled
+                        ? () async {
+                            _onLoginPressed();
+                          }
+                        : null,
                     child: Text(
                       'Log in',
                       style: GoogleFonts.inter(
@@ -149,7 +160,7 @@ class _LoginState extends State<Login> {
                       GestureDetector(
                         onTap: () {
                           Navigator.of(context).push(
-                            MaterialPageRoute(builder: (context) => SignUp()),
+                            MaterialPageRoute(builder: (context) => SignUpAs()),
                           );
                         },
                         child: Text(
@@ -162,11 +173,61 @@ class _LoginState extends State<Login> {
                         ),
                       ),
                     ],
-                  )
+                  ),
+                  if (isLoading)
+                    Positioned.fill(
+                      child: Container(
+                        color: Colors.white.withOpacity(0.8),
+                        child: Center(child: CircularProgressIndicator()),
+                      ),
+                    ),
                 ],
               )),
         ),
       ),
+    );
+  }
+
+  void _onLoginPressed() async {
+    setState(() => isLoading = true);
+    try {
+      email = emailController.text.trim();
+      password = passwordController.text.trim();
+
+      FirebaseService firebaseService = FirebaseService();
+      User? user =
+          await firebaseService.signInWithEmailAndPassword(email, password);
+
+      if (user != null) {
+        Navigator.of(context)
+            .push(MaterialPageRoute(builder: (context) => UserMainPage()));
+      } else {
+        _showLoginErrorDialog();
+      }
+    } catch (e) {
+      _showLoginErrorDialog();
+    } finally {
+      setState(() => isLoading = false);
+    }
+  }
+
+  void _showLoginErrorDialog() {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: Text('Login Failed'),
+          content: Text('Invalid email or password.'),
+          actions: <Widget>[
+            TextButton(
+              child: Text('OK'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
     );
   }
 }

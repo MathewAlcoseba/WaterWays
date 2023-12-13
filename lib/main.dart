@@ -6,7 +6,7 @@ import 'package:get/get.dart';
 import 'package:waterways/app_styles.dart';
 import 'package:firebase_core/firebase_core.dart';
 
-void main() async {
+Future main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   await Firebase.initializeApp(

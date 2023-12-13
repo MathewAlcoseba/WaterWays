@@ -1,30 +1,46 @@
-import 'dart:ffi';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Customer {
-  final String custId;
-  final String email;
-  final String password;
-  final String phone;
-  final String firstname;
-  final String lastname;
-  final String address;
-  final String profileImg;
-  final String coverImg;
-  List<Store>? favorites;
-  List<Order>? orders;
+  final String? custId;
+  final String? email;
+  final String? password;
+  final String? phone;
+  final String? firstname;
+  final String? lastname;
+  final String? address;
+  final String? profileImg;
+  final String? coverImg;
+  final List<Store>? favorites;
+  final List<Order>? orders;
 
   Customer(
-      {required this.custId,
-      required this.email,
-      required this.password,
-      required this.phone,
-      required this.firstname,
-      required this.lastname,
-      required this.address,
-      required this.profileImg,
-      required this.coverImg,
+      {this.custId,
+      this.email,
+      this.password,
+      this.phone,
+      this.firstname,
+      this.lastname,
+      this.address,
+      this.profileImg,
+      this.coverImg,
       this.favorites,
       this.orders});
+
+  Map<String, dynamic> toMap() {
+    return {
+      'custId': custId,
+      'email': email,
+      'password': password,
+      'phone': phone,
+      'firstname': firstname,
+      'lastname': lastname,
+      'address': address,
+      'profileImg': profileImg,
+      'coverImg': coverImg,
+      'favorites': favorites?.map((store) => store.toMap()).toList(),
+      'orders': orders?.map((order) => order.toMap()).toList(),
+    };
+  }
 }
 
 class Store {
@@ -42,8 +58,8 @@ class Store {
   final String storeBio;
   final String storeHours;
   final String storeRating;
-  final Float waterInStock;
-  final Float price;
+  final double waterInStock;
+  final double price;
   final bool isAvailable;
 
   Store(
@@ -64,6 +80,28 @@ class Store {
       required this.price,
       required this.isAvailable,
       this.orders});
+
+  Map<String, dynamic> toMap() {
+    return {
+      'storeId': storeId,
+      'email': email,
+      'password': password,
+      'phone': phone,
+      'storeName': storeName,
+      'storeAddress': storeAddress,
+      'orders': orders?.map((order) => order.toMap()).toList(),
+      'profileImg': profileImg,
+      'coverImg': coverImg,
+      'storePhoto': storePhoto,
+      'storeCoverPhoto': storeCoverPhoto,
+      'storeBio': storeBio,
+      'storeHours': storeHours,
+      'storeRating': storeRating,
+      'waterInStock': waterInStock,
+      'price': price,
+      'isAvailable': isAvailable,
+    };
+  }
 }
 
 class Order {
@@ -76,9 +114,9 @@ class Order {
   final String deliveryOption;
   final String deliveryAddress;
   final String paymentOption;
-  final Float productSubtotal;
-  final Float deliverySubtotal;
-  final Float totalPayment;
+  final double productSubtotal;
+  final double deliverySubtotal;
+  final double totalPayment;
   final bool status;
 
   Order(
@@ -95,4 +133,22 @@ class Order {
       required this.deliverySubtotal,
       required this.totalPayment,
       required this.status});
+
+  Map<String, dynamic> toMap() {
+    return {
+      'orderId': orderId,
+      'customerId': customerId,
+      'storeId': storeId,
+      'timestamp': Timestamp.fromDate(timestamp),
+      'deliveryMethod': deliveryMethod,
+      'qty': qty,
+      'deliveryOption': deliveryOption,
+      'deliveryAddress': deliveryAddress,
+      'paymentOption': paymentOption,
+      'productSubtotal': productSubtotal,
+      'deliverySubtotal': deliverySubtotal,
+      'totalPayment': totalPayment,
+      'status': status,
+    };
+  }
 }

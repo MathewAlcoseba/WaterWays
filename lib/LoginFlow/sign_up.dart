@@ -6,6 +6,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:waterways/LoginFlow/login.dart';
 import 'package:waterways/LoginFlow/login_or_create.dart';
 import 'package:waterways/LoginFlow/sign_up2.dart';
+import 'package:waterways/app_styles.dart';
 
 class SignUp extends StatefulWidget {
   const SignUp({super.key});
@@ -61,39 +62,24 @@ class _SignUpState extends State<SignUp> {
       child: Scaffold(
         body: SingleChildScrollView(
           child: Padding(
-              padding: EdgeInsets.symmetric(horizontal: 38),
+              padding: EdgeInsets.all(36),
               child: Column(
                 children: [
-                  Row(
-                    children: [
-                      SizedBox(height: 77),
-                    ],
+                  ClipRect(
+                    child: Align(
+                      alignment: Alignment.centerLeft,
+                      child: Image.asset(
+                        'assets/WaterWaysIcon.png',
+                        width: 140,
+                      ),
+                    ),
                   ),
-                  Row(
-                    children: [
-                      ClipRect(
-                        child: Align(
-                          alignment: Alignment.centerRight,
-                          widthFactor: 0.85,
-                          child: Image.asset(
-                            'assets/WaterWaysIcon.png',
-                            height: 80,
-                            width: 191,
-                          ),
-                        ),
-                      )
-                    ],
-                  ),
-                  SizedBox(height: 12),
+                  SizedBox(height: 16),
                   Row(
                     children: [
                       Text(
                         'Sign up',
-                        style: GoogleFonts.poppins(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 30.0,
-                          color: const Color(0xFF313144),
-                        ),
+                        style: AppStyles.headline1,
                       ),
                     ],
                   ),
@@ -104,18 +90,18 @@ class _SignUpState extends State<SignUp> {
                   ),
                   SignUpField(
                     fieldHeader: 'Phone Number',
-                    hintTxt: 'enter 11-digit number',
+                    hintTxt: 'Enter 11-digit number',
                     isPhoneNumberField: true,
                     controller: phoneNumberController,
                   ),
                   SignUpField(
                     fieldHeader: 'First Name',
-                    hintTxt: 'enter first name',
+                    hintTxt: 'Enter first name',
                     controller: firstNameController,
                   ),
                   SignUpField(
                     fieldHeader: 'Last Name',
-                    hintTxt: 'enter last name',
+                    hintTxt: 'Enter last name',
                     controller: lastNameController,
                   ),
                   SizedBox(height: 38),
@@ -172,7 +158,8 @@ class _SignUpState extends State<SignUp> {
                       GestureDetector(
                         onTap: () {
                           Navigator.of(context).push(
-                            MaterialPageRoute(builder: (context) => Login()),
+                            MaterialPageRoute(
+                                builder: (context) => LoginOrCreate()),
                           );
                         },
                         child: Text(
@@ -233,7 +220,7 @@ class SignUpField extends StatelessWidget {
                 padding: EdgeInsets.symmetric(horizontal: 16),
                 decoration: BoxDecoration(
                   color: Colors.white,
-                  borderRadius: BorderRadius.circular(15),
+                  borderRadius: BorderRadius.circular(12),
                   border: Border.all(color: const Color(0XFFD8DADC)),
                 ),
                 child: Row(

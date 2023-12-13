@@ -16,13 +16,13 @@ class LoginOrCreate extends StatelessWidget {
         body: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 38),
           child: Column(children: [
-            SizedBox(height: 176),
+            SizedBox(height: 110),
             Image.asset(
               'assets/WaterWaysIconBig.png',
               height: 180,
               width: 430,
             ),
-            SizedBox(height: 44),
+            SizedBox(height: 45),
             Text(
               'Test the waters',
               style: GoogleFonts.poppins(
@@ -41,7 +41,7 @@ class LoginOrCreate extends StatelessWidget {
                 color: const Color(0xFF313144),
               ),
             ),
-            SizedBox(height: 76),
+            SizedBox(height: 75),
             ElevatedButton(
               style: ElevatedButton.styleFrom(
                 foregroundColor: Colors.white,

@@ -9,7 +9,7 @@ void main() {
 }
 
 class SuccessfulPurchase extends StatelessWidget {
-  const SuccessfulPurchase({Key? key, required String title}) : super(key: key);
+  const SuccessfulPurchase({super.key, required String title});
 
   @override
   Widget build(BuildContext context) {
@@ -25,15 +25,15 @@ class SuccessfulPurchase extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   _buildCheckIcon(),
-                  SizedBox(
+                  const SizedBox(
                     height: 30,
                   ),
                   _buildPaymentSuccessfulText(),
-                  SizedBox(
+                  const SizedBox(
                     height: 30,
                   ),
                   _buildViewOrderDetailsText(),
-                  SizedBox(
+                  const SizedBox(
                     height: 20,
                   ),
                   _buildViewOrderDetailsButton(context),
@@ -91,7 +91,7 @@ class SuccessfulPurchase extends StatelessWidget {
       onTap: () => Navigator.push(
         context,
         MaterialPageRoute(
-            builder: (context) => OrderStatus(
+            builder: (context) => const OrderStatus(
                   title: '',
                 )),
       ),

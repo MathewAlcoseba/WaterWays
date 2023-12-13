@@ -1,6 +1,5 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:waterways/OrderManagement/custom_appbar_storedetails.dart';
 import 'package:waterways/OrderManagement/order_details.dart';
 import 'package:waterways/app_styles.dart';
@@ -11,7 +10,7 @@ void main() {
 }
 
 class StoreRating extends StatelessWidget {
-  const StoreRating({Key? key, required this.title}) : super(key: key);
+  const StoreRating({super.key, required this.title});
   final String title;
 
   @override
@@ -73,7 +72,7 @@ class StoreRating extends StatelessWidget {
       children: [
         buildTextSection(screenHeight, screenWidth, '4.4', AppStyles.headline7),
         Padding(
-          padding: EdgeInsets.only(top: 0, left: 7, bottom: 3),
+          padding: const EdgeInsets.only(top: 0, left: 7, bottom: 3),
           child: rating2(),
         ),
         buildTextSection(
@@ -88,13 +87,13 @@ class StoreRating extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         buildTextSection(screenHeight, screenWidth, '5', AppStyles.bodyText2),
-        SizedBox(height: 1),
+        const SizedBox(height: 1),
         buildTextSection(screenHeight, screenWidth, '4', AppStyles.bodyText2),
-        SizedBox(height: 1),
+        const SizedBox(height: 1),
         buildTextSection(screenHeight, screenWidth, '3', AppStyles.bodyText2),
-        SizedBox(height: 1),
+        const SizedBox(height: 1),
         buildTextSection(screenHeight, screenWidth, '2', AppStyles.bodyText2),
-        SizedBox(height: 1),
+        const SizedBox(height: 1),
         buildTextSection(screenHeight, screenWidth, '1', AppStyles.bodyText2),
       ],
     );
@@ -104,11 +103,11 @@ class StoreRating extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.start, // Align items to the start
       children: [
-        SizedBox(width: 8),
+        const SizedBox(width: 8),
         buildSectionWithStarRate(
             screenHeight, screenWidth, '4.4', AppStyles.headline7),
         numberedRatings(screenHeight, screenWidth, '5', AppStyles.bodyText2),
-        SizedBox(width: 8),
+        const SizedBox(width: 8),
         rateBar(),
       ],
     );
@@ -121,13 +120,13 @@ class StoreRating extends StatelessWidget {
       children: [
         buildTextSection2(
             screenHeight, screenWidth, 'Nathan Alcoseba', AppStyles.bodyText4),
-        SizedBox(height: 3),
+        const SizedBox(height: 3),
         Row(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            SizedBox(width: 4),
+            const SizedBox(width: 4),
             rating1(),
-            SizedBox(width: 0),
+            const SizedBox(width: 0),
             buildTextSection2(
                 screenHeight, screenWidth, '9/28/23', AppStyles.subText1),
           ],
@@ -140,9 +139,9 @@ class StoreRating extends StatelessWidget {
     return Row(
       children: [
         profileIcon(),
-        SizedBox(width: 0),
+        const SizedBox(width: 0),
         rateTimeStamp(screenHeight, screenWidth),
-        SizedBox(width: 220),
+        const SizedBox(width: 220),
         dot(),
       ],
     );
@@ -166,7 +165,7 @@ class StoreRating extends StatelessWidget {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder: (context) => OrderDetails(
+                      builder: (context) => const OrderDetails(
                             title: '',
                           )),
                 );
@@ -179,12 +178,12 @@ class StoreRating extends StatelessWidget {
 
   Widget review(BuildContext context, double screenHeight, double screenWidth) {
     return Padding(
-      padding: EdgeInsets.only(left: 8.0), // Adjust the left padding as needed
+      padding: const EdgeInsets.only(left: 8.0), // Adjust the left padding as needed
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           reviewHeader(screenHeight, screenWidth),
-          SizedBox(height: 8), // Adjust the height for vertical spacing
+          const SizedBox(height: 8), // Adjust the height for vertical spacing
           feedback(context),
         ],
       ),
@@ -193,33 +192,33 @@ class StoreRating extends StatelessWidget {
 
   Widget reviewList(
       BuildContext context, double screenHeight, double screenWidth) {
-    return Container(
+    return SizedBox(
       height: screenHeight * 0.65,
       child: Padding(
-        padding: EdgeInsets.only(top: 30.0),
+        padding: const EdgeInsets.only(top: 30.0),
         child: ListView(
           scrollDirection: Axis.vertical,
           children: [
             review(context, screenHeight, screenWidth),
-            SizedBox(height: 16),
+            const SizedBox(height: 16),
             review(context, screenHeight, screenWidth),
-            SizedBox(height: 16),
+            const SizedBox(height: 16),
             review(context, screenHeight, screenWidth),
-            SizedBox(height: 16),
+            const SizedBox(height: 16),
             review(context, screenHeight, screenWidth),
-            SizedBox(height: 16),
+            const SizedBox(height: 16),
             review(context, screenHeight, screenWidth),
-            SizedBox(height: 16),
+            const SizedBox(height: 16),
             review(context, screenHeight, screenWidth),
-            SizedBox(height: 16),
+            const SizedBox(height: 16),
             review(context, screenHeight, screenWidth),
-            SizedBox(height: 16),
+            const SizedBox(height: 16),
             review(context, screenHeight, screenWidth),
-            SizedBox(height: 16),
+            const SizedBox(height: 16),
             review(context, screenHeight, screenWidth),
-            SizedBox(height: 16),
+            const SizedBox(height: 16),
             review(context, screenHeight, screenWidth),
-            SizedBox(height: 16),
+            const SizedBox(height: 16),
           ],
         ),
       ),

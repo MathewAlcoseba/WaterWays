@@ -21,8 +21,8 @@ import 'package:waterways/UserUI/user_main_page.dart';
 import 'package:waterways/UserUI/user_notifications_page.dart';
 import 'package:waterways/UserUI/user_profile_page.dart';
 import 'package:waterways/app_styles.dart';
-import 'package:waterways/bottom_navbar.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:get/get.dart';
 
 Future main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -38,24 +38,23 @@ Future main() async {
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+  const MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
     imageCache.clear();
-    return MaterialApp(
+    return GetMaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'WaterWays Delivery App',
       theme: ThemeData(
         useMaterial3: true,
       ),
-      home: Scaffold(
-        backgroundColor: AppStyles.colorScheme.background,
-        body: SafeArea(
-
-
-          child: LoginOrCreate(),
-
+      home: SafeArea(
+        child: Scaffold(
+          backgroundColor: AppStyles.colorScheme.background,
+          body: SafeArea(
+            child: LoadingScreen(),
+          ),
         ),
       ),
     );

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:waterways/bottom_navbar.dart';
 
 void main() {
   runApp(const OrderStatus2(
@@ -9,7 +8,7 @@ void main() {
 }
 
 class OrderStatus2 extends StatelessWidget {
-  const OrderStatus2({Key? key, required this.title}) : super(key: key);
+  const OrderStatus2({super.key, required this.title});
 
   final String title;
 
@@ -18,7 +17,7 @@ class OrderStatus2 extends StatelessWidget {
     return Scaffold(
       body: Center(
         child: Center(
-          child: Container(
+          child: SizedBox(
             width: 500,
             height: 1100,
             child: Stack(
@@ -46,7 +45,7 @@ class OrderStatus2 extends StatelessWidget {
                   child: Text(
                     'Order Details',
                     style: GoogleFonts.poppins(
-                      color: Color(0xFF313144),
+                      color: const Color(0xFF313144),
                       fontSize: 24,
                       fontWeight: FontWeight.w500,
                     ),
@@ -63,7 +62,7 @@ class OrderStatus2 extends StatelessWidget {
                       child: Text(
                         'AquaBest',
                         style: GoogleFonts.poppins(
-                          color: Color(0xFF313144),
+                          color: const Color(0xFF313144),
                           fontSize: 32,
                           fontWeight: FontWeight.w600,
                         ),
@@ -76,7 +75,7 @@ class OrderStatus2 extends StatelessWidget {
                         height: 180,
                         width: 401,
                         decoration: BoxDecoration(
-                          color: Color(0xFFFFFFFF),
+                          color: const Color(0xFFFFFFFF),
                           borderRadius: BorderRadius.circular(17.0),
                           boxShadow: const [
                             BoxShadow(
@@ -104,7 +103,7 @@ Delivery
 ₱12.00
 ''',
                         style: GoogleFonts.gothicA1(
-                          color: Color(0xFF7F8184),
+                          color: const Color(0xFF7F8184),
                           fontSize: 16,
                           fontWeight: FontWeight.w400,
                           height: 1.5,
@@ -117,7 +116,7 @@ Delivery
                       child: Text(
                         'x3',
                         style: GoogleFonts.gothicA1(
-                          color: Color(0xFF7F8184),
+                          color: const Color(0xFF7F8184),
                           fontSize: 16,
                           fontWeight: FontWeight.w400,
                           height: 1.5,
@@ -143,7 +142,7 @@ Delivery
                         child: Text(
                           'To Process',
                           style: GoogleFonts.jost(
-                            color: Color(0xFF1a1a1a),
+                            color: const Color(0xFF1a1a1a),
                             fontSize: 16,
                             fontWeight: FontWeight.w400,
                             height: 1.5,
@@ -156,7 +155,7 @@ Delivery
                         child: Text(
                           'On The Way',
                           style: GoogleFonts.jost(
-                            color: Color(0xFF1a1a1a),
+                            color: const Color(0xFF1a1a1a),
                             fontSize: 16,
                             fontWeight: FontWeight.w400,
                             height: 1.5,
@@ -169,7 +168,7 @@ Delivery
                         child: Text(
                           'Rate',
                           style: GoogleFonts.jost(
-                            color: Color(0xFF1a1a1a),
+                            color: const Color(0xFF1a1a1a),
                             fontSize: 16,
                             fontWeight: FontWeight.w400,
                             height: 1.5,
@@ -196,7 +195,7 @@ Delivery
                       child: Text(
                         'Order Total ( 3 Items )',
                         style: GoogleFonts.jost(
-                          color: Color(0xFF1a1a1a),
+                          color: const Color(0xFF1a1a1a),
                           fontSize: 16,
                           fontWeight: FontWeight.w500,
                           height: 1.5,
@@ -209,7 +208,7 @@ Delivery
                       child: Container(
                         height: 1,
                         width: 350,
-                        decoration: BoxDecoration(
+                        decoration: const BoxDecoration(
                           color: Color(0xFF007AFF),
                         ),
                       ),
@@ -220,7 +219,7 @@ Delivery
                       child: Text(
                         'Order has been delivered',
                         style: GoogleFonts.jost(
-                          color: Color(0xFF616161),
+                          color: const Color(0xFF616161),
                           fontSize: 18,
                           fontWeight: FontWeight.w400,
                           height: 1.5,
@@ -240,7 +239,7 @@ Delivery
                       child: Text(
                         'Order Summary',
                         style: GoogleFonts.jost(
-                          color: Color(0xFF1a1a1a),
+                          color: const Color(0xFF1a1a1a),
                           fontSize: 16,
                           fontWeight: FontWeight.w500,
                           height: 1.5,
@@ -256,7 +255,7 @@ Delivery Subtotal
 Add-on Subtotal
 ''',
                         style: GoogleFonts.jost(
-                          color: Color(0xFF616161),
+                          color: const Color(0xFF616161),
                           fontSize: 14,
                           fontWeight: FontWeight.w400,
                           height: 1.5,
@@ -272,7 +271,7 @@ Add-on Subtotal
 150
 ''',
                         style: GoogleFonts.jost(
-                          color: Color(0xFF616161),
+                          color: const Color(0xFF616161),
                           fontSize: 14,
                           fontWeight: FontWeight.w400,
                           height: 1.5,
@@ -285,7 +284,7 @@ Add-on Subtotal
                       child: Text(
                         'Transaction Code: GHTH7821B-Y2-90I',
                         style: GoogleFonts.jost(
-                          color: Color(0xFF616161),
+                          color: const Color(0xFF616161),
                           fontSize: 16,
                           fontWeight: FontWeight.w400,
                           height: 1.5,
@@ -298,7 +297,7 @@ Add-on Subtotal
                       child: Text(
                         '₱3670.00',
                         style: GoogleFonts.poppins(
-                          color: Color(0xFF313144),
+                          color: const Color(0xFF313144),
                           fontSize: 24,
                           fontWeight: FontWeight.w600,
                           height: 1.5,
@@ -311,7 +310,7 @@ Add-on Subtotal
                       child: Text(
                         'Total Payment',
                         style: GoogleFonts.poppins(
-                          color: Color(0xFF313144),
+                          color: const Color(0xFF313144),
                           fontSize: 24,
                           fontWeight: FontWeight.w600,
                           height: 1.5,
@@ -331,7 +330,7 @@ Add-on Subtotal
                       child: Text(
                         'Aqua Atlan',
                         style: GoogleFonts.poppins(
-                          color: Color(0xFF313144),
+                          color: const Color(0xFF313144),
                           fontSize: 32,
                           fontWeight: FontWeight.w600,
                         ),

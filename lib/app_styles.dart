@@ -115,17 +115,17 @@ class AppStyles {
   static final TextStyle subText3 = GoogleFonts.poppins(
     fontSize: 14,
     fontWeight: FontWeight.w500, //regular
-    color: Color(0xFF3EA0C6), //black/black
+    color: const Color(0xFF3EA0C6), //black/black
   );
   static final TextStyle subText4 = GoogleFonts.poppins(
     fontSize: 14,
     fontWeight: FontWeight.w500, //regular
-    color: Color(0xFF007AFF), //black/black
+    color: const Color(0xFF007AFF), //black/black
   );
   static final TextStyle subText5 = GoogleFonts.jost(
     fontSize: 14,
     fontWeight: FontWeight.w500, //regular
-    color: Color(0xFF1A1A1A), //black/black
+    color: const Color(0xFF1A1A1A), //black/black
   );
   // Add more styles as needed...
 }

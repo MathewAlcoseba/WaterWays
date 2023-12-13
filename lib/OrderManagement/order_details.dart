@@ -11,7 +11,7 @@ void main() {
 }
 
 class OrderDetails extends StatefulWidget {
-  const OrderDetails({Key? key, required this.title}) : super(key: key);
+  const OrderDetails({super.key, required this.title});
   final String title;
 
   @override
@@ -29,12 +29,12 @@ class _OrderDetailsState extends State<OrderDetails> {
 
   void showCupertinoPopup(BuildContext context) {
     // Default prices for each option
-    final double pricePerGallon = 25.0;
-    final double pricePerBarrel = 300.0;
-    final double pricePerICBTank = 1000.0;
-    final double pricePerOthers = 30.0;
-    final double radioOption1Price = 25.0;
-    final double radioOption2Price = 0.0;
+    const double pricePerGallon = 25.0;
+    const double pricePerBarrel = 300.0;
+    const double pricePerICBTank = 1000.0;
+    const double pricePerOthers = 30.0;
+    const double radioOption1Price = 25.0;
+    const double radioOption2Price = 0.0;
 
     // Function to calculate total price
     double calculateTotalPrice() {
@@ -55,7 +55,7 @@ class _OrderDetailsState extends State<OrderDetails> {
         return CupertinoPopupSurface(
           child: Material(
             child: Container(
-              padding: EdgeInsets.only(top: 15, left: 5),
+              padding: const EdgeInsets.only(top: 15, left: 5),
               height: MediaQuery.of(context).size.height * 0.45,
               child: StatefulBuilder(
                 builder: (BuildContext context, StateSetter setState) {
@@ -67,7 +67,7 @@ class _OrderDetailsState extends State<OrderDetails> {
                             children: [
                               Expanded(
                                 child: CheckboxListTile(
-                                  title: Text('Gallon'),
+                                  title: const Text('Gallon'),
                                   value: checkboxValue1,
                                   onChanged: (bool? newValue) {
                                     setState(() {
@@ -76,7 +76,7 @@ class _OrderDetailsState extends State<OrderDetails> {
                                   },
                                   controlAffinity:
                                       ListTileControlAffinity.leading,
-                                  activeColor: Color(0XFF007AFF),
+                                  activeColor: const Color(0XFF007AFF),
                                 ),
                               ),
                               Expanded(
@@ -89,7 +89,7 @@ class _OrderDetailsState extends State<OrderDetails> {
                                       radioValue = newValue!;
                                     });
                                   },
-                                  activeColor: Color(0XFF007AFF),
+                                  activeColor: const Color(0XFF007AFF),
                                 ),
                               ),
                             ],
@@ -98,7 +98,7 @@ class _OrderDetailsState extends State<OrderDetails> {
                             children: [
                               Expanded(
                                 child: CheckboxListTile(
-                                  title: Text('Barrel'),
+                                  title: const Text('Barrel'),
                                   value: checkboxValue2,
                                   onChanged: (bool? newValue) {
                                     setState(() {
@@ -107,7 +107,7 @@ class _OrderDetailsState extends State<OrderDetails> {
                                   },
                                   controlAffinity:
                                       ListTileControlAffinity.leading,
-                                  activeColor: Color(0XFF007AFF),
+                                  activeColor: const Color(0XFF007AFF),
                                 ),
                               ),
                               Expanded(
@@ -120,7 +120,7 @@ class _OrderDetailsState extends State<OrderDetails> {
                                       radioValue = newValue!;
                                     });
                                   },
-                                  activeColor: Color(0XFF007AFF),
+                                  activeColor: const Color(0XFF007AFF),
                                 ),
                               ),
                             ],
@@ -129,7 +129,7 @@ class _OrderDetailsState extends State<OrderDetails> {
                             children: [
                               Expanded(
                                 child: CheckboxListTile(
-                                  title: Text('ICB Tank'),
+                                  title: const Text('ICB Tank'),
                                   value: checkboxValue3,
                                   onChanged: (bool? newValue) {
                                     setState(() {
@@ -138,7 +138,7 @@ class _OrderDetailsState extends State<OrderDetails> {
                                   },
                                   controlAffinity:
                                       ListTileControlAffinity.leading,
-                                  activeColor: Color(0XFF007AFF),
+                                  activeColor: const Color(0XFF007AFF),
                                 ),
                               ),
                             ],
@@ -147,7 +147,7 @@ class _OrderDetailsState extends State<OrderDetails> {
                             children: [
                               Expanded(
                                 child: CheckboxListTile(
-                                  title: Text('Others'),
+                                  title: const Text('Others'),
                                   value: checkboxValue4,
                                   onChanged: (bool? newValue) {
                                     setState(() {
@@ -156,19 +156,19 @@ class _OrderDetailsState extends State<OrderDetails> {
                                   },
                                   controlAffinity:
                                       ListTileControlAffinity.leading,
-                                  activeColor: Color(0XFF007AFF),
+                                  activeColor: const Color(0XFF007AFF),
                                 ),
                               ),
                             ],
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: 5,
                           ),
                           Row(
                             children: [
                               Padding(
                                 padding: const EdgeInsets.only(left: 25),
-                                child: Container(
+                                child: SizedBox(
                                   width: 195,
                                   child: Expanded(
                                     child: Text(
@@ -188,18 +188,18 @@ class _OrderDetailsState extends State<OrderDetails> {
                               )
                             ],
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: 20,
                           ),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: [
                               Container(
-                                margin: EdgeInsets.only(
+                                margin: const EdgeInsets.only(
                                     right: 10,
                                     left:
                                         20), // Add right margin to the first container
-                                decoration: BoxDecoration(
+                                decoration: const BoxDecoration(
                                   color: Color(
                                       0XFF007AFF), // Set the color of the circle
                                   shape: BoxShape.circle, // Make it circular
@@ -216,17 +216,17 @@ class _OrderDetailsState extends State<OrderDetails> {
                                 ),
                               ),
                               Padding(
-                                padding: EdgeInsets.symmetric(
+                                padding: const EdgeInsets.symmetric(
                                     horizontal:
                                         8), // Add horizontal padding to the text
                                 child: Text('$counter',
                                     style: const TextStyle(fontSize: 20)),
                               ),
                               Container(
-                                margin: EdgeInsets.only(
+                                margin: const EdgeInsets.only(
                                     left:
                                         10), // Add left margin to the second container
-                                decoration: BoxDecoration(
+                                decoration: const BoxDecoration(
                                   color: Color(
                                       0XFF007AFF), // Set the color of the circle
                                   shape: BoxShape.circle, // Make it circular
@@ -242,10 +242,10 @@ class _OrderDetailsState extends State<OrderDetails> {
                                   },
                                 ),
                               ),
-                              SizedBox(
+                              const SizedBox(
                                 width: 90,
                               ),
-                              Container(
+                              SizedBox(
                                 width: 146,
                                 height: 42, // Set the width of the container
                                 child: ElevatedButton(
@@ -255,15 +255,14 @@ class _OrderDetailsState extends State<OrderDetails> {
                                       context,
                                       MaterialPageRoute(
                                           builder: (context) =>
-                                              Checkout(title: 'Checkout')),
+                                              const Checkout(title: 'Checkout')),
                                     );
                                   },
+                                  style: ElevatedButton.styleFrom(
+                                    foregroundColor: Colors.white, backgroundColor: const Color(0XFF007AFF),
+                                  ),
                                   child: const Text('BUY',
                                       style: TextStyle(fontSize: 20)),
-                                  style: ElevatedButton.styleFrom(
-                                    primary: const Color(0XFF007AFF),
-                                    onPrimary: Colors.white,
-                                  ),
                                 ),
                               ),
                             ],
@@ -338,7 +337,7 @@ class _OrderDetailsState extends State<OrderDetails> {
             onPressed: () => showCupertinoPopup(context),
             label: const Text('BUY',
                 style: TextStyle(color: Color(0xfff8f8f8), fontSize: 21)),
-            backgroundColor: Color(0XFF007AFF),
+            backgroundColor: const Color(0XFF007AFF),
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(30),
             ),
@@ -352,7 +351,7 @@ class _OrderDetailsState extends State<OrderDetails> {
   Widget buildProfileRow(double screenWidth) {
     double screenHeight = MediaQuery.of(context).size.height;
 
-    return Container(
+    return SizedBox(
       height: screenHeight * 0.2,
       child: Stack(
         children: [
@@ -374,18 +373,18 @@ class _OrderDetailsState extends State<OrderDetails> {
                 SizedBox(width: screenWidth * 0.18),
                 Column(
                   children: [
-                    SizedBox(height: 45),
+                    const SizedBox(height: 45),
                     ElevatedButton.icon(
                       onPressed: () {
                         // Define your action here
                       },
-                      icon: Icon(Icons.mail, color: Colors.white),
+                      icon: const Icon(Icons.mail, color: Colors.white),
                       label: Text(
                         'Message',
                         style: GoogleFonts.poppins(color: Colors.white),
                       ),
                       style: ElevatedButton.styleFrom(
-                        primary: Color(0XFF007AFF),
+                        backgroundColor: const Color(0XFF007AFF),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(8),
                         ),
@@ -413,15 +412,15 @@ class _OrderDetailsState extends State<OrderDetails> {
           onPressed: () {
             // Define your action here
           },
+          style: ElevatedButton.styleFrom(
+            backgroundColor: const Color(0xfff8f8f8),
+            elevation: 0,
+          ),
           child: const Text(
             'Open',
             style: TextStyle(
                 color: Color(0XFF007AFF),
                 fontSize: 16), // Text color set to white
-          ),
-          style: ElevatedButton.styleFrom(
-            primary: Color(0xfff8f8f8),
-            elevation: 0,
           ),
         ),
       ],
@@ -467,7 +466,7 @@ class _OrderDetailsState extends State<OrderDetails> {
         Container(
           height: 69,
           width: screenWidth,
-          decoration: BoxDecoration(color: Color(0xFFF2F2F2)),
+          decoration: const BoxDecoration(color: Color(0xFFF2F2F2)),
         ),
         Positioned(
           left: screenWidth * 0.02,
@@ -517,7 +516,7 @@ class _OrderDetailsState extends State<OrderDetails> {
   }
 
   Widget buildCardList(double screenWidth) {
-    return Container(
+    return SizedBox(
       height: 200,
       child: ListView.builder(
         scrollDirection: Axis.horizontal,
@@ -525,7 +524,7 @@ class _OrderDetailsState extends State<OrderDetails> {
         itemBuilder: (BuildContext context, int index) {
           String assetName = 'assets/Order/Card${index + 1}.png';
           return Padding(
-            padding: EdgeInsets.symmetric(horizontal: 0.01),
+            padding: const EdgeInsets.symmetric(horizontal: 0.01),
             child: Image.asset(assetName),
           );
         },
@@ -537,7 +536,7 @@ class _OrderDetailsState extends State<OrderDetails> {
     return Container(
       height: 2,
       width: screenWidth,
-      decoration: BoxDecoration(color: Color(0xFFEBEBEB)),
+      decoration: const BoxDecoration(color: Color(0xFFEBEBEB)),
     );
   }
 
@@ -564,17 +563,17 @@ class _OrderDetailsState extends State<OrderDetails> {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         reviewRating(screenHeight, screenWidth),
-        SizedBox(width: 150),
+        const SizedBox(width: 150),
         Row(
           // Inner row
           children: [
-            SizedBox(height: 50),
+            const SizedBox(height: 50),
             GestureDetector(
               onTap: () {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder: (context) => StoreRating(
+                      builder: (context) => const StoreRating(
                             title: '',
                           )),
                 );

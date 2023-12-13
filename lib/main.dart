@@ -22,7 +22,7 @@ import 'package:waterways/app_styles.dart';
 import 'package:waterways/bottom_navbar.dart';
 import 'package:firebase_core/firebase_core.dart';
 
-Future main() async {
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   await Firebase.initializeApp(
@@ -40,7 +40,6 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    imageCache.clear();
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'WaterWays Delivery App',
@@ -50,7 +49,7 @@ class MyApp extends StatelessWidget {
       home: Scaffold(
         backgroundColor: AppStyles.colorScheme.background,
         body: SafeArea(
-          child: LoginOrCreate(),
+          child: SignUpAs(),
         ),
       ),
     );

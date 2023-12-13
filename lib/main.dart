@@ -1,20 +1,63 @@
+// ignore_for_file: prefer_const_constructors
+
 import 'package:flutter/material.dart';
+import 'package:waterways/LoadingScreen/loading_screen.dart';
+import 'package:waterways/LoginFlow/SignupSuccess.dart';
+import 'package:waterways/LoginFlow/login_or_create.dart';
+import 'package:waterways/LoginFlow/sign_up.dart';
+import 'package:waterways/LoginFlow/sign_up2.dart';
+import 'package:waterways/LoginFlow/sign_up_as.dart';
+import 'package:waterways/OrderManagement/chat.dart';
+import 'package:waterways/OrderManagement/checkout.dart';
+import 'package:waterways/OrderManagement/order_details.dart';
+import 'package:waterways/OrderManagement/order_status.dart';
+import 'package:waterways/OrderManagement/purchase_history.dart';
+import 'package:waterways/OrderManagement/store_rating.dart';
+import 'package:waterways/OrderManagement/successful_purchase.dart';
+import 'package:waterways/StorePage/store_details.dart';
+import 'package:waterways/StorePage/store_order_details.dart';
+import 'package:waterways/UserUI/user_home_page.dart';
+import 'package:waterways/UserUI/user_main_page.dart';
+import 'package:waterways/UserUI/user_notifications_page.dart';
+import 'package:waterways/UserUI/user_profile_page.dart';
+import 'package:waterways/app_styles.dart';
+import 'package:waterways/bottom_navbar.dart';
+import 'package:firebase_core/firebase_core.dart';
 
-import 'src/app.dart';
-import 'src/settings/settings_controller.dart';
-import 'src/settings/settings_service.dart';
+Future main() async {
+  WidgetsFlutterBinding.ensureInitialized();
 
-void main() async {
-  // Set up the SettingsController, which will glue user settings to multiple
-  // Flutter Widgets.
-  final settingsController = SettingsController(SettingsService());
+  await Firebase.initializeApp(
+      options: FirebaseOptions(
+          apiKey: "AIzaSyBmBMaNg_9-l8fZpWkyQF2OBaVojolr0js",
+          appId: "1:704742160478:android:6baad1a16273790167dccf",
+          messagingSenderId: "704742160478",
+          projectId: "waterways-7c3c8"));
 
-  // Load the user's preferred theme while the splash screen is displayed.
-  // This prevents a sudden theme change when the app is first displayed.
-  await settingsController.loadSettings();
+  runApp(const MyApp());
+}
 
-  // Run the app and pass in the SettingsController. The app listens to the
-  // SettingsController for changes, then passes it further down to the
-  // SettingsView.
-  runApp(MyApp(settingsController: settingsController));
+class MyApp extends StatelessWidget {
+  const MyApp({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    imageCache.clear();
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      title: 'WaterWays Delivery App',
+      theme: ThemeData(
+        useMaterial3: true,
+      ),
+      home: Scaffold(
+        backgroundColor: AppStyles.colorScheme.background,
+        body: SafeArea(
+
+
+          child: LoginOrCreate(),
+
+        ),
+      ),
+    );
+  }
 }

@@ -12,8 +12,19 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+
   flutter_localizations:
     sdk: flutter
+  google_fonts: ^6.1.0
+  currency_symbols: ^0.0.1+2
+
+  step_progress_indicator: ^1.0.2
+
+  image_picker: ^1.0.4
+  firebase_core: ^2.24.2
+  cloud_firestore: ^4.13.6
+  firebase_auth: ^4.15.3
+
 
 dev_dependencies:
   flutter_test:
@@ -30,6 +41,7 @@ flutter:
   assets:
     # Add assets from the images directory to the application.
     - assets/
+    - assets/NavBar-Icons/
     - assets/Login/
     - assets/Order/
     - assets/Main/

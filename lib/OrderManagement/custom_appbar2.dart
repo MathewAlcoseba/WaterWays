@@ -31,11 +31,7 @@ class AppBarToHome extends StatelessWidget {
             children: [
               GestureDetector(
                 onTap: () {
-                  // Navigate to UserHomePage
-                  Navigator.pushReplacement(
-                    context,
-                    MaterialPageRoute(builder: (context) => UserHomePage()),
-                  );
+                  Navigator.of(context).pop();
                 },
                 child: Image.asset(
                   'assets/Main/left.png',

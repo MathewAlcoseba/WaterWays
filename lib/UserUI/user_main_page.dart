@@ -62,16 +62,6 @@ class UserMainPageState extends State<UserMainPage> {
               UserProfilePage()
             ],
           ),
-          // floatingActionButton: FloatingActionButton(
-          //     onPressed: showChatList,
-          //     backgroundColor: AppStyles.colorScheme.secondary,
-          //     shape: const RoundedRectangleBorder(
-          //         borderRadius: BorderRadius.only(
-          //             bottomLeft: Radius.circular(50),
-          //             bottomRight: Radius.circular(10),
-          //             topLeft: Radius.circular(50),
-          //             topRight: Radius.circular(50))),
-          //     child: Image.asset('assets/Main/chat-message.png')),
           bottomNavigationBar: Theme(
               data: ThemeData(
                 splashColor: Colors.transparent,

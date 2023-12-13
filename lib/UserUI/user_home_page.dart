@@ -14,7 +14,7 @@ class UserHomePage extends StatelessWidget {
             backgroundColor: AppStyles.colorScheme.background,
             appBar: const PreferredSize(
               preferredSize: Size.fromHeight(75.0),
-              child: CustomAppBar(),
+              child: CustomAppBar(title: '',),
             ),
             body: const Padding(
               padding: EdgeInsets.only(left: 16.0, right: 16.0),

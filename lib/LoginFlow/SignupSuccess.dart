@@ -3,7 +3,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:waterways/LoginFlow/login_or_create.dart';
-import 'package:waterways/LoginFlow/sign_up_as.dart';
 
 class SignupSuccess extends StatelessWidget {
   const SignupSuccess({super.key});
@@ -16,7 +15,7 @@ class SignupSuccess extends StatelessWidget {
         child: Column(children: [
           SizedBox(height: 176),
           Image.asset(
-            'assets/login/verified.png',
+            'assets/Login/verified.png',
             height: 180,
             width: 430,
           ),

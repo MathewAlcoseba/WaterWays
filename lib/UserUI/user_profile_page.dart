@@ -185,7 +185,7 @@ class UserProfilePage extends StatelessWidget {
                         style: OutlinedButton.styleFrom(
                             shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(10.0)),
-                            side: BorderSide(color: Colors.red)),
+                            side: const BorderSide(color: Colors.red)),
                         child: Text(
                           'Delete Account',
                           style:

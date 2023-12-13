@@ -1,12 +1,20 @@
-// ignore_for_file: prefer_const_constructors
+// ignore_for_file: prefer_const_constructors, depend_on_referenced_packages
+
+import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:waterways/LoginFlow/login_or_create.dart';
+import 'package:get/get.dart';
+
 
 class LoadingScreen extends StatelessWidget {
   const LoadingScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    Timer(const Duration(seconds: 2), () {
+      Get.to(() => LoginOrCreate());
+    });
     return Scaffold(
       body: Center(
         child: Image.asset(

@@ -17,11 +17,12 @@ dependencies:
     sdk: flutter
   google_fonts: ^6.1.0
   currency_symbols: ^0.0.1+2
+  step_progress_indicator: ^1.0.2
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  
+
   flutter_lints: ^2.0.0
 
 flutter:

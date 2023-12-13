@@ -3,8 +3,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:waterways/LoginFlow/login.dart';
-import 'package:waterways/LoginFlow/login_or_create.dart';
-import 'package:waterways/LoginFlow/sign_up_as.dart';
 
 class SignupSuccess extends StatelessWidget {
   const SignupSuccess({super.key});

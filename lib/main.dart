@@ -2,26 +2,8 @@
 
 import 'package:flutter/material.dart';
 import 'package:waterways/LoadingScreen/loading_screen.dart';
-import 'package:waterways/LoginFlow/login.dart';
-import 'package:waterways/LoginFlow/login_or_create.dart';
-import 'package:waterways/LoginFlow/sign_up.dart';
-import 'package:waterways/LoginFlow/sign_up2.dart';
-import 'package:waterways/LoginFlow/sign_up_as.dart';
-import 'package:waterways/LoadingScreen/loading_screen.dart';
 import 'package:get/get.dart';
-import 'package:waterways/OrderManagement/chat.dart';
-import 'package:waterways/OrderManagement/checkout.dart';
-import 'package:waterways/OrderManagement/order_details.dart';
-import 'package:waterways/OrderManagement/order_status.dart';
-import 'package:waterways/OrderManagement/purchase_history.dart';
-import 'package:waterways/OrderManagement/store_rating.dart';
-import 'package:waterways/OrderManagement/successful_purchase.dart';
-import 'package:waterways/UserUI/user_home_page.dart';
-import 'package:waterways/UserUI/user_main_page.dart';
-import 'package:waterways/UserUI/user_notifications_page.dart';
-import 'package:waterways/UserUI/user_profile_page.dart';
 import 'package:waterways/app_styles.dart';
-import 'package:waterways/bottom_navbar.dart';
 import 'package:firebase_core/firebase_core.dart';
 
 Future main() async {
@@ -38,7 +20,7 @@ Future main() async {
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+  const MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {

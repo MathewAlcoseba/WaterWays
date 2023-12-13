@@ -1,11 +1,8 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:waterways/LoginFlow/login.dart';
-import 'package:waterways/LoginFlow/login_or_create.dart';
-import 'package:waterways/LoginFlow/sign_up2.dart';
 
 class ForgotPassword extends StatefulWidget {
   const ForgotPassword({super.key});

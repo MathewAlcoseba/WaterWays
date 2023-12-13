@@ -3,7 +3,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:waterways/LoginFlow/login.dart';
-import 'package:waterways/LoginFlow/login_or_create.dart';
 import 'package:waterways/LoginFlow/sign_up_success.dart';
 
 class SignUp2 extends StatefulWidget {
@@ -62,7 +61,7 @@ class _SignUp2State extends State<SignUp2> {
               child: Column(
                 children: [
                   Row(
-                    children: [
+                    children: const [
                       SizedBox(height: 77),
                     ],
                   ),

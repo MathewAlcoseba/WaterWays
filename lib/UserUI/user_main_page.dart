@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:waterways/UserUI/user_favorites_page.dart';
 import 'package:waterways/UserUI/user_home_page.dart';
 import 'package:waterways/UserUI/user_notifications_page.dart';
+import 'package:waterways/UserUI/user_profile_page.dart';
 import 'package:waterways/UserUI/user_profile_drawer.dart';
 import 'package:waterways/app_styles.dart';
 import 'package:waterways/bottom_navbar.dart';
@@ -19,39 +20,16 @@ class UserMainPageState extends State<UserMainPage> {
   final TextEditingController textController = TextEditingController();
   int selectedIndex = 0;
 
+  void onEditProfileTap() {
+    Navigator.pop(context);
+    onItemTapped(3);
+  }
+
   void onItemTapped(int index) {
-    if (index == 3) {
-      scaffoldKey.currentState?.openEndDrawer();
-    } else {
-      userMainPageController.jumpToPage(index);
-      setState(() {
-        selectedIndex = index;
-      });
-    }
-  }
-
-  @override
-  void dispose() {
-    textController.dispose();
-    super.dispose();
-  }
-
-  void showChatList() {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return Scaffold(
-          appBar: AppBar(
-              title: Text(
-            'Chats',
-            style: AppStyles.headline3,
-          )),
-          body: Placeholder(
-            color: Colors.black,
-          ),
-        );
-      },
-    );
+    userMainPageController.jumpToPage(index);
+    setState(() {
+      selectedIndex = index;
+    });
   }
 
   @override
@@ -65,7 +43,9 @@ class UserMainPageState extends State<UserMainPage> {
           key: scaffoldKey,
           extendBody: true,
           backgroundColor: AppStyles.colorScheme.background,
-          endDrawer: const UserProfileDrawer(),
+          endDrawer: UserProfileDrawer(
+            onEditProfileTap: onEditProfileTap,
+          ),
           body: PageView(
             controller: userMainPageController,
             physics: const BouncingScrollPhysics(
@@ -79,6 +59,7 @@ class UserMainPageState extends State<UserMainPage> {
               UserHomePage(),
               UserFavoritesPage(),
               UserNotificationsPage(),
+              UserProfilePage()
             ],
           ),
           // floatingActionButton: FloatingActionButton(

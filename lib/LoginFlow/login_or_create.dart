@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:waterways/LoginFlow/sign_up_as.dart';
 
 class LoginOrCreate extends StatelessWidget {
   const LoginOrCreate({super.key});
@@ -12,13 +13,13 @@ class LoginOrCreate extends StatelessWidget {
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 38),
         child: Column(children: [
-          SizedBox(height: 176),
+          SizedBox(height: 110),
           Image.asset(
             'assets/WaterWaysIconBig.png',
             height: 180,
             width: 430,
           ),
-          SizedBox(height: 44),
+          SizedBox(height: 45),
           Text(
             'Test the waters',
             style: GoogleFonts.poppins(
@@ -37,7 +38,7 @@ class LoginOrCreate extends StatelessWidget {
               color: const Color(0xFF313144),
             ),
           ),
-          SizedBox(height: 76),
+          SizedBox(height: 75),
           ElevatedButton(
             style: ElevatedButton.styleFrom(
               foregroundColor: Colors.white,
@@ -67,7 +68,11 @@ class LoginOrCreate extends StatelessWidget {
               ),
               minimumSize: Size(353, 56), // size
             ),
-            onPressed: () {},
+            onPressed: () {
+              Navigator.of(context).push(
+                MaterialPageRoute(builder: (context) => SignUpAs()),
+              );
+            },
             child: Text(
               'Create Account',
               style: GoogleFonts.inter(

@@ -37,7 +37,9 @@ class CustomAppBar extends StatelessWidget {
                               AppStyles.colorScheme.tertiary.withOpacity(0.15),
                           shape: BoxShape.circle),
                       child: IconButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          showSearchBottomSheet(context);
+                        },
                         icon: Image.asset(
                           'assets/Main/appbar-search.png',
                           width: 20,
@@ -65,4 +67,41 @@ class CustomAppBar extends StatelessWidget {
           )),
     );
   }
+}
+
+void showSearchBottomSheet(BuildContext context) {
+  showModalBottomSheet(
+    context: context,
+    builder: (BuildContext bc) {
+      return Padding(
+        padding: MediaQuery.of(context).viewInsets,
+        child: Container(
+          padding: const EdgeInsets.all(10),
+          child: Wrap(
+            children: <Widget>[
+              Container(
+                decoration: BoxDecoration(
+                  color: AppStyles.colorScheme.primary,
+                  borderRadius: BorderRadius.circular(50),
+                ),
+                child: ListTile(
+                  leading: const Icon(Icons.search, color: Colors.grey),
+                  title: TextField(
+                    decoration: const InputDecoration(
+                      hintText: 'Search',
+                      border: InputBorder.none,
+                      contentPadding: EdgeInsets.symmetric(vertical: 10),
+                      focusedBorder: InputBorder.none,
+                    ),
+                    autofocus: true,
+                    cursorColor: AppStyles.colorScheme.inversePrimary,
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      );
+    },
+  );
 }

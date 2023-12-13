@@ -17,7 +17,7 @@ class AvailableStoresListView extends StatelessWidget {
             itemCount: 3,
             itemBuilder: (context, index) {
               return Padding(
-                padding: const EdgeInsets.only(bottom: 20),
+                padding: const EdgeInsets.only(top: 16, bottom: 16),
                 child: Stack(children: [
                   Container(
                     decoration: BoxDecoration(

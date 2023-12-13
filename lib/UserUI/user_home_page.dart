@@ -17,14 +17,14 @@ class UserHomePage extends StatelessWidget {
               child: CustomAppBar(title: '',),
             ),
             body: const Padding(
-              padding: EdgeInsets.only(top: 16.0, left: 16.0, right: 16.0),
+              padding: EdgeInsets.only(left: 16.0, right: 16.0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Tag(),
-                  SizedBox(
-                    height: 16.0,
-                  ),
+                  // Tag(),
+                  // SizedBox(
+                  //   height: 16.0,
+                  // ),
                   AvailableStoresListView(),
                 ],
               ),

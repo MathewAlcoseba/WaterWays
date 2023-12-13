@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:waterways/app_styles.dart';
 
 class UserProfileDrawer extends StatelessWidget {
-  const UserProfileDrawer({super.key});
+  final VoidCallback onEditProfileTap;
+
+  const UserProfileDrawer({super.key, required this.onEditProfileTap});
 
   @override
   Widget build(BuildContext context) {
@@ -37,43 +39,70 @@ class UserProfileDrawer extends StatelessWidget {
                     ),
                   ),
                   Padding(
-                    padding: const EdgeInsets.all(16.0),
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.end,
+                    padding: const EdgeInsets.only(left: 16.0),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        Container(
-                          width: 70,
-                          height: 70,
-                          decoration: BoxDecoration(
-                              color: AppStyles.colorScheme.primary,
-                              shape: BoxShape.circle,
-                              image: const DecorationImage(
-                                image: AssetImage(
-                                  'assets/Main/sample-profile.png',
-                                ),
-                              )),
-                        ),
-                        const SizedBox(width: 10.0),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisAlignment: MainAxisAlignment.end,
+                        Row(
+                          crossAxisAlignment: CrossAxisAlignment.end,
                           children: [
-                            Text('Boss AAh',
-                                style: AppStyles.headline2.copyWith(
-                                    fontSize: 26,
-                                    fontWeight: FontWeight.w600,
-                                    color: AppStyles.colorScheme.primary),
-                                overflow: TextOverflow.ellipsis),
-                            Text('09950066821',
-                                style: AppStyles.bodyText3.copyWith(
-                                    color: AppStyles.colorScheme.primary)),
-                            Text(
-                              'bossaamigo@gmail.com',
-                              style: AppStyles.bodyText3.copyWith(
-                                  color: AppStyles.colorScheme.primary),
-                              maxLines: 2,
-                              overflow: TextOverflow.ellipsis,
+                            Container(
+                              width: 70,
+                              height: 70,
+                              decoration: BoxDecoration(
+                                  color: AppStyles.colorScheme.primary,
+                                  shape: BoxShape.circle,
+                                  image: const DecorationImage(
+                                    image: AssetImage(
+                                      'assets/Main/sample-profile.png',
+                                    ),
+                                  )),
+                            ),
+                            const SizedBox(width: 10.0),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              children: [
+                                Text('Boss AAh',
+                                    style: AppStyles.headline2.copyWith(
+                                        fontSize: 26,
+                                        fontWeight: FontWeight.w600,
+                                        color: AppStyles.colorScheme.primary),
+                                    overflow: TextOverflow.ellipsis),
+                                Text('09950066821',
+                                    style: AppStyles.bodyText3.copyWith(
+                                        color: AppStyles.colorScheme.primary)),
+                                Text(
+                                  'bossaamigo@gmail.com',
+                                  style: AppStyles.bodyText3.copyWith(
+                                      color: AppStyles.colorScheme.primary),
+                                  maxLines: 2,
+                                  overflow: TextOverflow.ellipsis,
+                                )
+                              ],
                             )
+                          ],
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Text(
+                              'Edit Profile',
+                              style: AppStyles.bodyText2.copyWith(
+                                  color: AppStyles.colorScheme.primary),
+                            ),
+                            IconButton(
+                              icon: Icon(
+                                Icons.create_outlined,
+                                color: AppStyles.colorScheme.primary,
+                                size: 20,
+                              ),
+                              onPressed: () {
+                                onEditProfileTap;
+                              },
+                            ),
                           ],
                         )
                       ],
@@ -88,12 +117,7 @@ class UserProfileDrawer extends StatelessWidget {
               color: AppStyles.colorScheme.secondary,
             ),
             title: Text('Settings', style: AppStyles.bodyText2),
-            onTap: () {
-              // Update the state of the app
-              // ...
-              // Then close the drawer
-              Navigator.pop(context);
-            },
+            onTap: () {},
           ),
           ListTile(
             leading: Icon(
@@ -101,12 +125,7 @@ class UserProfileDrawer extends StatelessWidget {
               color: AppStyles.colorScheme.secondary,
             ),
             title: Text('FAQs', style: AppStyles.bodyText2),
-            onTap: () {
-              // Update the state of the app
-              // ...
-              // Then close the drawer
-              Navigator.pop(context);
-            },
+            onTap: () {},
           ),
           ListTile(
             leading: Icon(
@@ -114,12 +133,7 @@ class UserProfileDrawer extends StatelessWidget {
               color: AppStyles.colorScheme.secondary,
             ),
             title: Text('Customer Support', style: AppStyles.bodyText2),
-            onTap: () {
-              // Update the state of the app
-              // ...
-              // Then close the drawer
-              Navigator.pop(context);
-            },
+            onTap: () {},
           ),
           ListTile(
             leading: Icon(
@@ -127,12 +141,7 @@ class UserProfileDrawer extends StatelessWidget {
               color: AppStyles.colorScheme.secondary,
             ),
             title: Text('Terms & Conditions', style: AppStyles.bodyText2),
-            onTap: () {
-              // Update the state of the app
-              // ...
-              // Then close the drawer
-              Navigator.pop(context);
-            },
+            onTap: () {},
           ),
           ListTile(
             leading: Icon(
@@ -140,12 +149,7 @@ class UserProfileDrawer extends StatelessWidget {
               color: AppStyles.colorScheme.secondary,
             ),
             title: Text('Logout', style: AppStyles.bodyText2),
-            onTap: () {
-              // Update the state of the app
-              // ...
-              // Then close the drawer
-              Navigator.pop(context);
-            },
+            onTap: () {},
           ),
         ],
       ),
@@ -187,31 +191,21 @@ class EditProfileState extends State<EditProfile> {
       children: <Widget>[
         ListTile(
           title: Text(
-            'Username',
-            style: AppStyles.bodyText2,
-          ),
-          subtitle: Text(
-            'bossaamigo',
-            style: AppStyles.bodyText3,
-          ),
-        ),
-        ListTile(
-          title: Text(
-            'Phone No.',
-            style: AppStyles.bodyText2,
-          ),
-          subtitle: Text(
-            '09950066821',
-            style: AppStyles.bodyText3,
-          ),
-        ),
-        ListTile(
-          title: Text(
             'Email',
             style: AppStyles.bodyText2,
           ),
           subtitle: Text(
             'bossaamigo@gmail.com',
+            style: AppStyles.bodyText3,
+          ),
+        ),
+        ListTile(
+          title: Text(
+            'Phone',
+            style: AppStyles.bodyText2,
+          ),
+          subtitle: Text(
+            '09950066821',
             style: AppStyles.bodyText3,
           ),
         ),

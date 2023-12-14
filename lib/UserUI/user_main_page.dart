@@ -50,6 +50,7 @@ class UserMainPageState extends State<UserMainPage> {
           backgroundColor: AppStyles.colorScheme.background,
           endDrawer: UserProfileDrawer(
             onEditProfileTap: onEditProfileTap,
+            customer: customer,
           ),
           body: PageView(
             controller: userMainPageController,

@@ -1,16 +1,190 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:waterways/app_styles.dart';
 import 'dart:io';
 import 'package:image_picker/image_picker.dart';
 import 'package:waterways/models/users.dart';
 
-class UserProfilePage extends StatelessWidget {
+class UserProfilePage extends StatefulWidget {
   final Customer customer;
-
   const UserProfilePage({super.key, required this.customer});
 
   @override
+  _UserProfilePageState createState() => _UserProfilePageState();
+}
+
+class _UserProfilePageState extends State<UserProfilePage> {
+  late Customer customer;
+  final ImagePicker _picker = ImagePicker();
+  XFile? _image;
+  bool _uploading = false;
+
+  @override
+  void initState() {
+    super.initState();
+    customer = widget.customer;
+  }
+
+  void updateCustomerInfo(BuildContext context, String field, String newValue) {
+    String userId = customer.custId ?? '';
+
+    FirebaseFirestore.instance
+        .collection('Customers')
+        .doc(userId)
+        .update({field: newValue}).then((_) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text("User information updated successfully")),
+      );
+      fetchUpdatedUserData(userId);
+    }).catchError((error) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text("Failed to update user information: $error")),
+      );
+    });
+  }
+
+  Future<void> _updateProfileImage() async {
+    String? downloadUrl = await _uploadImage();
+
+    if (downloadUrl != null) {
+      String userId = customer.custId ?? '';
+
+      try {
+        await FirebaseFirestore.instance
+            .collection('Customers')
+            .doc(userId)
+            .update({'profileImg': downloadUrl});
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text("Profile image updated successfully")),
+        );
+        fetchUpdatedUserData(userId);
+      } catch (error) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text("Failed to update profile image: $error")),
+        );
+      }
+    }
+  }
+
+  Future<void> updateCustomerName(BuildContext context, String userId,
+      Map<String, dynamic> custNameFields) async {
+    try {
+      await FirebaseFirestore.instance
+          .collection('Customers')
+          .doc(userId)
+          .update(custNameFields);
+      fetchUpdatedUserData(userId);
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text("User information updated successfully")),
+      );
+    } catch (error) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text("Failed to update user information: $error")),
+      );
+    }
+  }
+
+  void fetchUpdatedUserData(String userId) async {
+    try {
+      var doc = await FirebaseFirestore.instance
+          .collection('Customers')
+          .doc(userId)
+          .get();
+      Customer updatedCustomer =
+          Customer.fromMap(doc.data() as Map<String, dynamic>);
+
+      setState(() {
+        customer = updatedCustomer;
+      });
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text("Error fetching updated user data: $e")),
+      );
+    }
+  }
+
+  Future<void> _pickImage() async {
+    final XFile? pickedFile =
+        await _picker.pickImage(source: ImageSource.gallery);
+    if (pickedFile != null) {
+      setState(() {
+        _image = pickedFile;
+      });
+      _showPreviewDialog();
+    }
+  }
+
+  Future<String?> _uploadImage() async {
+    if (_image == null) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text("No image selected")),
+      );
+      return null;
+    }
+
+    setState(() {
+      _uploading = true;
+    });
+
+    File file = File(_image!.path);
+    try {
+      final storageRef = FirebaseStorage.instanceFor(
+              bucket: 'gs://waterways-7c3c8.appspot.com')
+          .ref()
+          .child('uploads/${_image!.name}');
+      await storageRef.putFile(file);
+      final downloadUrl = await storageRef.getDownloadURL();
+      return downloadUrl;
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text("Upload failed: $e")),
+      );
+    } finally {
+      setState(() {
+        _uploading = false;
+      });
+    }
+  }
+
+  void _showPreviewDialog() {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text("Preview and Upload"),
+          content: _image == null ? SizedBox() : Image.file(File(_image!.path)),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: Text(
+                'Cancel',
+                style: AppStyles.bodyText2,
+              ),
+            ),
+            TextButton(
+              onPressed: () async {
+                Navigator.of(context).pop();
+                await _uploadImage();
+              },
+              child: Text(
+                'Save',
+                style: AppStyles.bodyText2,
+              ),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  @override
   Widget build(BuildContext context) {
+    String customerFullName =
+        '${customer.firstname ?? ''} ${customer.lastname ?? ''}';
+
     return SafeArea(
       child: Scaffold(
         extendBody: true,
@@ -39,10 +213,9 @@ class UserProfilePage extends StatelessWidget {
                         decoration: BoxDecoration(
                           color: Colors.grey,
                           image: DecorationImage(
-                            image: AssetImage(customer.coverImg ??
-                                'assets/Main/sample-profile-cover.png'),
-                            fit: BoxFit.cover,
-                          ),
+                              image: NetworkImage(customer.coverImg ?? '',
+                                  scale: 1.0),
+                              fit: BoxFit.cover),
                         ),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.end,
@@ -86,8 +259,7 @@ class UserProfilePage extends StatelessWidget {
                         padding: const EdgeInsets.only(left: 16.0),
                         child: Row(
                           children: [
-                            Text(customer.firstname ?? '',
-                                style: AppStyles.headline2),
+                            Text(customerFullName, style: AppStyles.headline2),
                             IconButton(
                               icon: Icon(
                                 Icons.arrow_forward_ios_rounded,
@@ -96,7 +268,9 @@ class UserProfilePage extends StatelessWidget {
                               ),
                               onPressed: () {
                                 showEditNameInputDialog(
-                                    context, 'Edit Account Name', (p0) => null);
+                                    context,
+                                    'Edit Account Name',
+                                    widget.customer.custId ?? '');
                               },
                             ),
                           ],
@@ -136,7 +310,7 @@ class UserProfilePage extends StatelessWidget {
                             'Phone',
                             'Enter new phone number',
                             (value) {
-                              print('New phone number: $value');
+                              updateCustomerInfo(context, 'phone', value);
                             },
                           );
                         },
@@ -150,7 +324,7 @@ class UserProfilePage extends StatelessWidget {
                             'Address',
                             'Enter new address',
                             (value) {
-                              print('New address: $value');
+                              updateCustomerInfo(context, 'address', value);
                             },
                           );
                         },
@@ -213,9 +387,9 @@ class UserProfilePage extends StatelessWidget {
                         color: AppStyles.colorScheme.primary,
                         shape: BoxShape.circle,
                         image: DecorationImage(
-                          image: AssetImage(customer.profileImg ??
-                              'assets/Main/sample-profile.png'),
-                        ),
+                            image: NetworkImage(customer.profileImg ?? '',
+                                scale: 1.0),
+                            fit: BoxFit.cover),
                       ),
                     ),
                   ),
@@ -223,30 +397,65 @@ class UserProfilePage extends StatelessWidget {
                     top: 170,
                     left: 120,
                     child: Container(
-                      width: 40,
-                      decoration: BoxDecoration(
-                        border: Border.all(
-                          color: AppStyles.colorScheme.primary,
-                          width: 1.5,
-                          style: BorderStyle.solid,
+                        width: 40,
+                        decoration: BoxDecoration(
+                          border: Border.all(
+                            color: AppStyles.colorScheme.primary,
+                            width: 1.5,
+                            style: BorderStyle.solid,
+                          ),
+                          color: const Color(0xffeeeeee),
+                          shape: BoxShape.circle,
                         ),
-                        color: const Color(0xffeeeeee),
-                        shape: BoxShape.circle,
-                      ),
-                      child: IconButton(
-                        padding: const EdgeInsets.all(4),
-                        icon: Icon(
-                          Icons.camera_alt_rounded,
-                          color: AppStyles.colorScheme.inversePrimary,
-                          size: 24,
+                        child: IconButton(
+                          padding: const EdgeInsets.all(4),
+                          icon: Icon(
+                            Icons.camera_alt_rounded,
+                            color: AppStyles.colorScheme.inversePrimary,
+                            size: 24,
+                          ),
+                          onPressed: () {
+                            showDialog(
+                              context: context,
+                              builder: (BuildContext context) {
+                                return AlertDialog(
+                                  title: Text("Upload Image"),
+                                  content: Text("Choose an action"),
+                                  actions: <Widget>[
+                                    TextButton(
+                                      onPressed: () async {
+                                        Navigator.of(context).pop();
+                                        await _pickImage();
+                                      },
+                                      child: Text('Add Photo',
+                                          style: AppStyles.bodyText3),
+                                    ),
+                                    TextButton(
+                                      onPressed: () async {
+                                        Navigator.of(context).pop();
+                                        await _updateProfileImage();
+                                      },
+                                      child: Text('Save',
+                                          style: AppStyles.bodyText3),
+                                    ),
+                                  ],
+                                );
+                              },
+                            );
+                          },
+                        )),
+                  ),
+                  if (_uploading)
+                    Container(
+                      color: Colors.white.withOpacity(0.5),
+                      child: Center(
+                        child: CircularProgressIndicator(
+                          valueColor: AlwaysStoppedAnimation<Color>(
+                            AppStyles.colorScheme.primary,
+                          ),
                         ),
-                        onPressed: () async {
-                          File? imageFile = await pickImage();
-                          if (imageFile != null) {}
-                        },
                       ),
                     ),
-                  ),
                 ],
               ),
             ],
@@ -335,13 +544,12 @@ class UserProfilePage extends StatelessWidget {
   Future<void> showEditNameInputDialog(
     BuildContext context,
     String accountName,
-    Function(String) onSubmitted,
+    String userId,
   ) async {
-    String result = '';
-    String newLastName = '';
     String newFirstName = '';
+    String newLastName = '';
 
-    return showDialog(
+    showDialog(
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
@@ -353,23 +561,6 @@ class UserProfilePage extends StatelessWidget {
           content: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              TextField(
-                decoration: InputDecoration(
-                  hintText: 'New Last Name',
-                  hintStyle: AppStyles.bodyText1.copyWith(fontSize: 14),
-                  focusedBorder: UnderlineInputBorder(
-                    borderSide:
-                        BorderSide(color: AppStyles.colorScheme.inversePrimary),
-                  ),
-                ),
-                cursorColor: AppStyles.colorScheme.inversePrimary,
-                onChanged: (value) {
-                  newLastName = value;
-                },
-              ),
-              const SizedBox(
-                height: 20,
-              ),
               TextField(
                 decoration: InputDecoration(
                   hintText: 'New First Name',
@@ -384,6 +575,23 @@ class UserProfilePage extends StatelessWidget {
                   newFirstName = value;
                 },
               ),
+              const SizedBox(
+                height: 20,
+              ),
+              TextField(
+                decoration: InputDecoration(
+                  hintText: 'New Last Name',
+                  hintStyle: AppStyles.bodyText1.copyWith(fontSize: 14),
+                  focusedBorder: UnderlineInputBorder(
+                    borderSide:
+                        BorderSide(color: AppStyles.colorScheme.inversePrimary),
+                  ),
+                ),
+                cursorColor: AppStyles.colorScheme.inversePrimary,
+                onChanged: (value) {
+                  newLastName = value;
+                },
+              ),
             ],
           ),
           actions: <Widget>[
@@ -394,11 +602,21 @@ class UserProfilePage extends StatelessWidget {
               child: Text('Cancel', style: AppStyles.bodyText2),
             ),
             TextButton(
-              onPressed: () {
-                Navigator.of(context).pop();
-                result = '$newFirstName $newLastName';
-                onSubmitted(result);
-                print(result);
+              onPressed: () async {
+                if (newFirstName.isNotEmpty && newLastName.isNotEmpty) {
+                  Map<String, dynamic> fieldsToUpdate = {
+                    'firstname': newFirstName,
+                    'lastname': newLastName,
+                  };
+
+                  await updateCustomerName(context, userId, fieldsToUpdate);
+
+                  Navigator.of(context).pop();
+                } else {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(content: Text("Both fields are required")),
+                  );
+                }
               },
               child: Text('Save', style: AppStyles.bodyText2),
             ),

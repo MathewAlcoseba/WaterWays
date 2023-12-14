@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:waterways/OrderManagement/store_rating.dart';
 import 'package:waterways/StorePage/bottom_navbar_store.dart';
 import 'package:waterways/StorePage/store_drawer.dart';
@@ -146,7 +144,6 @@ class _StoreDetailsState extends State<StoreDetails> {
   }
 
   Widget buildRowWithTextAndButton(double screenHeight, double screenWidth) {
-    // Moved inside method to fix scope
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       crossAxisAlignment: CrossAxisAlignment.baseline,

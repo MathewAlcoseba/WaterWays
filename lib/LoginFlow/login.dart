@@ -5,7 +5,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:waterways/LoginFlow/forgot_password.dart';
-import 'package:waterways/LoginFlow/sign_up.dart';
 import 'package:waterways/UserUI/user_main_page.dart';
 import 'package:waterways/LoginFlow/sign_up_as.dart';
 import 'package:waterways/app_styles.dart';
@@ -73,15 +72,13 @@ class _LoginState extends State<Login> {
                     children: [
                       ClipRect(
                         child: Align(
-                          alignment: Alignment.centerRight,
-                          widthFactor: 0.85,
+                          alignment: Alignment.centerLeft,
                           child: Image.asset(
                             'assets/WaterWaysIcon.png',
-                            height: 80,
-                            width: 191,
+                            width: 140,
                           ),
                         ),
-                      )
+                      ),
                     ],
                   ),
                   SizedBox(height: 12),

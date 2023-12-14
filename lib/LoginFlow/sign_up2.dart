@@ -55,18 +55,19 @@ class _SignUp2State extends State<SignUp2> {
 
   Customer updateCustomerData(String address, String password, String custId) {
     return Customer(
-      custId: custId,
-      email: widget.customer.email,
-      password: password,
-      phone: widget.customer.phone,
-      firstname: widget.customer.firstname,
-      lastname: widget.customer.lastname,
-      address: address,
-      profileImg: '',
-      coverImg: '',
-      favorites: [],
-      orders: [],
-    );
+        custId: custId,
+        email: widget.customer.email,
+        password: password,
+        phone: widget.customer.phone,
+        firstname: widget.customer.firstname,
+        lastname: widget.customer.lastname,
+        address: address,
+        profileImg:
+            'https://firebasestorage.googleapis.com/v0/b/waterways-7c3c8.appspot.com/o/profile-placeholder.png?alt=media&token=94a74998-1280-4007-9b13-15f442a1845a',
+        coverImg:
+            'https://firebasestorage.googleapis.com/v0/b/waterways-7c3c8.appspot.com/o/coverphoto-placeholder.png?alt=media&token=2ede18bf-b68e-478e-8605-fccedfc9100e',
+        favorites: [],
+        orders: []);
   }
 
   @override

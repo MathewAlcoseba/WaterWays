@@ -1,13 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:waterways/app_styles.dart';
+import 'package:waterways/models/users.dart';
 
 class UserProfileDrawer extends StatelessWidget {
   final VoidCallback onEditProfileTap;
+  final Customer customer;
 
-  const UserProfileDrawer({super.key, required this.onEditProfileTap});
+  const UserProfileDrawer(
+      {super.key, required this.onEditProfileTap, required this.customer});
 
   @override
   Widget build(BuildContext context) {
+    String customerFullName =
+        '${customer.firstname ?? ''} ${customer.lastname ?? ''}';
     return Drawer(
       backgroundColor: AppStyles.colorScheme.background,
       surfaceTintColor: AppStyles.colorScheme.background,
@@ -18,8 +23,8 @@ class UserProfileDrawer extends StatelessWidget {
           DrawerHeader(
               decoration: BoxDecoration(
                 color: AppStyles.colorScheme.secondary,
-                image: const DecorationImage(
-                  image: AssetImage('assets/Main/sample-profile-cover.png'),
+                image: DecorationImage(
+                  image: NetworkImage(customer.coverImg ?? '', scale: 1.0),
                   fit: BoxFit.cover,
                 ),
               ),
@@ -53,10 +58,10 @@ class UserProfileDrawer extends StatelessWidget {
                               decoration: BoxDecoration(
                                   color: AppStyles.colorScheme.primary,
                                   shape: BoxShape.circle,
-                                  image: const DecorationImage(
-                                    image: AssetImage(
-                                      'assets/Main/sample-profile.png',
-                                    ),
+                                  image: DecorationImage(
+                                    image: NetworkImage(
+                                        customer.profileImg ?? '',
+                                        scale: 1.0),
                                   )),
                             ),
                             const SizedBox(width: 10.0),
@@ -64,17 +69,17 @@ class UserProfileDrawer extends StatelessWidget {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               mainAxisAlignment: MainAxisAlignment.end,
                               children: [
-                                Text('Boss AAh',
+                                Text(customerFullName,
                                     style: AppStyles.headline2.copyWith(
                                         fontSize: 26,
                                         fontWeight: FontWeight.w600,
                                         color: AppStyles.colorScheme.primary),
                                     overflow: TextOverflow.ellipsis),
-                                Text('09950066821',
+                                Text(customer.phone ?? '',
                                     style: AppStyles.bodyText3.copyWith(
                                         color: AppStyles.colorScheme.primary)),
                                 Text(
-                                  'bossaamigo@gmail.com',
+                                  customer.email ?? '',
                                   style: AppStyles.bodyText3.copyWith(
                                       color: AppStyles.colorScheme.primary),
                                   maxLines: 2,

@@ -6,7 +6,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:waterways/models/users.dart';
 
 class UserHomePage extends StatelessWidget {
-  final Customer customer;
+  final Customer? customer;
 
   const UserHomePage({super.key, required this.customer});
 

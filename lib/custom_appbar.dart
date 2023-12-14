@@ -5,7 +5,12 @@ import 'package:waterways/models/users.dart';
 
 class CustomAppBar extends StatelessWidget {
   final Customer customer;
-  const CustomAppBar({super.key, required this.customer});
+  final TextEditingController searchController;
+  const CustomAppBar({
+    super.key,
+    required this.customer,
+    required this.searchController, // Make sure this matches the above line
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -41,7 +46,7 @@ class CustomAppBar extends StatelessWidget {
                           shape: BoxShape.circle),
                       child: IconButton(
                         onPressed: () {
-                          showSearchBottomSheet(context);
+                          showSearchBottomSheet(context, searchController);
                         },
                         icon: Image.asset(
                           'assets/Main/appbar-search.png',
@@ -72,7 +77,8 @@ class CustomAppBar extends StatelessWidget {
   }
 }
 
-void showSearchBottomSheet(BuildContext context) {
+void showSearchBottomSheet(
+    BuildContext context, TextEditingController controller) {
   showModalBottomSheet(
     context: context,
     isScrollControlled: true,
@@ -87,7 +93,7 @@ void showSearchBottomSheet(BuildContext context) {
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: <Widget>[
-                  const CustomSearchBar(),
+                  CustomSearchBar(controller: controller),
                 ],
               ),
             ),

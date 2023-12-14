@@ -8,7 +8,9 @@ import 'package:waterways/app_styles.dart';
 import 'package:waterways/models/users.dart';
 
 class AvailableStoresListView extends StatelessWidget {
-  AvailableStoresListView({super.key, required this.customer});
+  AvailableStoresListView(
+      {super.key, required this.customer, required this.searchQuery});
+  final String searchQuery;
   final Customer customer;
 
   @override
@@ -26,7 +28,18 @@ class AvailableStoresListView extends StatelessWidget {
           return const Text('No stores found');
         }
 
-        List<Store> stores = snapshot.data!;
+        List<Store> stores = snapshot.data!.where((store) {
+          String lowerCaseQuery = searchQuery.toLowerCase();
+
+          return store.storeName.toLowerCase().contains(lowerCaseQuery) ||
+              store.storeAddress.toLowerCase().contains(lowerCaseQuery) ||
+              store.storeBio.toLowerCase().contains(lowerCaseQuery) ||
+              store.storeHours.toLowerCase().contains(lowerCaseQuery) ||
+              store.storeRating.toString().contains(searchQuery) ||
+              store.waterInStock.toString().contains(searchQuery) ||
+              store.price.toString().contains(searchQuery) ||
+              (store.isAvailable ? 'open' : 'closed').contains(lowerCaseQuery);
+        }).toList();
 
         return Expanded(
           child: ListView.builder(

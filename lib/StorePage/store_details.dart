@@ -27,11 +27,32 @@ class StoreDetails extends StatefulWidget {
 class _StoreDetailsState extends State<StoreDetails> {
   int selectedIndex = 0;
   bool isOpen = true;
+  final TextEditingController _searchController = TextEditingController();
+  String searchQuery = "";
+
+  @override
+  void initState() {
+    super.initState();
+    _searchController.addListener(_onSearchChanged);
+  }
+
+  void _onSearchChanged() {
+    setState(() {
+      searchQuery = _searchController.text;
+    });
+  }
 
   void onItemTapped(int index) {
     setState(() {
       selectedIndex = index;
     });
+  }
+
+  @override
+  void dispose() {
+    _searchController.removeListener(_onSearchChanged);
+    _searchController.dispose();
+    super.dispose();
   }
 
   @override
@@ -48,6 +69,7 @@ class _StoreDetailsState extends State<StoreDetails> {
                 preferredSize: Size.fromHeight(kToolbarHeight),
                 child: CustomAppBar(
                   customer: widget.customer,
+                  searchController: _searchController,
                 ),
               )
             : null,

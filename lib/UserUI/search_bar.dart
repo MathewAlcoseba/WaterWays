@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:waterways/app_styles.dart';
 
 class CustomSearchBar extends StatelessWidget {
-  const CustomSearchBar({super.key});
+  final TextEditingController controller;
+  const CustomSearchBar({super.key, required this.controller});
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +27,7 @@ class CustomSearchBar extends StatelessWidget {
             Expanded(
               child: TextField(
                 style: AppStyles.bodyText3,
-                controller: TextEditingController(),
+                controller: controller,
                 decoration: InputDecoration(
                     contentPadding: const EdgeInsets.symmetric(
                       horizontal: 14.0,

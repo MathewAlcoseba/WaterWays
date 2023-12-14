@@ -5,38 +5,61 @@ import 'package:waterways/custom_appbar.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:waterways/models/users.dart';
 
-class UserHomePage extends StatelessWidget {
+class UserHomePage extends StatefulWidget {
   final Customer customer;
-  const UserHomePage({
-    super.key,
-    required this.customer,
-  });
+  const UserHomePage({super.key, required this.customer});
+
+  @override
+  _UserHomePageState createState() => _UserHomePageState();
+}
+
+class _UserHomePageState extends State<UserHomePage> {
+  final TextEditingController _searchController = TextEditingController();
+  String _searchQuery = "";
+
+  @override
+  void initState() {
+    super.initState();
+    _searchController.addListener(() {
+      setState(() {
+        _searchQuery = _searchController.text;
+      });
+    });
+  }
+
+  @override
+  void dispose() {
+    _searchController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-        child: Scaffold(
-            extendBody: true,
-            backgroundColor: AppStyles.colorScheme.background,
-            appBar: PreferredSize(
-              preferredSize: Size.fromHeight(75.0),
-              child: CustomAppBar(
-                customer: customer,
+      child: Scaffold(
+        extendBody: true,
+        backgroundColor: AppStyles.colorScheme.background,
+        appBar: PreferredSize(
+          preferredSize: const Size.fromHeight(75.0),
+          child: CustomAppBar(
+            customer: widget.customer,
+            searchController: _searchController,
+          ),
+        ),
+        body: Padding(
+          padding: const EdgeInsets.only(left: 16.0, right: 16.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              AvailableStoresListView(
+                customer: widget.customer,
+                searchQuery: _searchController.text,
               ),
-            ),
-            body: Padding(
-              padding: EdgeInsets.only(left: 16.0, right: 16.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  // Tag(),
-                  // SizedBox(
-                  //   height: 16.0,
-                  // ),
-                  AvailableStoresListView(customer: customer),
-                ],
-              ),
-            )));
+            ],
+          ),
+        ),
+      ),
+    );
   }
 }
 

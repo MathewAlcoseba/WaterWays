@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:waterways/LoginFlow/login.dart';
@@ -94,7 +95,12 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                       ),
                       minimumSize: Size(353, 50),
                     ),
-                    onPressed: isButtonEnabled ? () {} : null,
+                    onPressed: isButtonEnabled
+                        ? () {
+                            String email = emailController.text.trim();
+                            _sendPasswordResetLink(context, email);
+                          }
+                        : null,
                     child: Text(
                       'Send Code',
                       style: GoogleFonts.inter(
@@ -217,6 +223,29 @@ class SignUpField extends StatelessWidget {
           ],
         )
       ],
+    );
+  }
+}
+
+Future<void> _sendPasswordResetLink(BuildContext context, String email) async {
+  try {
+    await FirebaseAuth.instance.sendPasswordResetEmail(email: email);
+    print('Password reset link sent to $email');
+
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text('Password reset link sent to $email'),
+        duration: Duration(seconds: 3),
+      ),
+    );
+  } catch (e) {
+    print('Error sending password reset link: $e');
+
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text('Error sending password reset link: $e'),
+        duration: Duration(seconds: 3),
+      ),
     );
   }
 }

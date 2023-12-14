@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:waterways/app_styles.dart';
@@ -135,6 +136,9 @@ class _UserProfilePageState extends State<UserProfilePage> {
           .child('uploads/${_image!.name}');
       await storageRef.putFile(file);
       final downloadUrl = await storageRef.getDownloadURL();
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text("Photo uploaded")),
+      );
       return downloadUrl;
     } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(
@@ -451,7 +455,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
                       child: Center(
                         child: CircularProgressIndicator(
                           valueColor: AlwaysStoppedAnimation<Color>(
-                            AppStyles.colorScheme.primary,
+                            AppStyles.colorScheme.secondary,
                           ),
                         ),
                       ),
@@ -649,7 +653,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
             TextButton(
               onPressed: () {
                 Navigator.of(context).pop();
-                print(message);
+                deleteCustomerAccount(context, widget.customer.custId ?? '');
               },
               child: Text('Yes', style: AppStyles.bodyText2),
             ),
@@ -668,5 +672,28 @@ Future<File?> pickImage() async {
     return File(image.path);
   } else {
     return null;
+  }
+}
+
+Future<void> deleteCustomerAccount(
+    BuildContext context, String customerId) async {
+  try {
+    CollectionReference customers =
+        FirebaseFirestore.instance.collection('Customers');
+    await customers.doc(customerId).delete();
+
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text('Customer account deleted successfully'),
+        duration: Duration(seconds: 3),
+      ),
+    );
+  } catch (e) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text('Error deleting customer account: $e'),
+        duration: Duration(seconds: 3),
+      ),
+    );
   }
 }

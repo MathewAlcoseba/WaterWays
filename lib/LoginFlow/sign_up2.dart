@@ -90,15 +90,13 @@ class _SignUp2State extends State<SignUp2> {
                       children: [
                         ClipRect(
                           child: Align(
-                            alignment: Alignment.centerRight,
-                            widthFactor: 0.85,
+                            alignment: Alignment.centerLeft,
                             child: Image.asset(
                               'assets/WaterWaysIcon.png',
-                              height: 80,
-                              width: 191,
+                              width: 140,
                             ),
                           ),
-                        )
+                        ),
                       ],
                     ),
                     const SizedBox(height: 12),

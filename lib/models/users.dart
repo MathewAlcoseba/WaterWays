@@ -42,8 +42,8 @@ class Store {
   final String storeBio;
   final String storeHours;
   final String storeRating;
-  final Float waterInStock;
-  final Float price;
+  final double waterInStock;
+  final double price;
   final bool isAvailable;
 
   Store(
@@ -76,9 +76,9 @@ class Order {
   final String deliveryOption;
   final String deliveryAddress;
   final String paymentOption;
-  final Float productSubtotal;
-  final Float deliverySubtotal;
-  final Float totalPayment;
+  final double productSubtotal;
+  final double deliverySubtotal;
+  final double totalPayment;
   final bool status;
 
   Order(

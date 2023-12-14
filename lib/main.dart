@@ -52,10 +52,9 @@ class MyApp extends StatelessWidget {
       home: Scaffold(
         backgroundColor: AppStyles.colorScheme.background,
         body: SafeArea(
-
-
-          child: LoginOrCreate(),
-
+          child: OrderDetails(
+            title: '',
+          ),
         ),
       ),
     );

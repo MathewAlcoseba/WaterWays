@@ -5,6 +5,7 @@ import 'package:waterways/OrderManagement/checkout.dart';
 import 'package:waterways/OrderManagement/custom_appbar_storedetails.dart';
 import 'package:waterways/OrderManagement/store_rating.dart';
 import 'package:waterways/app_styles.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 void main() {
   runApp(const OrderDetails(title: ''));
@@ -27,26 +28,49 @@ class _OrderDetailsState extends State<OrderDetails> {
   int counter = 0;
   int radioValue = 0;
 
+  String selectedOption = '';
+  String deliveryMethod = '';
+
+  void updateSelectedOptions() {
+    List<String> selectedOptions = [];
+    if (checkboxValue1) selectedOptions.add('Gallon');
+    if (checkboxValue2) selectedOptions.add('Barrel');
+    if (checkboxValue3) selectedOptions.add('ICB Tank');
+
+    selectedOption = selectedOptions.join(', ');
+
+    deliveryMethod = radioValue == 1 ? 'Delivery' : 'Pick-Up';
+  }
+
   void showCupertinoPopup(BuildContext context) {
-    // Default prices for each option
     final double pricePerGallon = 25.0;
     final double pricePerBarrel = 300.0;
     final double pricePerICBTank = 1000.0;
-    final double pricePerOthers = 30.0;
-    final double radioOption1Price = 25.0;
+    final double radioOption1Price = 225.0;
     final double radioOption2Price = 0.0;
 
-    // Function to calculate total price
     double calculateTotalPrice() {
       double totalPrice = 0.0;
       if (checkboxValue1) totalPrice += pricePerGallon;
       if (checkboxValue2) totalPrice += pricePerBarrel;
       if (checkboxValue3) totalPrice += pricePerICBTank;
-      if (checkboxValue4) totalPrice += pricePerOthers;
       if (radioValue == 1) totalPrice += radioOption1Price;
       if (radioValue == 2) totalPrice += radioOption2Price;
+      return totalPrice * counter;
+    }
 
-      return totalPrice * counter; // Multiply by quantity
+    double calculateProductSubtotal() {
+      final double pricePerGallon = 25.0;
+      final double pricePerBarrel = 300.0;
+      final double pricePerICBTank = 1000.0;
+
+      double subPrice = 0.0;
+
+      if (checkboxValue1) subPrice += pricePerGallon * counter;
+      if (checkboxValue2) subPrice += pricePerBarrel * counter;
+      if (checkboxValue3) subPrice += pricePerICBTank * counter;
+
+      return subPrice;
     }
 
     showCupertinoModalPopup(
@@ -133,25 +157,7 @@ class _OrderDetailsState extends State<OrderDetails> {
                                   value: checkboxValue3,
                                   onChanged: (bool? newValue) {
                                     setState(() {
-                                      checkboxValue2 = newValue!;
-                                    });
-                                  },
-                                  controlAffinity:
-                                      ListTileControlAffinity.leading,
-                                  activeColor: Color(0XFF007AFF),
-                                ),
-                              ),
-                            ],
-                          ),
-                          Row(
-                            children: [
-                              Expanded(
-                                child: CheckboxListTile(
-                                  title: Text('Others'),
-                                  value: checkboxValue4,
-                                  onChanged: (bool? newValue) {
-                                    setState(() {
-                                      checkboxValue2 = newValue!;
+                                      checkboxValue3 = newValue!;
                                     });
                                   },
                                   controlAffinity:
@@ -247,15 +253,35 @@ class _OrderDetailsState extends State<OrderDetails> {
                               ),
                               Container(
                                 width: 146,
-                                height: 42, // Set the width of the container
+                                height: 42,
                                 child: ElevatedButton(
                                   onPressed: () {
-                                    // Navigate to Checkout page when pressed
+                                    // Update selected options
+                                    updateSelectedOptions();
+
+                                    // Calculate total price
+                                    double totalPrice = calculateTotalPrice();
+                                    double subPrice =
+                                        calculateProductSubtotal();
+                                    double selectedDeliveryFee = radioValue == 1
+                                        ? radioOption1Price
+                                        : radioOption2Price;
+                                    // Navigate to Checkout page with updated values
                                     Navigator.push(
                                       context,
                                       MaterialPageRoute(
-                                          builder: (context) =>
-                                              Checkout(title: 'Checkout')),
+                                        builder: (context) => Checkout(
+                                          title: 'Checkout',
+                                          showCupertinoPopupCallback: () =>
+                                              showCupertinoPopup(context),
+                                          selectedOptions: selectedOption,
+                                          deliveryMethod: deliveryMethod,
+                                          totalPrice: totalPrice,
+                                          subPrice: subPrice,
+                                          selectedDeliveryFee:
+                                              selectedDeliveryFee,
+                                        ),
+                                      ),
                                     );
                                   },
                                   child: const Text('BUY',
@@ -265,7 +291,7 @@ class _OrderDetailsState extends State<OrderDetails> {
                                     onPrimary: Colors.white,
                                   ),
                                 ),
-                              ),
+                              )
                             ],
                           ),
                         ],
@@ -300,33 +326,7 @@ class _OrderDetailsState extends State<OrderDetails> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              buildProfileRow(screenWidth),
-              buildTextSection(
-                  screenHeight, screenWidth, 'About Us:', AppStyles.bodyText4),
-              buildTextSection(
-                screenHeight,
-                screenWidth,
-                'Aqua Atlan has been a local water refilling station for more than 7 years. We are always ready to serve you!',
-                AppStyles.bodyText5,
-              ),
-              buildRowWithTextAndButton(screenWidth, screenHeight),
-              line(screenWidth),
-              viewProfileRating(screenHeight, screenWidth, context),
-              line(screenWidth),
-              buildTextSection(screenHeight, screenWidth, 'Product Details:',
-                  AppStyles.headline5),
-              buildStockInfo(screenWidth),
-              buildDetailOne(screenWidth),
-              buildDetailTwo(screenWidth),
-              line(screenWidth),
-              buildTextSection(
-                screenHeight,
-                screenWidth,
-                'Water Volume Reference:',
-                AppStyles.headline5,
-              ),
-              buildDisclaimerBanner(screenWidth, screenHeight),
-              buildCardList(screenWidth),
+              buildProfileRow(screenWidth, screenHeight),
               Container(
                   height: 100, color: const Color.fromARGB(255, 255, 255, 255)),
             ],
@@ -349,7 +349,67 @@ class _OrderDetailsState extends State<OrderDetails> {
     );
   }
 
-  Widget buildProfileRow(double screenWidth) {
+  Widget buildProfileRow(double screenWidth, double screenHeight) {
+    return FutureBuilder<DocumentSnapshot>(
+      future: FirebaseFirestore.instance
+          .collection('Stores')
+          .doc('ag43YzkKuvYvpojGgBSv')
+          .get(),
+      builder: (context, snapshot) {
+        if (snapshot.hasError) {
+          return Text("Error: ${snapshot.error}");
+        }
+        if (snapshot.connectionState == ConnectionState.done) {
+          if (snapshot.hasData && snapshot.data?.data() != null) {
+            Map<String, dynamic> data =
+                snapshot.data?.data() as Map<String, dynamic>;
+            String storeName = data['storeName'] ?? 'Default Store Name';
+            String storeHours =
+                data['storeHours'] ?? 'No store hours available';
+            String waterInStock = (data['waterInStock'] ?? 0).toString();
+
+            String storeBio = data['storeBio'] ?? 'No bio';
+            return Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                createProfileRow(screenWidth, storeName),
+                buildTextSection(
+                  screenHeight,
+                  screenWidth,
+                  storeBio,
+                  AppStyles.bodyText5,
+                ),
+                buildRowWithTextAndButton(
+                    screenHeight, screenWidth, storeHours),
+                line(screenWidth),
+                viewProfileRating(screenHeight, screenWidth, context),
+                line(screenWidth),
+                buildTextSection(screenHeight, screenWidth, 'Product Details:',
+                    AppStyles.headline5),
+                buildStockInfo(screenWidth, waterInStock),
+                buildDetailOne(screenWidth),
+                buildDetailTwo(screenWidth),
+                line(screenWidth),
+                buildTextSection(
+                  screenHeight,
+                  screenWidth,
+                  'Water Volume Reference:',
+                  AppStyles.headline5,
+                ),
+                buildDisclaimerBanner(screenWidth, screenHeight),
+                buildCardList(screenWidth),
+              ],
+            );
+          } else {
+            return Text('No data available for this document.');
+          }
+        }
+        return CircularProgressIndicator(); // Loading indicator while waiting for the data
+      },
+    );
+  }
+
+  Widget createProfileRow(double screenWidth, String storeName) {
     double screenHeight = MediaQuery.of(context).size.height;
 
     return Container(
@@ -360,7 +420,7 @@ class _OrderDetailsState extends State<OrderDetails> {
           Positioned(
             top: screenHeight * 0.09,
             left: screenWidth * 0.28,
-            child: Text('Aqua Atlan', style: AppStyles.headline6),
+            child: Text(storeName, style: AppStyles.headline6),
           ),
           Positioned(
             top: screenHeight * 0.09,
@@ -376,9 +436,7 @@ class _OrderDetailsState extends State<OrderDetails> {
                   children: [
                     SizedBox(height: 45),
                     ElevatedButton.icon(
-                      onPressed: () {
-                        // Define your action here
-                      },
+                      onPressed: () {},
                       icon: Icon(Icons.mail, color: Colors.white),
                       label: Text(
                         'Message',
@@ -401,14 +459,15 @@ class _OrderDetailsState extends State<OrderDetails> {
     );
   }
 
-  Widget buildRowWithTextAndButton(double screenHeight, double screenWidth) {
+  Widget buildRowWithTextAndButton(
+      double screenHeight, double screenWidth, String storeHours) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       crossAxisAlignment: CrossAxisAlignment
           .start, // Align children to the start of the cross axis
       children: [
-        buildTextSection(screenHeight, screenWidth, '10:00 AM - 4:30 PM',
-            AppStyles.bodyText6),
+        buildTextSection(
+            screenHeight, screenWidth, storeHours, AppStyles.bodyText6),
         ElevatedButton(
           onPressed: () {
             // Define your action here
@@ -448,14 +507,16 @@ class _OrderDetailsState extends State<OrderDetails> {
     );
   }
 
-  Widget buildStockInfo(double screenWidth) {
+  Widget buildStockInfo(double screenWidth, String waterInStock) {
     return Padding(
       padding: EdgeInsets.only(left: screenWidth * 0.03, top: 20),
       child: Row(
         children: [
           stockIcon(),
           SizedBox(width: screenWidth * 0.02),
-          Text('In Stock: 5000 Ltrs', style: AppStyles.bodyText1),
+          Text('In Stock:', style: AppStyles.bodyText1),
+          Text(waterInStock, style: AppStyles.bodyText1),
+          Text('Ltrs', style: AppStyles.bodyText1),
         ],
       ),
     );

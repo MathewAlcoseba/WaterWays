@@ -25,7 +25,6 @@ dependencies:
   cloud_firestore: ^4.13.6
   firebase_auth: ^4.15.3
 
-
 dev_dependencies:
   flutter_test:
     sdk: flutter

@@ -1,15 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:waterways/OrderManagement/custom_appbar2.dart';
-import 'package:waterways/OrderManagement/custom_appbar_storedetails.dart';
-import 'package:waterways/app_styles.dart';
-import 'package:waterways/bottom_navbar.dart';
 
-void main() {
-  runApp(const OrderStatus(
-    title: '',
-  ));
-}
+import 'package:waterways/app_styles.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class OrderStatus extends StatelessWidget {
   const OrderStatus({Key? key, required this.title}) : super(key: key);
@@ -34,33 +28,78 @@ class OrderStatus extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              itemCard(screenWidth, screenHeight),
-              CustomImageRow(),
-              SizedBox(
-                height: 15,
-              ),
-              _buildViewLocation(screenHeight, screenWidth),
-              SizedBox(
-                height: 15,
-              ),
-              line(screenWidth),
-              _buildPaymentOptions(screenHeight, screenWidth),
-              buildTextSection3(screenHeight, screenWidth, 'Cash on Delivery',
-                  AppStyles.bodyText6),
-              _buildAddress(screenHeight, screenWidth),
-              buildTextSection3(screenHeight, screenWidth,
-                  'Basak, Pardo, 123 Street', AppStyles.bodyText6),
-              _buildOrderSummary(screenHeight, screenWidth),
-              textRow6(screenHeight, screenWidth),
-              _buildOrderTotal(screenHeight, screenWidth),
-              buildTextSection3(screenHeight, screenWidth,
-                  'Transaction Code: MYUI7821A-G2-90A', AppStyles.bodyText2),
-              _buildViewChat(screenHeight, screenWidth),
-              _buildTotalPayment(screenHeight, screenWidth),
+              buildProfileRow(screenHeight, screenWidth),
             ],
           ),
         ),
       ),
+    );
+  }
+
+  Future<void> cancelOrder() async {
+    FirebaseFirestore firestore = FirebaseFirestore.instance;
+
+    try {
+      await firestore.collection('Orders').doc('T5rJY7yK01upXu0L03LT').update({
+        'Status': false,
+      });
+    } catch (e) {
+      print('Error canceling order: $e');
+    }
+  }
+
+  Widget buildProfileRow(double screenWidth, double screenHeight) {
+    return StreamBuilder<DocumentSnapshot>(
+      stream: FirebaseFirestore.instance
+          .collection('Orders')
+          .doc('T5rJY7yK01upXu0L03LT')
+          .snapshots(),
+      builder: (context, snapshot) {
+        if (snapshot.hasError) {
+          return Text("Error: ${snapshot.error}");
+        }
+        if (!snapshot.hasData || snapshot.data?.data() == null) {
+          return CircularProgressIndicator();
+        }
+        Map<String, dynamic> orderData =
+            snapshot.data?.data() as Map<String, dynamic>;
+        String deliveryMethod =
+            orderData['deliveryMethod'] ?? 'No delivery method available';
+        String selectedOptions = orderData['selectedOptions'] ?? 'No selection';
+        String totalPayment =
+            (orderData['totalPayment'] as int? ?? 0).toString();
+        String paymentOption =
+            orderData['paymentOption'] ?? 'No delivery payemnt available';
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            itemCard(screenWidth, screenHeight, deliveryMethod, selectedOptions,
+                totalPayment),
+            CustomImageRow(),
+            SizedBox(
+              height: 15,
+            ),
+            _buildViewLocation(screenHeight, screenWidth),
+            SizedBox(
+              height: 15,
+            ),
+            line(screenWidth),
+            _buildPaymentOptions(screenHeight, screenWidth),
+            buildTextSection3(
+                screenHeight, screenWidth, paymentOption, AppStyles.bodyText6),
+            _buildAddress(screenHeight, screenWidth),
+            buildTextSection3(screenHeight, screenWidth,
+                'Basak, Pardo, 123 Street', AppStyles.bodyText6),
+            _buildOrderSummary(screenHeight, screenWidth),
+            textRow6(screenHeight, screenWidth),
+            buildTextSection3(screenHeight, screenWidth,
+                'Transaction Code: MYUI7821A-G2-90A', AppStyles.bodyText2),
+            _buildViewChat(screenHeight, screenWidth),
+            _buildOrderTotal(screenHeight, screenWidth),
+            _buildTotalPayment(screenHeight, screenWidth, totalPayment),
+          ],
+        );
+      },
     );
   }
 
@@ -77,7 +116,7 @@ class OrderStatus extends StatelessWidget {
     return Padding(
       padding: EdgeInsets.only(
           left: 15, // Set or reduce the left padding as needed
-          top: screenHeight * 0.03),
+          top: screenHeight * 0.02),
       child: Text(text, style: style),
     );
   }
@@ -114,7 +153,8 @@ class OrderStatus extends StatelessWidget {
     );
   }
 
-  Widget itemCard(double screenHeight, double screenWidth) {
+  Widget itemCard(double screenHeight, double screenWidth,
+      String deliveryMethod, String selectedOptions, totalPayment) {
     return Padding(
       padding: const EdgeInsets.only(top: 8.0, left: 10.0, bottom: 10.0),
       child: Stack(
@@ -133,7 +173,8 @@ class OrderStatus extends StatelessWidget {
                   ),
                 ],
               ),
-              child: cardFullDetails(screenHeight, screenWidth)),
+              child: cardFullDetails(screenHeight, screenWidth, deliveryMethod,
+                  selectedOptions, totalPayment)),
           buildTextSection2(
               screenHeight, screenWidth, 'Aqua Atlan', AppStyles.headline2),
         ],
@@ -141,40 +182,42 @@ class OrderStatus extends StatelessWidget {
     );
   }
 
-  Widget cardDetails(double screenHeight, double screenWidth) {
+  Widget cardDetails(double screenHeight, double screenWidth,
+      String deliveryMethod, String selectedOptions, totalPayment) {
     return Padding(
       padding: const EdgeInsets.only(top: 45.0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          buildTextSection(screenHeight, screenWidth, 'Barrel (200 Liters) x3',
-              AppStyles.bodyText2),
+          buildTextSection(
+              screenHeight, screenWidth, selectedOptions, AppStyles.bodyText2),
           SizedBox(
             height: 8,
           ),
           buildTextSection(
-              screenHeight, screenWidth, 'Delivery', AppStyles.bodyText2),
+              screenHeight, screenWidth, deliveryMethod, AppStyles.bodyText2),
           SizedBox(
             height: 8,
           ),
           buildTextSection(
-              screenHeight, screenWidth, 'P12.00', AppStyles.bodyText2),
+              screenHeight, screenWidth, totalPayment, AppStyles.bodyText2),
         ],
       ),
     );
   }
 
-  Widget cardFullDetails(double screenHeight, double screenWidth) {
+  Widget cardFullDetails(double screenHeight, double screenWidth,
+      String deliveryMethod, String selectedOptions, totalPayment) {
     return Padding(
       padding: const EdgeInsets.only(top: 5.0, left: 10.0),
       child: Row(
         children: [
           card(),
-          // SizedBox(
-          //   width: 8,
-          // ),
-          cardDetails(screenHeight, screenWidth),
-          edit()
+          SizedBox(
+            width: 8,
+          ),
+          cardDetails(screenHeight, screenWidth, deliveryMethod,
+              selectedOptions, totalPayment),
         ],
       ),
     );
@@ -187,8 +230,8 @@ class OrderStatus extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           clipboard(),
-          buildTextSection3(screenHeight, screenWidth,
-              'Order Total ( 3 Items )', AppStyles.bodyText6),
+          buildTextSection3(
+              screenHeight, screenWidth, 'Order Total', AppStyles.bodyText6),
         ],
       ),
     );
@@ -215,30 +258,37 @@ class OrderStatus extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           location(),
-          buildTextSection3(screenHeight, screenWidth,
-              'View real-time Location', AppStyles.bodyText6),
-          SizedBox(width: 60),
-          Stack(
-            alignment:
-                Alignment.center, // Center align the text within the stack
-            children: [
-              Container(
-                height: 40,
-                width: 100,
-                decoration: BoxDecoration(
-                  color: Color(0xFF66AFFF),
-                  borderRadius: BorderRadius.circular(10),
-                ),
+          buildTextSection3(
+            screenHeight,
+            screenWidth,
+            'View real-time Location',
+            AppStyles.bodyText6,
+          ),
+          SizedBox(width: 33),
+          ElevatedButton(
+            onPressed: () async {
+              try {
+                // Call the cancelOrder function to update the status
+                await cancelOrder();
+                // Add any additional logic you want to perform after the update here
+              } catch (e) {
+                print('Error canceling order: $e');
+              }
+            },
+            style: ElevatedButton.styleFrom(
+              primary: Color(0xFF66AFFF), // Background color
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10), // Border radius
               ),
-              Text(
-                'Cancel',
-                style: GoogleFonts.poppins(
-                  color: Colors.white,
-                  fontWeight: FontWeight.w600,
-                  fontSize: 20,
-                ),
+            ),
+            child: Text(
+              'Cancel',
+              style: GoogleFonts.poppins(
+                color: Colors.white,
+                fontWeight: FontWeight.w600,
+                fontSize: 20,
               ),
-            ],
+            ),
           ),
         ],
       ),
@@ -320,7 +370,8 @@ class OrderStatus extends StatelessWidget {
     );
   }
 
-  Widget _buildTotalPayment(double screenHeight, double screenWidth) {
+  Widget _buildTotalPayment(
+      double screenHeight, double screenWidth, String totalPayment) {
     return Padding(
       padding: const EdgeInsets.only(top: 20.0),
       child: Row(
@@ -328,9 +379,9 @@ class OrderStatus extends StatelessWidget {
         children: [
           buildTextSection3(
               screenHeight, screenWidth, 'Total Payment', AppStyles.headline2),
-          SizedBox(width: 90.00),
-          buildTextSection3(
-              screenHeight, screenWidth, 'P7520.00', AppStyles.headline2),
+          SizedBox(width: 110.00),
+          buildTextSection3(screenHeight, screenWidth, 'P $totalPayment',
+              AppStyles.headline2),
         ],
       ),
     );
@@ -439,13 +490,6 @@ class OrderStatus extends StatelessWidget {
     return Padding(
       padding: EdgeInsets.only(top: 40.0),
       child: Image.asset('assets/Order/AquaAtlanSmall.png'),
-    );
-  }
-
-  Widget edit() {
-    return Padding(
-      padding: EdgeInsets.only(left: 0.0, top: 145.00),
-      child: Image.asset('assets/Order/edit.png'),
     );
   }
 

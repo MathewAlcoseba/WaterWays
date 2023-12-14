@@ -1,25 +1,70 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:waterways/OrderManagement/custom_appbar_storedetails.dart';
 import 'package:waterways/OrderManagement/successful_purchase.dart';
 import 'package:waterways/app_styles.dart';
-import 'package:waterways/bottom_navbar.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
-void main() {
-  runApp(const Checkout(
-    title: '',
-  ));
-}
+// void main() {
+//   runApp(Checkout(
+//     title: '',
+//     selectedOptions: '',
+//     deliveryMethod: '',
+//     totalPrice: 0.0,
+//     showCupertinoPopupCallback: () {
+//       // Dummy callback function for initialization
+//       // print("Cupertino Popup Callback Triggered");
+//     },
+
+//   ));
+// }
 
 class Checkout extends StatefulWidget {
-  const Checkout({Key? key, required this.title}) : super(key: key);
-  final String title;
+  const Checkout(
+      {Key? key,
+      required this.title,
+      required this.selectedOptions,
+      required this.deliveryMethod,
+      required this.totalPrice,
+      required this.subPrice,
+      required this.selectedDeliveryFee,
+      required this.showCupertinoPopupCallback})
+      : super(key: key);
 
+  final String title;
+  final VoidCallback showCupertinoPopupCallback;
+  final String selectedOptions;
+  final String deliveryMethod;
+  final double totalPrice;
+  final double subPrice;
+  final double selectedDeliveryFee;
   @override
   _CheckoutState createState() => _CheckoutState();
 }
 
 class _CheckoutState extends State<Checkout> {
+  Future<void> submitOrderToFirestore() async {
+    FirebaseFirestore firestore = FirebaseFirestore.instance;
+
+    try {
+      await firestore.collection('Orders').add({
+        'Status': true,
+        'deliveryMethod': widget.deliveryMethod,
+        'totalPayment': widget.totalPrice,
+        'productSubtotal': widget.subPrice,
+        'deliverySubtotal': widget.selectedDeliveryFee,
+        'paymentOption': selectedPaymentMethod ?? 'Not Selected',
+      });
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) => SuccessfulPurchase(title: 'Your Purchase')),
+      );
+    } catch (e) {
+      print('Error submitting order: $e');
+    }
+  }
+
   String? selectedPaymentMethod;
   List<String> paymentMethods = [
     'Credit Card',
@@ -181,18 +226,14 @@ class _CheckoutState extends State<Checkout> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          buildTextSection(screenHeight, screenWidth, 'Barrel (200 Liters) x3',
+          buildTextSection(screenHeight, screenWidth, widget.selectedOptions,
               AppStyles.bodyText2),
-          SizedBox(
-            height: 8,
-          ),
-          buildTextSection(
-              screenHeight, screenWidth, 'Delivery', AppStyles.bodyText2),
-          SizedBox(
-            height: 8,
-          ),
-          buildTextSection(
-              screenHeight, screenWidth, 'P12.00', AppStyles.bodyText2),
+          SizedBox(height: 8),
+          buildTextSection(screenHeight, screenWidth, widget.deliveryMethod,
+              AppStyles.bodyText2),
+          SizedBox(height: 8),
+          buildTextSection(screenHeight, screenWidth,
+              '₱${widget.totalPrice.toStringAsFixed(2)}', AppStyles.bodyText2),
         ],
       ),
     );
@@ -204,9 +245,9 @@ class _CheckoutState extends State<Checkout> {
       child: Row(
         children: [
           card(),
-          // SizedBox(
-          //   width: 8,
-          // ),
+          SizedBox(
+            width: 8,
+          ),
           cardDetails(screenHeight, screenWidth),
           edit()
         ],
@@ -244,7 +285,10 @@ class _CheckoutState extends State<Checkout> {
           down(),
           SizedBox(width: 130.00),
           buildTextSection3(
-              screenHeight, screenWidth, 'P320.00', AppStyles.bodyText2),
+              screenHeight,
+              screenWidth,
+              '₱${widget.selectedDeliveryFee.toStringAsFixed(2)}',
+              AppStyles.bodyText2),
         ],
       ),
     );
@@ -275,11 +319,11 @@ class _CheckoutState extends State<Checkout> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           clipboard(),
-          buildTextSection3(screenHeight, screenWidth,
-              'Order Total ( 3 Items )', AppStyles.bodyText6),
-          SizedBox(width: 45.00),
-          buildTextSection4(
-              screenHeight, screenWidth, 'P7520.00', AppStyles.headline2),
+          buildTextSection3(
+              screenHeight, screenWidth, 'Order Total:', AppStyles.bodyText6),
+          SizedBox(width: 135.00),
+          buildTextSection4(screenHeight, screenWidth,
+              '₱${widget.totalPrice.toStringAsFixed(2)}', AppStyles.headline2),
         ],
       ),
     );
@@ -307,11 +351,14 @@ class _CheckoutState extends State<Checkout> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          buildTextSection3(
-              screenHeight, screenWidth, '720', AppStyles.bodyText6),
+          buildTextSection3(screenHeight, screenWidth,
+              '₱${widget.subPrice.toStringAsFixed(2)}', AppStyles.bodyText6),
           SizedBox(height: 5.00),
           buildTextSection3(
-              screenHeight, screenWidth, '320', AppStyles.bodyText6),
+              screenHeight,
+              screenWidth,
+              '₱${widget.selectedDeliveryFee.toStringAsFixed(2)}',
+              AppStyles.bodyText6),
         ],
       ),
     );
@@ -338,7 +385,7 @@ class _CheckoutState extends State<Checkout> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           textCol1(screenHeight, screenWidth),
-          SizedBox(width: 185.00),
+          SizedBox(width: 130.00),
           textCol2(screenHeight, screenWidth)
         ],
       ),
@@ -354,8 +401,8 @@ class _CheckoutState extends State<Checkout> {
           buildTextSection3(
               screenHeight, screenWidth, 'Total Payment', AppStyles.headline2),
           SizedBox(width: 90.00),
-          buildTextSection3(
-              screenHeight, screenWidth, 'P7520.00', AppStyles.headline2),
+          buildTextSection3(screenHeight, screenWidth,
+              '₱${widget.totalPrice.toStringAsFixed(2)}', AppStyles.headline2),
         ],
       ),
     );
@@ -368,16 +415,12 @@ class _CheckoutState extends State<Checkout> {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          buildTextSection6(
-              screenHeight, screenWidth, 'P7520.00', AppStyles.headline2),
+          buildTextSection6(screenHeight, screenWidth,
+              '₱${widget.totalPrice.toStringAsFixed(2)}', AppStyles.headline2),
           SizedBox(width: 20.00),
           GestureDetector(
             onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (context) => SuccessfulPurchase(title: '')),
-              );
+              submitOrderToFirestore();
             },
             child: buildTextSection6(
                 screenHeight, screenWidth, 'Place Order', AppStyles.headline8),
@@ -463,9 +506,12 @@ class _CheckoutState extends State<Checkout> {
   }
 
   Widget edit() {
-    return Padding(
-      padding: EdgeInsets.only(left: 0.0, top: 145.00),
-      child: Image.asset('assets/Order/edit.png'),
+    return GestureDetector(
+      onTap: widget.showCupertinoPopupCallback,
+      child: Padding(
+        padding: EdgeInsets.only(left: 70.0, top: 145.00),
+        child: Image.asset('assets/Order/edit.png'), // Your edit button's image
+      ),
     );
   }
 

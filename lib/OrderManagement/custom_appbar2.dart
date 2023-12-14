@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:waterways/UserUI/user_home_page.dart';
+import 'package:waterways/UserUI/user_main_page.dart';
 import 'package:waterways/app_styles.dart';
 
 class AppBarToHome extends StatelessWidget {
@@ -31,7 +32,11 @@ class AppBarToHome extends StatelessWidget {
             children: [
               GestureDetector(
                 onTap: () {
-                  Navigator.of(context).pop();
+                  Navigator.of(context).pushReplacement(
+                    MaterialPageRoute(
+                      builder: (context) => UserMainPage(),
+                    ),
+                  );
                 },
                 child: Image.asset(
                   'assets/Main/left.png',

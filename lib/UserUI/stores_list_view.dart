@@ -198,7 +198,7 @@ class AvailableStoresListView extends StatelessWidget {
                         ),
                         onPressed: () {
                           print('IconButton pressed!');
-                        }, // handle onPressed here
+                        },
                       ),
                     )
                   ]),

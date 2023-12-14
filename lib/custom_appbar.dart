@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:waterways/UserUI/search_bar.dart';
 import 'package:waterways/app_styles.dart';
 
 class CustomAppBar extends StatelessWidget {
@@ -72,35 +73,24 @@ class CustomAppBar extends StatelessWidget {
 void showSearchBottomSheet(BuildContext context) {
   showModalBottomSheet(
     context: context,
+    isScrollControlled: true,
     builder: (BuildContext bc) {
-      return Padding(
-        padding: MediaQuery.of(context).viewInsets,
-        child: Container(
-          padding: const EdgeInsets.all(10),
-          child: Wrap(
-            children: <Widget>[
-              Container(
-                decoration: BoxDecoration(
-                  color: AppStyles.colorScheme.primary,
-                  borderRadius: BorderRadius.circular(50),
-                ),
-                child: ListTile(
-                  leading: const Icon(Icons.search, color: Colors.grey),
-                  title: TextField(
-                    decoration: const InputDecoration(
-                      hintText: 'Search',
-                      border: InputBorder.none,
-                      contentPadding: EdgeInsets.symmetric(vertical: 10),
-                      focusedBorder: InputBorder.none,
-                    ),
-                    autofocus: true,
-                    cursorColor: AppStyles.colorScheme.inversePrimary,
-                  ),
-                ),
+      return DraggableScrollableSheet(
+        expand: false,
+        builder: (_, scrollController) {
+          return SingleChildScrollView(
+            controller: scrollController,
+            child: Container(
+              padding: const EdgeInsets.all(20),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: <Widget>[
+                  const CustomSearchBar(),
+                ],
               ),
-            ],
-          ),
-        ),
+            ),
+          );
+        },
       );
     },
   );

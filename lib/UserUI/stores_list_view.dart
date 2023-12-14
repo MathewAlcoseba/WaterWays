@@ -7,12 +7,19 @@ import 'package:waterways/UserUI/user_home_page.dart';
 import 'package:waterways/app_styles.dart';
 import 'package:waterways/models/users.dart';
 
-class AvailableStoresListView extends StatelessWidget {
+class AvailableStoresListView extends StatefulWidget {
   AvailableStoresListView(
       {super.key, required this.customer, required this.searchQuery});
   final String searchQuery;
   final Customer customer;
 
+  @override
+  State<AvailableStoresListView> createState() =>
+      _AvailableStoresListViewState();
+}
+
+class _AvailableStoresListViewState extends State<AvailableStoresListView> {
+  List<String> favoriteStores = [];
   @override
   Widget build(BuildContext context) {
     return FutureBuilder<List<Store>>(
@@ -29,15 +36,15 @@ class AvailableStoresListView extends StatelessWidget {
         }
 
         List<Store> stores = snapshot.data!.where((store) {
-          String lowerCaseQuery = searchQuery.toLowerCase();
+          String lowerCaseQuery = widget.searchQuery.toLowerCase();
 
           return store.storeName.toLowerCase().contains(lowerCaseQuery) ||
               store.storeAddress.toLowerCase().contains(lowerCaseQuery) ||
               store.storeBio.toLowerCase().contains(lowerCaseQuery) ||
               store.storeHours.toLowerCase().contains(lowerCaseQuery) ||
-              store.storeRating.toString().contains(searchQuery) ||
-              store.waterInStock.toString().contains(searchQuery) ||
-              store.price.toString().contains(searchQuery) ||
+              store.storeRating.toString().contains(widget.searchQuery) ||
+              store.waterInStock.toString().contains(widget.searchQuery) ||
+              store.price.toString().contains(widget.searchQuery) ||
               (store.isAvailable ? 'open' : 'closed').contains(lowerCaseQuery);
         }).toList();
 
@@ -196,7 +203,7 @@ class AvailableStoresListView extends StatelessWidget {
                           Navigator.of(context).push(
                             MaterialPageRoute(
                                 builder: (context) => OrderDetails(
-                                      customer: customer,
+                                      customer: widget.customer,
                                       store: store,
                                     )),
                           );
@@ -209,12 +216,20 @@ class AvailableStoresListView extends StatelessWidget {
                       top: 140,
                       child: IconButton(
                         icon: Icon(
-                          Icons.favorite_outline_rounded,
+                          favoriteStores.contains(store.storeId)
+                              ? Icons.favorite
+                              : Icons.favorite_outline_rounded,
                           color: AppStyles.colorScheme.primary,
                           size: 28,
                         ),
                         onPressed: () {
-                          print('IconButton pressed!');
+                          setState(() {
+                            if (favoriteStores.contains(store.storeId)) {
+                              favoriteStores.remove(store.storeId);
+                            } else {
+                              favoriteStores.add(store.storeId);
+                            }
+                          });
                         },
                       ),
                     )

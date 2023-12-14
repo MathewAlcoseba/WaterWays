@@ -8,7 +8,8 @@ import 'package:waterways/app_styles.dart';
 import 'package:waterways/models/users.dart';
 
 class AvailableStoresListView extends StatelessWidget {
-  const AvailableStoresListView({super.key});
+  AvailableStoresListView({super.key, required this.customer});
+  final Customer customer;
 
   @override
   Widget build(BuildContext context) {
@@ -181,9 +182,12 @@ class AvailableStoresListView extends StatelessWidget {
                         onPressed: () {
                           Navigator.of(context).push(
                             MaterialPageRoute(
-                                builder: (context) =>
-                                    OrderDetails(title: 'SampleTitle')),
+                                builder: (context) => OrderDetails(
+                                      customer: customer,
+                                      store: store,
+                                    )),
                           );
+                          // print(store.storeName);
                         },
                       ),
                     ),

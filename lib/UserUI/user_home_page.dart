@@ -7,8 +7,10 @@ import 'package:waterways/models/users.dart';
 
 class UserHomePage extends StatelessWidget {
   final Customer customer;
-
-  const UserHomePage({super.key, required this.customer});
+  const UserHomePage({
+    super.key,
+    required this.customer,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -16,13 +18,13 @@ class UserHomePage extends StatelessWidget {
         child: Scaffold(
             extendBody: true,
             backgroundColor: AppStyles.colorScheme.background,
-            appBar: const PreferredSize(
+            appBar: PreferredSize(
               preferredSize: Size.fromHeight(75.0),
               child: CustomAppBar(
-                title: '',
+                customer: customer,
               ),
             ),
-            body: const Padding(
+            body: Padding(
               padding: EdgeInsets.only(left: 16.0, right: 16.0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -31,7 +33,7 @@ class UserHomePage extends StatelessWidget {
                   // SizedBox(
                   //   height: 16.0,
                   // ),
-                  AvailableStoresListView(),
+                  AvailableStoresListView(customer: customer),
                 ],
               ),
             )));

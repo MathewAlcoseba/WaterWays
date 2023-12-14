@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:waterways/OrderManagement/order_status.dart';
+import 'package:waterways/models/users.dart';
 
-void main() {
-  runApp(const PurchaseHistory(title: 'Purchase History'));
-}
+// void main() {
+//   runApp(const PurchaseHistory(title: 'Purchase History'));
+// }
 
 class PurchaseHistory extends StatelessWidget {
-  const PurchaseHistory({super.key, required this.title});
+  const PurchaseHistory({super.key, required this.customer});
 
-  final String title;
+  final Customer customer;
 
   @override
   Widget build(BuildContext context) {
@@ -62,7 +63,8 @@ class PurchaseHistory extends StatelessWidget {
               ),
             ),
             bottom: TabBar(
-              labelColor: const Color(0xFF007AFF), // Set the selected label color
+              labelColor:
+                  const Color(0xFF007AFF), // Set the selected label color
               unselectedLabelColor:
                   const Color(0xFF313144), // Set the unselected label color
               labelStyle: GoogleFonts.poppins(
@@ -121,7 +123,7 @@ class PurchaseHistory extends StatelessWidget {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                    builder: (context) => const OrderStatus(title: 'Your Title')),
+                    builder: (context) => OrderStatus(customer: customer)),
               );
             },
           ),

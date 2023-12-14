@@ -1,15 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:waterways/OrderManagement/order_status.dart';
+import 'package:waterways/models/users.dart';
 
-void main() {
-  runApp(const SuccessfulPurchase(
-    title: '',
-  ));
-}
+// void main() {
+//   runApp(const SuccessfulPurchase(
+//     title: '',
+//   ));
+// }
 
 class SuccessfulPurchase extends StatelessWidget {
-  const SuccessfulPurchase({super.key, required String title});
+  final Customer customer;
+  const SuccessfulPurchase({super.key, required this.customer});
 
   @override
   Widget build(BuildContext context) {
@@ -91,8 +93,8 @@ class SuccessfulPurchase extends StatelessWidget {
       onTap: () => Navigator.push(
         context,
         MaterialPageRoute(
-            builder: (context) => const OrderStatus(
-                  title: '',
+            builder: (context) => OrderStatus(
+                  customer: customer,
                 )),
       ),
       child: Image.asset('assets/Order/clipboardWhite 1.png'),

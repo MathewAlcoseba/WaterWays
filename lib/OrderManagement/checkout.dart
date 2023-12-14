@@ -2,16 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:waterways/OrderManagement/custom_appbar_storedetails.dart';
 import 'package:waterways/OrderManagement/successful_purchase.dart';
 import 'package:waterways/app_styles.dart';
+import 'package:waterways/models/users.dart';
 
-void main() {
-  runApp(const Checkout(
-    title: '',
-  ));
-}
+// void main() {
+//   runApp(const Checkout(
+//     title: '',
+//   ));
+// }
 
 class Checkout extends StatefulWidget {
-  const Checkout({super.key, required this.title});
-  final String title;
+  const Checkout({super.key, required this.customer});
+  final Customer customer;
 
   @override
   _CheckoutState createState() => _CheckoutState();
@@ -374,7 +375,8 @@ class _CheckoutState extends State<Checkout> {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                    builder: (context) => const SuccessfulPurchase(title: '')),
+                    builder: (context) =>
+                        SuccessfulPurchase(customer: widget.customer)),
               );
             },
             child: buildTextSection6(

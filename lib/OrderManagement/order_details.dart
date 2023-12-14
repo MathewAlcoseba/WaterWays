@@ -5,14 +5,16 @@ import 'package:waterways/OrderManagement/checkout.dart';
 import 'package:waterways/OrderManagement/custom_appbar_storedetails.dart';
 import 'package:waterways/OrderManagement/store_rating.dart';
 import 'package:waterways/app_styles.dart';
+import 'package:waterways/models/users.dart';
 
-void main() {
-  runApp(const OrderDetails(title: ''));
-}
+// void main() {
+//   runApp(const OrderDetails(customer: Customer, store: Store));
+// }
 
 class OrderDetails extends StatefulWidget {
-  const OrderDetails({super.key, required this.title});
-  final String title;
+  final Customer customer;
+  final Store store;
+  const OrderDetails({super.key, required this.customer, required this.store});
 
   @override
   _OrderDetailsState createState() => _OrderDetailsState();
@@ -28,7 +30,6 @@ class _OrderDetailsState extends State<OrderDetails> {
   int radioValue = 0;
 
   void showCupertinoPopup(BuildContext context) {
-    // Default prices for each option
     const double pricePerGallon = 25.0;
     const double pricePerBarrel = 300.0;
     const double pricePerICBTank = 1000.0;
@@ -36,7 +37,6 @@ class _OrderDetailsState extends State<OrderDetails> {
     const double radioOption1Price = 25.0;
     const double radioOption2Price = 0.0;
 
-    // Function to calculate total price
     double calculateTotalPrice() {
       double totalPrice = 0.0;
       if (checkboxValue1) totalPrice += pricePerGallon;
@@ -46,7 +46,7 @@ class _OrderDetailsState extends State<OrderDetails> {
       if (radioValue == 1) totalPrice += radioOption1Price;
       if (radioValue == 2) totalPrice += radioOption2Price;
 
-      return totalPrice * counter; // Multiply by quantity
+      return totalPrice * counter;
     }
 
     showCupertinoModalPopup(
@@ -195,19 +195,15 @@ class _OrderDetailsState extends State<OrderDetails> {
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: [
                               Container(
-                                margin: const EdgeInsets.only(
-                                    right: 10,
-                                    left:
-                                        20), // Add right margin to the first container
+                                margin:
+                                    const EdgeInsets.only(right: 10, left: 20),
                                 decoration: const BoxDecoration(
-                                  color: Color(
-                                      0XFF007AFF), // Set the color of the circle
-                                  shape: BoxShape.circle, // Make it circular
+                                  color: Color(0XFF007AFF),
+                                  shape: BoxShape.circle,
                                 ),
                                 child: IconButton(
                                   icon: const Icon(Icons.remove,
-                                      color: Colors
-                                          .white), // Set icon color to white
+                                      color: Colors.white),
                                   onPressed: () {
                                     setState(() {
                                       if (counter > 0) counter--;
@@ -216,25 +212,20 @@ class _OrderDetailsState extends State<OrderDetails> {
                                 ),
                               ),
                               Padding(
-                                padding: const EdgeInsets.symmetric(
-                                    horizontal:
-                                        8), // Add horizontal padding to the text
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: 8),
                                 child: Text('$counter',
                                     style: const TextStyle(fontSize: 20)),
                               ),
                               Container(
-                                margin: const EdgeInsets.only(
-                                    left:
-                                        10), // Add left margin to the second container
+                                margin: const EdgeInsets.only(left: 10),
                                 decoration: const BoxDecoration(
-                                  color: Color(
-                                      0XFF007AFF), // Set the color of the circle
-                                  shape: BoxShape.circle, // Make it circular
+                                  color: Color(0XFF007AFF),
+                                  shape: BoxShape.circle,
                                 ),
                                 child: IconButton(
                                   icon: const Icon(Icons.add,
-                                      color: Colors
-                                          .white), // Set icon color to white
+                                      color: Colors.white),
                                   onPressed: () {
                                     setState(() {
                                       counter++;
@@ -247,19 +238,19 @@ class _OrderDetailsState extends State<OrderDetails> {
                               ),
                               SizedBox(
                                 width: 146,
-                                height: 42, // Set the width of the container
+                                height: 42,
                                 child: ElevatedButton(
                                   onPressed: () {
-                                    // Navigate to Checkout page when pressed
                                     Navigator.push(
                                       context,
                                       MaterialPageRoute(
-                                          builder: (context) =>
-                                              const Checkout(title: 'Checkout')),
+                                          builder: (context) => Checkout(
+                                              customer: widget.customer)),
                                     );
                                   },
                                   style: ElevatedButton.styleFrom(
-                                    foregroundColor: Colors.white, backgroundColor: const Color(0XFF007AFF),
+                                    foregroundColor: Colors.white,
+                                    backgroundColor: const Color(0XFF007AFF),
                                   ),
                                   child: const Text('BUY',
                                       style: TextStyle(fontSize: 20)),
@@ -305,7 +296,7 @@ class _OrderDetailsState extends State<OrderDetails> {
               buildTextSection(
                 screenHeight,
                 screenWidth,
-                'Aqua Atlan has been a local water refilling station for more than 7 years. We are always ready to serve you!',
+                widget.store.storeBio,
                 AppStyles.bodyText5,
               ),
               buildRowWithTextAndButton(screenWidth, screenHeight),
@@ -359,7 +350,7 @@ class _OrderDetailsState extends State<OrderDetails> {
           Positioned(
             top: screenHeight * 0.09,
             left: screenWidth * 0.28,
-            child: Text('Aqua Atlan', style: AppStyles.headline6),
+            child: Text(widget.store.storeName, style: AppStyles.headline6),
           ),
           Positioned(
             top: screenHeight * 0.09,
@@ -375,9 +366,7 @@ class _OrderDetailsState extends State<OrderDetails> {
                   children: [
                     const SizedBox(height: 45),
                     ElevatedButton.icon(
-                      onPressed: () {
-                        // Define your action here
-                      },
+                      onPressed: () {},
                       icon: const Icon(Icons.mail, color: Colors.white),
                       label: Text(
                         'Message',
@@ -403,26 +392,34 @@ class _OrderDetailsState extends State<OrderDetails> {
   Widget buildRowWithTextAndButton(double screenHeight, double screenWidth) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      crossAxisAlignment: CrossAxisAlignment
-          .start, // Align children to the start of the cross axis
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        buildTextSection(screenHeight, screenWidth, '10:00 AM - 4:30 PM',
+        buildTextSection(screenHeight, screenWidth, widget.store.storeHours,
             AppStyles.bodyText6),
         ElevatedButton(
-          onPressed: () {
-            // Define your action here
-          },
-          style: ElevatedButton.styleFrom(
-            backgroundColor: const Color(0xfff8f8f8),
-            elevation: 0,
-          ),
-          child: const Text(
-            'Open',
-            style: TextStyle(
-                color: Color(0XFF007AFF),
-                fontSize: 16), // Text color set to white
-          ),
-        ),
+            onPressed: () {},
+            style: ElevatedButton.styleFrom(
+              backgroundColor: const Color(0xfff8f8f8),
+              elevation: 0,
+            ),
+            child: Container(
+              width: 55,
+              height: 20,
+              decoration: BoxDecoration(
+                color: widget.store.isAvailable
+                    ? AppStyles.colorScheme.secondary
+                    : AppStyles.colorScheme.tertiary,
+                borderRadius: BorderRadius.circular(50),
+              ),
+              child: Center(
+                child: Text(
+                  widget.store.isAvailable ? "open" : "closed",
+                  style: AppStyles.bodyText3.copyWith(
+                    color: AppStyles.colorScheme.primary,
+                  ),
+                ),
+              ),
+            )),
       ],
     );
   }
@@ -430,9 +427,7 @@ class _OrderDetailsState extends State<OrderDetails> {
   Widget buildTextSection(
       double screenHeight, double screenWidth, String text, TextStyle style) {
     return Padding(
-      padding: EdgeInsets.only(
-          left: 10, // Set or reduce the left padding as needed
-          top: screenHeight * 0.01),
+      padding: EdgeInsets.only(left: 10, top: screenHeight * 0.01),
       child: Text(text, style: style),
     );
   }
@@ -440,9 +435,7 @@ class _OrderDetailsState extends State<OrderDetails> {
   Widget buildTextSection2(
       double screenHeight, double screenWidth, String text, TextStyle style) {
     return Padding(
-      padding: EdgeInsets.only(
-          left: 10, // Set or reduce the left padding as needed
-          top: screenHeight * 0.00),
+      padding: EdgeInsets.only(left: 10, top: screenHeight * 0.00),
       child: Text(text, style: style),
     );
   }
@@ -565,7 +558,6 @@ class _OrderDetailsState extends State<OrderDetails> {
         reviewRating(screenHeight, screenWidth),
         const SizedBox(width: 150),
         Row(
-          // Inner row
           children: [
             const SizedBox(height: 50),
             GestureDetector(
@@ -573,8 +565,9 @@ class _OrderDetailsState extends State<OrderDetails> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder: (context) => const StoreRating(
-                            title: '',
+                      builder: (context) => StoreRating(
+                            customer: widget.customer,
+                            store: widget.store,
                           )),
                 );
               },
@@ -586,9 +579,9 @@ class _OrderDetailsState extends State<OrderDetails> {
     );
   }
 
-  Widget banner() => Image.asset('assets/Order/banner.png');
+  Widget banner() => Image.network(widget.store.coverImg);
   Widget stockIcon() => Image.asset('assets/Order/stockIcon.png');
-  Widget profileIcon() => Image.asset('assets/Order/profileIcon.png');
+  Widget profileIcon() => Image.network(widget.store.profileImg);
   Widget rating() => Image.asset('assets/Order/yellowStars.png');
   Widget dot() => Image.asset('assets/Order/dot.png');
   Widget messageIcon() => Image.asset('assets/Order/messageIcon.png');

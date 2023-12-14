@@ -3,15 +3,16 @@ import 'package:flutter/material.dart';
 import 'package:waterways/OrderManagement/custom_appbar_storedetails.dart';
 import 'package:waterways/OrderManagement/order_details.dart';
 import 'package:waterways/app_styles.dart';
+import 'package:waterways/models/users.dart';
 
-
-void main() {
-  runApp(const StoreRating(title: ''));
-}
+// void main() {
+//   runApp(const StoreRating(title: ''));
+// }
 
 class StoreRating extends StatelessWidget {
-  const StoreRating({super.key, required this.title});
-  final String title;
+  const StoreRating({super.key, required this.customer, required this.store});
+  final Customer customer;
+  final Store store;
 
   @override
   Widget build(BuildContext context) {
@@ -165,8 +166,9 @@ class StoreRating extends StatelessWidget {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder: (context) => const OrderDetails(
-                            title: '',
+                      builder: (context) => OrderDetails(
+                            customer: customer,
+                            store: store,
                           )),
                 );
               },
@@ -178,7 +180,8 @@ class StoreRating extends StatelessWidget {
 
   Widget review(BuildContext context, double screenHeight, double screenWidth) {
     return Padding(
-      padding: const EdgeInsets.only(left: 8.0), // Adjust the left padding as needed
+      padding:
+          const EdgeInsets.only(left: 8.0), // Adjust the left padding as needed
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

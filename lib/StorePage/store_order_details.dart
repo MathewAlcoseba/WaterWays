@@ -3,10 +3,11 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:waterways/OrderManagement/custom_appbar2.dart';
 import 'package:step_progress_indicator/step_progress_indicator.dart';
 import 'package:waterways/app_styles.dart';
+import 'package:waterways/models/users.dart';
 
 class StoreOrderStatus extends StatefulWidget {
-  const StoreOrderStatus({Key? key, required this.title}) : super(key: key);
-  final String title;
+  const StoreOrderStatus({Key? key, required this.customer}) : super(key: key);
+  final Customer customer;
 
   @override
   _StoreOrderStatusState createState() => _StoreOrderStatusState();
@@ -62,10 +63,10 @@ class _StoreOrderStatusState extends State<StoreOrderStatus>
       child: Scaffold(
         extendBody: true,
         backgroundColor: AppStyles.colorScheme.background,
-        appBar: const PreferredSize(
+        appBar: PreferredSize(
           preferredSize: Size.fromHeight(75.0),
           child: AppBarToHome(
-            title: 'Order Details',
+            customer: widget.customer,
           ),
         ),
         body: SingleChildScrollView(

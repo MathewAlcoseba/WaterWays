@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:waterways/UserUI/search_bar.dart';
 import 'package:waterways/app_styles.dart';
+import 'package:waterways/models/users.dart';
 
 class CustomAppBar extends StatelessWidget {
-  const CustomAppBar({super.key, required String title});
+  final Customer customer;
+  const CustomAppBar({super.key, required this.customer});
 
   @override
   Widget build(BuildContext context) {

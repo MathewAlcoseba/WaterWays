@@ -1,11 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:waterways/OrderManagement/order_status.dart';
+import 'package:waterways/models/users.dart';
+
+// void main() {
+//   runApp(const PurchaseHistory(title: 'Purchase History'));
+// }
 
 class PurchaseHistory extends StatelessWidget {
-  const PurchaseHistory({Key? key, required this.title}) : super(key: key);
+  const PurchaseHistory({super.key, required this.customer});
 
-  final String title;
+  final Customer customer;
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +23,7 @@ class PurchaseHistory extends StatelessWidget {
           appBar: AppBar(
             toolbarHeight: 90,
             leading: IconButton(
-              icon: Icon(Icons.arrow_back, color: Colors.black),
+              icon: const Icon(Icons.arrow_back, color: Colors.black),
               onPressed: () {
                 Navigator.pop(context); // Pop the current screen
               },
@@ -30,13 +35,13 @@ class PurchaseHistory extends StatelessWidget {
                 style: GoogleFonts.poppins(
                   fontSize: 26,
                   fontWeight: FontWeight.w600,
-                  color: Color(0xFF313144),
+                  color: const Color(0xFF313144),
                 ),
                 children: <TextSpan>[
                   TextSpan(
                     text: '\nOrder History Details',
                     style: GoogleFonts.gothicA1(
-                      color: Color(0xFF6F6F6F),
+                      color: const Color(0xFF6F6F6F),
                       fontSize: 16,
                       fontWeight: FontWeight.w400,
                     ),
@@ -52,28 +57,29 @@ class PurchaseHistory extends StatelessWidget {
                     color: Colors.black.withOpacity(0.1),
                     spreadRadius: 1,
                     blurRadius: 5,
-                    offset: Offset(0, 3),
+                    offset: const Offset(0, 3),
                   ),
                 ],
               ),
             ),
             bottom: TabBar(
-              labelColor: Color(0xFF007AFF), // Set the selected label color
+              labelColor:
+                  const Color(0xFF007AFF), // Set the selected label color
               unselectedLabelColor:
-                  Color(0xFF313144), // Set the unselected label color
+                  const Color(0xFF313144), // Set the unselected label color
               labelStyle: GoogleFonts.poppins(
                 // Apply Poppins font for labels
                 fontWeight: FontWeight.w600,
                 fontSize: 16,
               ),
-              indicator: UnderlineTabIndicator(
+              indicator: const UnderlineTabIndicator(
                 borderSide: BorderSide(
                   color:
                       Color(0xFF007AFF), // Set the indicator (underline) color
                   width: 2.0,
                 ),
               ),
-              tabs: [
+              tabs: const [
                 Tab(text: 'On Going'),
                 Tab(text: 'Completed'),
               ],
@@ -117,7 +123,7 @@ class PurchaseHistory extends StatelessWidget {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                    builder: (context) => OrderStatus(title: 'Your Title')),
+                    builder: (context) => OrderStatus(customer: customer)),
               );
             },
           ),
@@ -130,7 +136,7 @@ class PurchaseHistory extends StatelessWidget {
     return Container(
       width: 380.0,
       height: 90.0,
-      margin: EdgeInsets.all(16.0),
+      margin: const EdgeInsets.all(16.0),
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(8.0),
@@ -139,7 +145,7 @@ class PurchaseHistory extends StatelessWidget {
             color: Colors.black.withOpacity(0.1),
             spreadRadius: 1,
             blurRadius: 5,
-            offset: Offset(0, 3),
+            offset: const Offset(0, 3),
           ),
         ],
       ),
@@ -176,7 +182,7 @@ class PurchaseHistory extends StatelessWidget {
             ),
           ),
           Padding(
-            padding: EdgeInsets.only(top: 4.0, right: 10.0),
+            padding: const EdgeInsets.only(top: 4.0, right: 10.0),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [

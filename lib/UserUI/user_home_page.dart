@@ -2,9 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:waterways/UserUI/stores_list_view.dart';
 import 'package:waterways/app_styles.dart';
 import 'package:waterways/custom_appbar.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:waterways/models/users.dart';
 
 class UserHomePage extends StatelessWidget {
-  const UserHomePage({super.key});
+  final Customer customer;
+  const UserHomePage({
+    super.key,
+    required this.customer,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -12,11 +18,13 @@ class UserHomePage extends StatelessWidget {
         child: Scaffold(
             extendBody: true,
             backgroundColor: AppStyles.colorScheme.background,
-            appBar: const PreferredSize(
+            appBar: PreferredSize(
               preferredSize: Size.fromHeight(75.0),
-              child: CustomAppBar(title: '',),
+              child: CustomAppBar(
+                customer: customer,
+              ),
             ),
-            body: const Padding(
+            body: Padding(
               padding: EdgeInsets.only(left: 16.0, right: 16.0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -25,7 +33,7 @@ class UserHomePage extends StatelessWidget {
                   // SizedBox(
                   //   height: 16.0,
                   // ),
-                  AvailableStoresListView(),
+                  AvailableStoresListView(customer: customer),
                 ],
               ),
             )));
@@ -36,9 +44,9 @@ class Rating extends StatelessWidget {
   final int starCount;
 
   const Rating({
-    Key? key,
+    super.key,
     required this.starCount,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -101,4 +109,20 @@ class Tag extends StatelessWidget {
       ),
     );
   }
+}
+
+Future<List<Store>> getStores() async {
+  List<Store> stores = [];
+  try {
+    QuerySnapshot querySnapshot =
+        await FirebaseFirestore.instance.collection('Stores').get();
+
+    for (var doc in querySnapshot.docs) {
+      Store store = Store.fromMap(doc.data() as Map<String, dynamic>);
+      stores.add(store);
+    }
+  } catch (e) {
+    print(e);
+  }
+  return stores;
 }

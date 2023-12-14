@@ -1,9 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:waterways/OrderManagement/order_status.dart';
+import 'package:waterways/models/users.dart';
+
+// void main() {
+//   runApp(const SuccessfulPurchase(
+//     title: '',
+//   ));
+// }
 
 class SuccessfulPurchase extends StatelessWidget {
-  const SuccessfulPurchase({Key? key, required String title}) : super(key: key);
+  final Customer customer;
+  const SuccessfulPurchase({super.key, required this.customer, required String title});
 
   @override
   Widget build(BuildContext context) {
@@ -19,15 +27,15 @@ class SuccessfulPurchase extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   _buildCheckIcon(),
-                  SizedBox(
+                  const SizedBox(
                     height: 30,
                   ),
                   _buildPaymentSuccessfulText(),
-                  SizedBox(
+                  const SizedBox(
                     height: 30,
                   ),
                   _buildViewOrderDetailsText(),
-                  SizedBox(
+                  const SizedBox(
                     height: 20,
                   ),
                   _buildViewOrderDetailsButton(context),
@@ -86,7 +94,7 @@ class SuccessfulPurchase extends StatelessWidget {
         context,
         MaterialPageRoute(
             builder: (context) => OrderStatus(
-                  title: '',
+                  customer: customer,
                 )),
       ),
       child: Image.asset('assets/Order/clipboardWhite 1.png'),

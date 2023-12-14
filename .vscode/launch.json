@@ -1,0 +1,28 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "WaterWays",
+            "request": "launch",
+            "type": "dart",
+            "cwd": "C:/Users/Mexl/Desktop/Mexl Files/College/3rd Year/Subjects/1st Sem/Mobile 1/Flutter Projects/WaterWays"
+        },
+        {
+            "name": "WaterWays (profile mode)",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "profile",
+            "cwd": "C:/Users/Mexl/Desktop/Mexl Files/College/3rd Year/Subjects/1st Sem/Mobile 1/Flutter Projects/WaterWays"
+        },
+        {
+            "name": "WaterWays (release mode)",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "release",
+            "cwd": "C:/Users/Mexl/Desktop/Mexl Files/College/3rd Year/Subjects/1st Sem/Mobile 1/Flutter Projects/WaterWays"
+        }
+    ]
+}

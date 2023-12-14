@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:waterways/UserUI/user_home_page.dart';
 import 'package:waterways/UserUI/user_main_page.dart';
 import 'package:waterways/app_styles.dart';
+import 'package:waterways/models/users.dart';
 
 class AppBarToHome extends StatelessWidget {
-  final String title;
+  final Customer customer;
 
-  const AppBarToHome({super.key, required this.title});
+  const AppBarToHome({super.key, required this.customer});
 
   @override
   Widget build(BuildContext context) {
@@ -32,10 +32,13 @@ class AppBarToHome extends StatelessWidget {
             children: [
               GestureDetector(
                 onTap: () {
-                  Navigator.of(context).pushReplacement(
+                  // Navigate to UserHomePage
+                  Navigator.pushReplacement(
+                    context,
                     MaterialPageRoute(
-                      builder: (context) => UserMainPage(),
-                    ),
+                        builder: (context) => UserHomePage(
+                              customer: customer,
+                            )),
                   );
                 },
                 child: Image.asset(
@@ -44,10 +47,10 @@ class AppBarToHome extends StatelessWidget {
                 ),
               ),
               const SizedBox(width: 8),
-              Text(
-                title,
-                style: AppStyles.headline2,
-              ),
+              // Text(
+              //   title,
+              //   style: AppStyles.headline2,
+              // ),
             ],
           ),
         ),

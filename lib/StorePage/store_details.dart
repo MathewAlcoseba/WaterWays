@@ -8,14 +8,17 @@ import 'package:waterways/StorePage/store_notifications.dart';
 import 'package:waterways/StorePage/store_requests.dart';
 import 'package:waterways/app_styles.dart';
 import 'package:waterways/custom_appbar.dart';
+import 'package:waterways/models/users.dart';
 
-void main() {
-  runApp(const StoreDetails(title: ''));
-}
+// void main() {
+//   runApp(const StoreDetails(title: ''));
+// }
 
 class StoreDetails extends StatefulWidget {
-  const StoreDetails({Key? key, required this.title}) : super(key: key);
-  final String title;
+  const StoreDetails({Key? key, required this.store, required this.customer})
+      : super(key: key);
+  final Store store;
+  final Customer customer;
 
   @override
   _StoreDetailsState createState() => _StoreDetailsState();
@@ -43,7 +46,9 @@ class _StoreDetailsState extends State<StoreDetails> {
         appBar: selectedIndex == 0
             ? PreferredSize(
                 preferredSize: Size.fromHeight(kToolbarHeight),
-                child: CustomAppBar(title: widget.title),
+                child: CustomAppBar(
+                  customer: widget.customer,
+                ),
               )
             : null,
         body: IndexedStack(
@@ -51,7 +56,7 @@ class _StoreDetailsState extends State<StoreDetails> {
           children: <Widget>[
             buildMainContent(screenWidth, screenHeight),
             StoreRequestsPage(
-              title: '',
+              customer: widget.customer,
             ),
             StoreNotificationsPage(),
             StoreProfileDrawer(),
@@ -299,7 +304,8 @@ class _StoreDetailsState extends State<StoreDetails> {
             Navigator.push(
                 context,
                 MaterialPageRoute(
-                    builder: (context) => StoreRating(title: '')));
+                    builder: (context) => StoreRating(
+                        customer: widget.customer, store: widget.store)));
           },
           child: right(),
         ),

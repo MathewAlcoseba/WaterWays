@@ -6,6 +6,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:waterways/LoginFlow/login_or_create.dart';
 import 'package:waterways/LoginFlow/sign_up2.dart';
 import 'package:waterways/app_styles.dart';
+import 'package:waterways/models/users.dart';
 
 class SignUp extends StatefulWidget {
   const SignUp({super.key});
@@ -53,6 +54,15 @@ class _SignUpState extends State<SignUp> {
         phoneNumberController.text.isNotEmpty &&
         firstNameController.text.isNotEmpty &&
         lastNameController.text.isNotEmpty;
+  }
+
+  Customer getCustomerData() {
+    return Customer(
+      email: emailController.text.trim(),
+      phone: phoneNumberController.text.trim(),
+      firstname: firstNameController.text.trim(),
+      lastname: lastNameController.text.trim(),
+    );
   }
 
   @override
@@ -116,9 +126,11 @@ class _SignUpState extends State<SignUp> {
                     ),
                     onPressed: isButtonEnabled
                         ? () {
+                            Customer initialCustomerData = getCustomerData();
                             Navigator.of(context).push(
                               MaterialPageRoute(
-                                  builder: (context) => SignUp2()),
+                                  builder: (context) =>
+                                      SignUp2(customer: initialCustomerData)),
                             );
                           }
                         : null,

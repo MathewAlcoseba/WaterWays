@@ -2,15 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:waterways/OrderManagement/order_status.dart';
 import 'package:waterways/StorePage/store_order_details.dart';
+import 'package:waterways/models/users.dart';
 
-void main() {
-  runApp(StoreRequestsPage(title: ' Orders'));
-}
+// void main() {
+//   runApp(StoreRequestsPage(title: ' Orders'));
+// }
 
 class StoreRequestsPage extends StatelessWidget {
-  const StoreRequestsPage({Key? key, required this.title}) : super(key: key);
-
-  final String title;
+  const StoreRequestsPage({Key? key, required this.customer}) : super(key: key);
+  final Customer customer;
 
   @override
   Widget build(BuildContext context) {
@@ -122,8 +122,9 @@ class StoreRequestsPage extends StatelessWidget {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                    builder: (context) =>
-                        StoreOrderStatus(title: 'Your Title')),
+                    builder: (context) => StoreOrderStatus(
+                          customer: customer,
+                        )),
               );
             },
           ),

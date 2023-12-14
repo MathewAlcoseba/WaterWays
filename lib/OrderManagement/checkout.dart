@@ -2,20 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:waterways/OrderManagement/custom_appbar_storedetails.dart';
 import 'package:waterways/OrderManagement/successful_purchase.dart';
 import 'package:waterways/app_styles.dart';
-import 'package:firebase_core/firebase_core.dart';
+import 'package:waterways/models/users.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+// void main() {
+//   runApp(const Checkout(
+//     title: '',
+//   ));
+// }
 
 class Checkout extends StatefulWidget {
-  const Checkout(
-      {Key? key,
-      required this.title,
-      required this.selectedOptions,
-      required this.deliveryMethod,
-      required this.totalPrice,
-      required this.subPrice,
-      required this.selectedDeliveryFee,
-      required this.showCupertinoPopupCallback})
-      : super(key: key);
+  const Checkout({super.key, required this.customer});
+  final Customer customer;
 
   final String title;
   final VoidCallback showCupertinoPopupCallback;
@@ -97,17 +94,17 @@ class _CheckoutState extends State<Checkout> {
 
   Widget paymentOptionsDropdown() {
     return Padding(
-      padding: EdgeInsets.only(left: 10, top: 10),
+      padding: const EdgeInsets.only(left: 10, top: 10),
       child: ConstrainedBox(
-        constraints: BoxConstraints(maxWidth: 250, maxHeight: 50),
+        constraints: const BoxConstraints(maxWidth: 250, maxHeight: 50),
         child: Container(
-          padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 5.0),
+          padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 5.0),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(10.0),
-            border: Border.all(color: Color(0xFFB8BBC2)),
+            border: Border.all(color: const Color(0xFFB8BBC2)),
           ),
           child: DropdownButton<String>(
-            hint: Text('Select a payment method'),
+            hint: const Text('Select a payment method'),
             value: selectedPaymentMethod,
             onChanged: (String? newValue) {
               setState(() {
@@ -121,7 +118,7 @@ class _CheckoutState extends State<Checkout> {
               );
             }).toList(),
             isExpanded: true,
-            underline: SizedBox(),
+            underline: const SizedBox(),
             dropdownColor: Colors.white,
           ),
         ),
@@ -166,7 +163,7 @@ class _CheckoutState extends State<Checkout> {
   Widget buildTextSection5(
       double screenHeight, double screenWidth, String text, TextStyle style) {
     return Padding(
-      padding: EdgeInsets.only(left: 105, top: 25),
+      padding: const EdgeInsets.only(left: 105, top: 25),
       child: Text(text, style: style),
     );
   }
@@ -174,7 +171,7 @@ class _CheckoutState extends State<Checkout> {
   Widget buildTextSection6(
       double screenHeight, double screenWidth, String text, TextStyle style) {
     return Padding(
-      padding: EdgeInsets.only(left: 10),
+      padding: const EdgeInsets.only(left: 10),
       child: Text(text, style: style),
     );
   }
@@ -188,7 +185,7 @@ class _CheckoutState extends State<Checkout> {
               height: 180,
               width: 390,
               decoration: BoxDecoration(
-                color: Color(0xFFFFFFFF),
+                color: const Color(0xFFFFFFFF),
                 borderRadius: BorderRadius.circular(17.0),
                 boxShadow: const [
                   BoxShadow(
@@ -214,12 +211,16 @@ class _CheckoutState extends State<Checkout> {
         children: [
           buildTextSection(screenHeight, screenWidth, widget.selectedOptions,
               AppStyles.bodyText2),
-          SizedBox(height: 8),
-          buildTextSection(screenHeight, screenWidth, widget.deliveryMethod,
-              AppStyles.bodyText2),
-          SizedBox(height: 8),
-          buildTextSection(screenHeight, screenWidth,
-              '₱${widget.totalPrice.toStringAsFixed(2)}', AppStyles.bodyText2),
+          const SizedBox(
+            height: 8,
+          ),
+          buildTextSection(
+              screenHeight, screenWidth, 'Delivery', AppStyles.bodyText2),
+          const SizedBox(
+            height: 8,
+          ),
+          buildTextSection(
+              screenHeight, screenWidth, 'P12.00', AppStyles.bodyText2),
         ],
       ),
     );
@@ -267,9 +268,9 @@ class _CheckoutState extends State<Checkout> {
           delivery(),
           buildTextSection3(
               screenHeight, screenWidth, 'Standard Local', AppStyles.subText4),
-          SizedBox(width: 15.00),
+          const SizedBox(width: 15.00),
           down(),
-          SizedBox(width: 130.00),
+          const SizedBox(width: 130.00),
           buildTextSection3(
               screenHeight,
               screenWidth,
@@ -288,7 +289,7 @@ class _CheckoutState extends State<Checkout> {
         children: [
           buildTextSection3(screenHeight, screenWidth, 'Delivery Options',
               AppStyles.subText3),
-          SizedBox(height: 10.00),
+          const SizedBox(height: 10.00),
           line(screenWidth),
           _buildStandardLocal(screenHeight, screenWidth),
           buildTextSection3(screenHeight, screenWidth,
@@ -305,11 +306,11 @@ class _CheckoutState extends State<Checkout> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           clipboard(),
-          buildTextSection3(
-              screenHeight, screenWidth, 'Order Total:', AppStyles.bodyText6),
-          SizedBox(width: 135.00),
-          buildTextSection4(screenHeight, screenWidth,
-              '₱${widget.totalPrice.toStringAsFixed(2)}', AppStyles.headline2),
+          buildTextSection3(screenHeight, screenWidth,
+              'Order Total ( 3 Items )', AppStyles.bodyText6),
+          const SizedBox(width: 45.00),
+          buildTextSection4(
+              screenHeight, screenWidth, 'P7520.00', AppStyles.headline2),
         ],
       ),
     );
@@ -323,7 +324,7 @@ class _CheckoutState extends State<Checkout> {
         children: [
           buildTextSection3(screenHeight, screenWidth, 'Product Subtotal',
               AppStyles.bodyText6),
-          SizedBox(height: 5.00),
+          const SizedBox(height: 5.00),
           buildTextSection3(screenHeight, screenWidth, 'Delivery Subtotal',
               AppStyles.bodyText6),
         ],
@@ -337,9 +338,9 @@ class _CheckoutState extends State<Checkout> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          buildTextSection3(screenHeight, screenWidth,
-              '₱${widget.subPrice.toStringAsFixed(2)}', AppStyles.bodyText6),
-          SizedBox(height: 5.00),
+          buildTextSection3(
+              screenHeight, screenWidth, '720', AppStyles.bodyText6),
+          const SizedBox(height: 5.00),
           buildTextSection3(
               screenHeight,
               screenWidth,
@@ -371,7 +372,7 @@ class _CheckoutState extends State<Checkout> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           textCol1(screenHeight, screenWidth),
-          SizedBox(width: 130.00),
+          const SizedBox(width: 185.00),
           textCol2(screenHeight, screenWidth)
         ],
       ),
@@ -386,9 +387,9 @@ class _CheckoutState extends State<Checkout> {
         children: [
           buildTextSection3(
               screenHeight, screenWidth, 'Total Payment', AppStyles.headline2),
-          SizedBox(width: 90.00),
-          buildTextSection3(screenHeight, screenWidth,
-              '₱${widget.totalPrice.toStringAsFixed(2)}', AppStyles.headline2),
+          const SizedBox(width: 90.00),
+          buildTextSection3(
+              screenHeight, screenWidth, 'P7520.00', AppStyles.headline2),
         ],
       ),
     );
@@ -401,12 +402,17 @@ class _CheckoutState extends State<Checkout> {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          buildTextSection6(screenHeight, screenWidth,
-              '₱${widget.totalPrice.toStringAsFixed(2)}', AppStyles.headline2),
-          SizedBox(width: 20.00),
+          buildTextSection6(
+              screenHeight, screenWidth, 'P7520.00', AppStyles.headline2),
+          const SizedBox(width: 20.00),
           GestureDetector(
             onTap: () {
-              submitOrderToFirestore();
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) =>
+                        SuccessfulPurchase(customer: widget.customer, title: '',)),
+              );
             },
             child: buildTextSection6(
                 screenHeight, screenWidth, 'Place Order', AppStyles.headline8),
@@ -420,7 +426,7 @@ class _CheckoutState extends State<Checkout> {
     return Container(
       height: 1,
       width: 390,
-      decoration: BoxDecoration(color: Color(0xFF007AFF)),
+      decoration: const BoxDecoration(color: Color(0xFF007AFF)),
     );
   }
 
@@ -438,7 +444,7 @@ class _CheckoutState extends State<Checkout> {
                 'Edit Address',
                 AppStyles.bodyText6,
               ),
-              SizedBox(
+              const SizedBox(
                 width: 8,
               ),
               pencil()
@@ -476,7 +482,7 @@ class _CheckoutState extends State<Checkout> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           marker(),
-          SizedBox(width: 5.00),
+          const SizedBox(width: 5.00),
           _buildEditAddress(screenHeight, screenWidth)
         ],
       ),
@@ -486,31 +492,28 @@ class _CheckoutState extends State<Checkout> {
   Widget left() => Image.asset('assets/Main/left.png');
   Widget card() {
     return Padding(
-      padding: EdgeInsets.only(top: 40.0),
+      padding: const EdgeInsets.only(top: 40.0),
       child: Image.asset('assets/Order/AquaAtlanSmall.png'),
     );
   }
 
   Widget edit() {
-    return GestureDetector(
-      onTap: widget.showCupertinoPopupCallback,
-      child: Padding(
-        padding: EdgeInsets.only(left: 70.0, top: 145.00),
-        child: Image.asset('assets/Order/edit.png'), // Your edit button's image
-      ),
+    return Padding(
+      padding: const EdgeInsets.only(left: 0.0, top: 145.00),
+      child: Image.asset('assets/Order/edit.png'),
     );
   }
 
   Widget down() {
     return Padding(
-      padding: EdgeInsets.only(left: 0.0, top: 10.00),
+      padding: const EdgeInsets.only(left: 0.0, top: 10.00),
       child: Image.asset('assets/Order/downIcon.png'),
     );
   }
 
   Widget delivery() {
     return Padding(
-      padding: EdgeInsets.only(left: 0.0, top: 6.00),
+      padding: const EdgeInsets.only(left: 0.0, top: 6.00),
       child: Image.asset('assets/Order/delivery.png'),
     );
   }
@@ -519,28 +522,28 @@ class _CheckoutState extends State<Checkout> {
 
   Widget wallet() {
     return Padding(
-      padding: EdgeInsets.only(top: 8.0),
+      padding: const EdgeInsets.only(top: 8.0),
       child: Image.asset('assets/Order/wallet.png'),
     );
   }
 
   Widget clipboard() {
     return Padding(
-      padding: EdgeInsets.only(top: 8.0),
+      padding: const EdgeInsets.only(top: 8.0),
       child: Image.asset('assets/Order/clipboard.png'),
     );
   }
 
   Widget pencil() {
     return Padding(
-      padding: EdgeInsets.only(top: 6.0),
+      padding: const EdgeInsets.only(top: 6.0),
       child: Image.asset('assets/Order/pencil.png'),
     );
   }
 
   Widget marker() {
     return Padding(
-      padding: EdgeInsets.only(top: 23.0),
+      padding: const EdgeInsets.only(top: 23.0),
       child: Image.asset('assets/Order/locationMarker.png'),
     );
   }
@@ -553,7 +556,7 @@ class _CheckoutState extends State<Checkout> {
 
   Widget paymentFooter() {
     return Padding(
-      padding: EdgeInsets.only(left: 0.0, top: 40.00),
+      padding: const EdgeInsets.only(left: 0.0, top: 40.00),
       child: Image.asset('assets/Order/paymentFooter.png'),
     );
   }

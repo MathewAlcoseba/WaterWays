@@ -1,12 +1,16 @@
-// ignore_for_file: prefer_const_constructors
-
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:waterways/LoginFlow/SignupSuccess.dart';
-import 'package:waterways/LoginFlow/login_or_create.dart';
+import 'package:waterways/LoginFlow/login.dart';
+import 'package:waterways/LoginFlow/sign_up_success.dart';
+import 'package:waterways/app_styles.dart';
+import 'package:waterways/firebase_service.dart';
+import 'package:waterways/models/users.dart';
 
 class SignUp2 extends StatefulWidget {
-  const SignUp2({super.key});
+  final Customer customer;
+
+  const SignUp2({super.key, required this.customer});
 
   @override
   State<SignUp2> createState() => _SignUp2State();
@@ -17,20 +21,19 @@ class _SignUp2State extends State<SignUp2> {
   final TextEditingController passwordController = TextEditingController();
   final TextEditingController confirmPasswordController =
       TextEditingController();
+  String? email;
+  String address = '';
+  String password = '';
+  String confirmPassword = '';
+  bool isLoading = false;
 
   @override
   void initState() {
     super.initState();
-
+    email = widget.customer.email;
     addressController.addListener(_updateButtonState);
     passwordController.addListener(_updateButtonState);
     confirmPasswordController.addListener(_updateButtonState);
-  }
-
-  void _updateButtonState() {
-    if (mounted) {
-      setState(() {});
-    }
   }
 
   @override
@@ -38,7 +41,6 @@ class _SignUp2State extends State<SignUp2> {
     addressController.removeListener(_updateButtonState);
     passwordController.removeListener(_updateButtonState);
     confirmPasswordController.removeListener(_updateButtonState);
-
     addressController.dispose();
     passwordController.dispose();
     confirmPasswordController.dispose();
@@ -51,122 +53,210 @@ class _SignUp2State extends State<SignUp2> {
         confirmPasswordController.text.isNotEmpty;
   }
 
+  Customer updateCustomerData(String address, String password, String custId) {
+    return Customer(
+      custId: custId,
+      email: widget.customer.email,
+      password: password,
+      phone: widget.customer.phone,
+      firstname: widget.customer.firstname,
+      lastname: widget.customer.lastname,
+      address: address,
+      profileImg: '',
+      coverImg: '',
+      favorites: [],
+      orders: [],
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SingleChildScrollView(
-        child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 38),
-            child: Column(
-              children: [
-                Row(
+    return SafeArea(
+      child: Scaffold(
+        body: Stack(
+          children: [
+            SingleChildScrollView(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 38),
+                child: Column(
                   children: [
-                    SizedBox(height: 77),
-                  ],
-                ),
-                Row(
-                  children: [
-                    ClipRect(
-                      child: Align(
-                        alignment: Alignment.centerRight,
-                        widthFactor: 0.85,
-                        child: Image.asset(
-                          'assets/WaterWaysIcon.png',
-                          height: 80,
-                          width: 191,
+                    const Row(
+                      children: [
+                        SizedBox(height: 77),
+                      ],
+                    ),
+                    Row(
+                      children: [
+                        ClipRect(
+                          child: Align(
+                            alignment: Alignment.centerRight,
+                            widthFactor: 0.85,
+                            child: Image.asset(
+                              'assets/WaterWaysIcon.png',
+                              height: 80,
+                              width: 191,
+                            ),
+                          ),
+                        )
+                      ],
+                    ),
+                    const SizedBox(height: 12),
+                    Row(
+                      children: [
+                        Text(
+                          'Sign up',
+                          style: GoogleFonts.poppins(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 30.0,
+                            color: const Color(0xFF313144),
+                          ),
+                        ),
+                      ],
+                    ),
+                    SignUpField(
+                      fieldHeader: 'Address',
+                      hintTxt: 'enter address',
+                      controller: addressController,
+                    ),
+                    SignUpField(
+                      fieldHeader: 'Create a password',
+                      hintTxt: 'must be 8 characters',
+                      isPasswordField: true,
+                      controller: passwordController,
+                    ),
+                    SignUpField(
+                      fieldHeader: 'Confirm password',
+                      hintTxt: 'confirm password',
+                      isPasswordField: true,
+                      controller: confirmPasswordController,
+                    ),
+                    const SizedBox(height: 143),
+                    ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        foregroundColor: Colors.white,
+                        backgroundColor: const Color(0xFF007AFF),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        minimumSize: const Size(353, 50),
+                      ),
+                      onPressed: isButtonEnabled ? _onSignUpPressed : null,
+                      child: Text(
+                        'Sign Up',
+                        style: GoogleFonts.inter(
+                          fontWeight: FontWeight.w600,
+                          fontSize: 16.0,
                         ),
                       ),
+                    ),
+                    const SizedBox(height: 72),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          'Already have an account? ',
+                          style: GoogleFonts.inter(
+                            fontWeight: FontWeight.normal,
+                            fontSize: 14.0,
+                            color: const Color(0xFF313144),
+                          ),
+                        ),
+                        GestureDetector(
+                          onTap: () {
+                            Navigator.of(context).push(
+                              MaterialPageRoute(
+                                  builder: (context) => const Login()),
+                            );
+                          },
+                          child: Text(
+                            'Log in',
+                            style: GoogleFonts.inter(
+                              fontWeight: FontWeight.w600,
+                              fontSize: 14.0,
+                              color: const Color(0xFF313144),
+                            ),
+                          ),
+                        ),
+                      ],
                     )
                   ],
                 ),
-                SizedBox(height: 12),
-                Row(
-                  children: [
-                    Text(
-                      'Sign up',
-                      style: GoogleFonts.poppins(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 30.0,
-                        color: const Color(0xFF313144),
-                      ),
-                    ),
-                  ],
+              ),
+            ),
+            if (isLoading)
+              Center(
+                  child: CircularProgressIndicator(
+                color: AppStyles.colorScheme.secondary,
+                backgroundColor: AppStyles.colorScheme.primary.withOpacity(0.5),
+              )),
+          ],
+        ),
+      ),
+    );
+  }
+
+  void _updateButtonState() {
+    if (mounted) {
+      setState(() {});
+    }
+  }
+
+  void _onSignUpPressed() async {
+    setState(() => isLoading = true);
+    try {
+      address = addressController.text.trim();
+      password = passwordController.text.trim();
+      confirmPassword = confirmPasswordController.text.trim();
+      if (password == confirmPassword) {
+        User? user = await FirebaseService()
+            .signUpWithEmailAndPassword(email!, password);
+        if (user != null) {
+          Customer customerData =
+              updateCustomerData(address, password, user.uid);
+
+          await FirebaseService().storeCustomerData(user, customerData.toMap());
+          Navigator.of(context).push(
+              MaterialPageRoute(builder: (context) => const SignupSuccess()));
+        }
+      } else {
+        showDialog(
+          context: context,
+          builder: (context) {
+            return AlertDialog(
+              title: const Text('Password Mismatch'),
+              content: const Text(
+                  'The passwords entered do not match. Please try again.'),
+              actions: <Widget>[
+                TextButton(
+                  child: const Text('OK'),
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
                 ),
-                SignUpField(
-                  fieldHeader: 'Address',
-                  hintTxt: 'enter address',
-                  controller: addressController,
-                ),
-                SignUpField(
-                  fieldHeader: 'Create a password',
-                  hintTxt: 'must be 8 characters',
-                  isPasswordField: true,
-                  controller: passwordController,
-                ),
-                SignUpField(
-                  fieldHeader: 'Confirm password',
-                  hintTxt: 'repeat password',
-                  isPasswordField: true,
-                  controller: confirmPasswordController,
-                ),
-                SizedBox(height: 143),
-                ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    foregroundColor: Colors.white,
-                    backgroundColor: Color(0xFF007AFF),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    minimumSize: Size(353, 50), // size
-                  ),
-                  onPressed: isButtonEnabled
-                      ? () {
-                          Navigator.of(context).push(
-                            MaterialPageRoute(
-                                builder: (context) => SignupSuccess()),
-                          );
-                        }
-                      : null,
-                  child: Text(
-                    'Sign Up',
-                    style: GoogleFonts.inter(
-                      fontWeight: FontWeight.w600,
-                      fontSize: 16.0,
-                    ),
-                  ),
-                ),
-                SizedBox(height: 72),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      'Already have an account? ',
-                      style: GoogleFonts.inter(
-                        fontWeight: FontWeight.normal,
-                        fontSize: 14.0,
-                        color: const Color(0xFF313144),
-                      ),
-                    ),
-                    GestureDetector(
-                      onTap: () {
-                        Navigator.of(context).push(
-                          MaterialPageRoute(
-                              builder: (context) => LoginOrCreate()),
-                        );
-                      },
-                      child: Text(
-                        'Log in',
-                        style: GoogleFonts.inter(
-                          fontWeight: FontWeight.w600,
-                          fontSize: 14.0,
-                          color: const Color(0xFF313144),
-                        ),
-                      ),
-                    ),
-                  ],
-                )
               ],
-            )),
+            );
+          },
+        );
+      }
+    } catch (e) {
+      _showErrorDialog(context, "Error signing up!");
+    } finally {
+      setState(() => isLoading = false);
+    }
+  }
+
+  void _showErrorDialog(BuildContext context, String message) {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text("Error"),
+        content: Text(message),
+        actions: [
+          TextButton(
+            child: const Text("OK"),
+            onPressed: () => Navigator.pop(context),
+          ),
+        ],
       ),
     );
   }
@@ -203,7 +293,7 @@ class _SignUpFieldState extends State<SignUpField> {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        SizedBox(height: 14),
+        const SizedBox(height: 14),
         Row(
           children: [
             Text(

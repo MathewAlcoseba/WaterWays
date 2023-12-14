@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:waterways/OrderManagement/custom_appbar2.dart';
-import 'package:waterways/OrderManagement/custom_appbar_storedetails.dart';
+
+void main() => runApp(const ChatApp());
 
 class ChatApp extends StatelessWidget {
+  const ChatApp({super.key});
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -15,12 +16,14 @@ class ChatApp extends StatelessWidget {
         visualDensity: VisualDensity.adaptivePlatformDensity,
         fontFamily: 'Poppins', // Set the default font family to Poppins
       ),
-      home: ChatPage(),
+      home: const ChatPage(),
     );
   }
 }
 
 class ChatPage extends StatefulWidget {
+  const ChatPage({super.key});
+
   @override
   _ChatPageState createState() => _ChatPageState();
 }
@@ -44,9 +47,9 @@ class _ChatPageState extends State<ChatPage>
 
   Widget _buildTextComposer() {
     return IconTheme(
-      data: IconThemeData(color: Colors.blue),
+      data: const IconThemeData(color: Colors.blue),
       child: Container(
-        padding: EdgeInsets.all(8.0),
+        padding: const EdgeInsets.all(8.0),
         margin: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 20.0),
         decoration: BoxDecoration(
           color: Colors.white,
@@ -55,7 +58,7 @@ class _ChatPageState extends State<ChatPage>
         child: Row(
           children: <Widget>[
             IconButton(
-              icon: Icon(Icons.attach_file),
+              icon: const Icon(Icons.attach_file),
               onPressed: () {},
             ),
             Flexible(
@@ -67,7 +70,7 @@ class _ChatPageState extends State<ChatPage>
                 child: TextField(
                   controller: _textController,
                   onSubmitted: _handleSubmitted,
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                     hintText: "Send a message",
                     border: InputBorder.none, // Remove underline
                     contentPadding:
@@ -100,7 +103,7 @@ class _ChatPageState extends State<ChatPage>
       appBar: AppBar(
         toolbarHeight: 90,
         leading: IconButton(
-          icon: Icon(Icons.arrow_back, color: Colors.black),
+          icon: const Icon(Icons.arrow_back, color: Colors.black),
           onPressed: () {
             Navigator.pop(context); // Pop the current screen
           },
@@ -112,13 +115,13 @@ class _ChatPageState extends State<ChatPage>
             style: GoogleFonts.poppins(
               fontSize: 26,
               fontWeight: FontWeight.w600,
-              color: Color(0xFF313144),
+              color: const Color(0xFF313144),
             ),
             children: <TextSpan>[
               TextSpan(
                 text: '\nGHTH7821B-Y2-90I',
                 style: GoogleFonts.gothicA1(
-                  color: Color(0xFF6F6F6F),
+                  color: const Color(0xFF6F6F6F),
                   fontSize: 16,
                   fontWeight: FontWeight.w400,
                 ),
@@ -134,28 +137,28 @@ class _ChatPageState extends State<ChatPage>
                 color: Colors.black.withOpacity(0.1),
                 spreadRadius: 1,
                 blurRadius: 5,
-                offset: Offset(0, 3),
+                offset: const Offset(0, 3),
               ),
             ],
           ),
         ),
         bottom: TabBar(
           controller: _tabController,
-          labelColor: Color(0xFF007AFF), // Set the selected label color
+          labelColor: const Color(0xFF007AFF), // Set the selected label color
           unselectedLabelColor:
-              Color(0xFF313144), // Set the unselected label color
+              const Color(0xFF313144), // Set the unselected label color
           labelStyle: GoogleFonts.poppins(
             // Apply Poppins font for labels
             fontWeight: FontWeight.w600,
             fontSize: 16,
           ),
-          indicator: UnderlineTabIndicator(
+          indicator: const UnderlineTabIndicator(
             borderSide: BorderSide(
               color: Color(0xFF007AFF), // Set the indicator (underline) color
               width: 2.0,
             ),
           ),
-          tabs: [
+          tabs: const [
             Tab(text: 'Store'),
             Tab(text: 'Delivery'),
           ],
@@ -179,7 +182,7 @@ class _ChatPageState extends State<ChatPage>
     // Using existing chat fields for the Store tab
     return ListView(
       padding: const EdgeInsets.all(8.0),
-      children: <Widget>[
+      children: const <Widget>[
         ChatMessage(
             messageContent: "Hi, your order is on the way!",
             messageType: "receiver"),
@@ -203,7 +206,7 @@ class _ChatPageState extends State<ChatPage>
     // Create new chat fields and placeholders for the Rider tab
     return ListView(
       padding: const EdgeInsets.all(8.0),
-      children: <Widget>[
+      children: const <Widget>[
         // Example placeholder messages
         ChatMessage(
             messageContent: "Hello, I'm the rider.", messageType: "receiver"),
@@ -221,23 +224,23 @@ class ChatMessage extends StatelessWidget {
   final String messageType;
   final bool isImage;
 
-  ChatMessage(
-      {required this.messageContent,
+  const ChatMessage(
+      {super.key, required this.messageContent,
       required this.messageType,
       this.isImage = false});
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: 15.0, vertical: 10.0),
+      padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 10.0),
       child: Row(
         mainAxisAlignment: messageType == "receiver"
             ? MainAxisAlignment.start
             : MainAxisAlignment.end,
         children: <Widget>[
           if (messageType == "receiver" && !isImage)
-            CircleAvatar(child: Text("R")), // Placeholder for user avatar
-          SizedBox(width: 10),
+            const CircleAvatar(child: Text("R")), // Placeholder for user avatar
+          const SizedBox(width: 10),
           Column(
             crossAxisAlignment: messageType == "receiver"
                 ? CrossAxisAlignment.start
@@ -253,7 +256,7 @@ class ChatMessage extends StatelessWidget {
                         : Colors.blue[400],
                     borderRadius: BorderRadius.circular(20),
                   ),
-                  padding: EdgeInsets.all(10),
+                  padding: const EdgeInsets.all(10),
                   child: Text(
                     messageContent,
                     style: TextStyle(
@@ -265,9 +268,9 @@ class ChatMessage extends StatelessWidget {
                 ),
             ],
           ),
-          SizedBox(width: 10),
+          const SizedBox(width: 10),
           if (messageType == "sender" && !isImage)
-            CircleAvatar(child: Text("S")), // Placeholder for user avatar
+            const CircleAvatar(child: Text("S")), // Placeholder for user avatar
         ],
       ),
     );

@@ -6,9 +6,12 @@ import 'package:waterways/UserUI/user_profile_page.dart';
 import 'package:waterways/UserUI/user_profile_drawer.dart';
 import 'package:waterways/app_styles.dart';
 import 'package:waterways/bottom_navbar.dart';
+import 'package:waterways/models/users.dart';
 
 class UserMainPage extends StatefulWidget {
-  const UserMainPage({super.key});
+  final Customer customer;
+
+  const UserMainPage({super.key, required this.customer});
 
   @override
   UserMainPageState createState() => UserMainPageState();
@@ -34,6 +37,8 @@ class UserMainPageState extends State<UserMainPage> {
 
   @override
   Widget build(BuildContext context) {
+    Customer customer = widget.customer;
+
     return MaterialApp(
       title: "WaterWays Delivery App",
       debugShowCheckedModeBanner: false,
@@ -55,11 +60,11 @@ class UserMainPageState extends State<UserMainPage> {
                 selectedIndex = index;
               });
             },
-            children: const <Widget>[
-              UserHomePage(),
-              UserFavoritesPage(),
-              UserNotificationsPage(),
-              UserProfilePage()
+            children: <Widget>[
+              UserHomePage(customer: customer),
+              UserFavoritesPage(customer: customer),
+              UserNotificationsPage(customer: customer),
+              UserProfilePage(customer: customer)
             ],
           ),
           bottomNavigationBar: Theme(

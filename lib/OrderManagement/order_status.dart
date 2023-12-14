@@ -1,13 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:waterways/OrderManagement/custom_appbar2.dart';
-
 import 'package:waterways/app_styles.dart';
+import 'package:waterways/models/users.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
+// void main() {
+//   runApp(const OrderStatus(
+//     title: '',
+//   ));
+// }
+
 class OrderStatus extends StatelessWidget {
-  const OrderStatus({Key? key, required this.title}) : super(key: key);
-  final String title;
+  const OrderStatus({super.key, required this.customer});
+  final Customer customer;
 
   @override
   Widget build(BuildContext context) {
@@ -18,17 +24,39 @@ class OrderStatus extends StatelessWidget {
       child: Scaffold(
         extendBody: true,
         backgroundColor: AppStyles.colorScheme.background,
-        appBar: const PreferredSize(
+        appBar: PreferredSize(
           preferredSize: Size.fromHeight(75.0),
           child: AppBarToHome(
-            title: 'Order Details',
+            customer: customer,
           ),
         ),
         body: SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              buildProfileRow(screenHeight, screenWidth),
+              itemCard(screenWidth, screenHeight),
+              CustomImageRow(),
+              const SizedBox(
+                height: 15,
+              ),
+              _buildViewLocation(screenHeight, screenWidth),
+              const SizedBox(
+                height: 15,
+              ),
+              line(screenWidth),
+              _buildPaymentOptions(screenHeight, screenWidth),
+              buildTextSection3(screenHeight, screenWidth, 'Cash on Delivery',
+                  AppStyles.bodyText6),
+              _buildAddress(screenHeight, screenWidth),
+              buildTextSection3(screenHeight, screenWidth,
+                  'Basak, Pardo, 123 Street', AppStyles.bodyText6),
+              _buildOrderSummary(screenHeight, screenWidth),
+              textRow6(screenHeight, screenWidth),
+              _buildOrderTotal(screenHeight, screenWidth),
+              buildTextSection3(screenHeight, screenWidth,
+                  'Transaction Code: MYUI7821A-G2-90A', AppStyles.bodyText2),
+              _buildViewChat(screenHeight, screenWidth),
+              _buildTotalPayment(screenHeight, screenWidth),
             ],
           ),
         ),
@@ -143,7 +171,7 @@ class OrderStatus extends StatelessWidget {
   Widget buildTextSection5(
       double screenHeight, double screenWidth, String text, TextStyle style) {
     return Padding(
-      padding: EdgeInsets.only(left: 105, top: 25),
+      padding: const EdgeInsets.only(left: 105, top: 25),
       child: Text(text, style: style),
     );
   }
@@ -151,7 +179,7 @@ class OrderStatus extends StatelessWidget {
   Widget buildTextSection6(
       double screenHeight, double screenWidth, String text, TextStyle style) {
     return Padding(
-      padding: EdgeInsets.only(left: 10),
+      padding: const EdgeInsets.only(left: 10),
       child: Text(text, style: style),
     );
   }
@@ -172,7 +200,7 @@ class OrderStatus extends StatelessWidget {
               height: 180,
               width: 390,
               decoration: BoxDecoration(
-                color: Color(0xFFFFFFFF),
+                color: const Color(0xFFFFFFFF),
                 borderRadius: BorderRadius.circular(17.0),
                 boxShadow: const [
                   BoxShadow(
@@ -210,14 +238,14 @@ class OrderStatus extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          buildTextSection(
-              screenHeight, screenWidth, selectedOptions, AppStyles.bodyText2),
-          SizedBox(
+          buildTextSection(screenHeight, screenWidth, 'Barrel (200 Liters) x3',
+              AppStyles.bodyText2),
+          const SizedBox(
             height: 8,
           ),
           buildTextSection(
-              screenHeight, screenWidth, deliveryMethod, AppStyles.bodyText2),
-          SizedBox(
+              screenHeight, screenWidth, 'Delivery', AppStyles.bodyText2),
+          const SizedBox(
             height: 8,
           ),
           buildTextSection(
@@ -285,26 +313,22 @@ class OrderStatus extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           location(),
-          buildTextSection3(
-            screenHeight,
-            screenWidth,
-            'View real-time Location',
-            AppStyles.bodyText6,
-          ),
-          SizedBox(width: 33),
-          ElevatedButton(
-            onPressed: () async {
-              try {
-                await cancelOrder();
-              } catch (e) {
-                print('Error canceling order: $e');
-              }
-            },
-            style: ElevatedButton.styleFrom(
-              primary: Color(0xFF007AFF),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(10),
+          buildTextSection3(screenHeight, screenWidth,
+              'View real-time Location', AppStyles.bodyText6),
+          const SizedBox(width: 60),
+          Stack(
+            alignment:
+                Alignment.center, // Center align the text within the stack
+            children: [
+              Container(
+                height: 40,
+                width: 100,
+                decoration: BoxDecoration(
+                  color: const Color(0xFF66AFFF),
+                  borderRadius: BorderRadius.circular(10),
+                ),
               ),
+            ]
             ),
             child: Text(
               'Cancel',
@@ -343,7 +367,7 @@ class OrderStatus extends StatelessWidget {
           marker(),
           buildTextSection3(
               screenHeight, screenWidth, 'Address', AppStyles.bodyText6),
-          SizedBox(width: 45.00)
+          const SizedBox(width: 45.00)
         ],
       ),
     );
@@ -357,7 +381,7 @@ class OrderStatus extends StatelessWidget {
         children: [
           buildTextSection3(screenHeight, screenWidth, 'Product Subtotal',
               AppStyles.bodyText6),
-          SizedBox(height: 5.00),
+          const SizedBox(height: 5.00),
           buildTextSection3(screenHeight, screenWidth, 'Delivery Subtotal',
               AppStyles.bodyText6),
         ],
@@ -372,11 +396,11 @@ class OrderStatus extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          buildTextSection3(screenHeight, screenWidth, 'P $productSubtotal',
-              AppStyles.bodyText6),
-          SizedBox(height: 5.00),
-          buildTextSection3(screenHeight, screenWidth, 'P $deliverySubtotal',
-              AppStyles.bodyText6),
+          buildTextSection3(
+              screenHeight, screenWidth, '720', AppStyles.bodyText6),
+          const SizedBox(height: 5.00),
+          buildTextSection3(
+              screenHeight, screenWidth, '320', AppStyles.bodyText6),
         ],
       ),
     );
@@ -390,8 +414,8 @@ class OrderStatus extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           textCol1(screenHeight, screenWidth),
-          SizedBox(width: 130.00),
-          textCol2(screenHeight, screenWidth, deliverySubtotal, productSubtotal)
+          const SizedBox(width: 185.00),
+          textCol2(screenHeight, screenWidth)
         ],
       ),
     );
@@ -406,9 +430,9 @@ class OrderStatus extends StatelessWidget {
         children: [
           buildTextSection3(
               screenHeight, screenWidth, 'Total Payment', AppStyles.headline2),
-          SizedBox(width: 110.00),
-          buildTextSection3(screenHeight, screenWidth, 'P $totalPayment',
-              AppStyles.headline2),
+          const SizedBox(width: 90.00),
+          buildTextSection3(
+              screenHeight, screenWidth, 'P7520.00', AppStyles.headline2),
         ],
       ),
     );
@@ -420,7 +444,7 @@ class OrderStatus extends StatelessWidget {
       child: Container(
         height: 1,
         width: 390,
-        decoration: BoxDecoration(color: Color(0xFF007AFF)),
+        decoration: const BoxDecoration(color: Color(0xFF007AFF)),
       ),
     );
   }
@@ -429,7 +453,7 @@ class OrderStatus extends StatelessWidget {
     return Container(
       height: 2,
       width: 290,
-      decoration: BoxDecoration(color: Color(0xFF007AFF)),
+      decoration: const BoxDecoration(color: Color(0xFF007AFF)),
     );
   }
 
@@ -455,7 +479,7 @@ class OrderStatus extends StatelessWidget {
         Column(
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
-            SizedBox(height: 25),
+            const SizedBox(height: 25),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: <Widget>[
@@ -515,42 +539,49 @@ class OrderStatus extends StatelessWidget {
   Widget left() => Image.asset('assets/Main/left.png');
   Widget card() {
     return Padding(
-      padding: EdgeInsets.only(top: 40.0),
+      padding: const EdgeInsets.only(top: 40.0),
       child: Image.asset('assets/Order/AquaAtlanSmall.png'),
+    );
+  }
+
+  Widget edit() {
+    return Padding(
+      padding: const EdgeInsets.only(left: 0.0, top: 145.00),
+      child: Image.asset('assets/Order/edit.png'),
     );
   }
 
   Widget down() {
     return Padding(
-      padding: EdgeInsets.only(left: 0.0, top: 10.00),
+      padding: const EdgeInsets.only(left: 0.0, top: 10.00),
       child: Image.asset('assets/Order/downIcon.png'),
     );
   }
 
   Widget delivery() {
     return Padding(
-      padding: EdgeInsets.only(left: 0.0, top: 6.00),
+      padding: const EdgeInsets.only(left: 0.0, top: 6.00),
       child: Image.asset('assets/Order/delivery.png'),
     );
   }
 
   Widget wallet() {
     return Padding(
-      padding: EdgeInsets.only(top: 8.0),
+      padding: const EdgeInsets.only(top: 8.0),
       child: Image.asset('assets/Order/wallet.png'),
     );
   }
 
   Widget clipboard() {
     return Padding(
-      padding: EdgeInsets.only(top: 8.0),
+      padding: const EdgeInsets.only(top: 8.0),
       child: Image.asset('assets/Order/clipboard.png'),
     );
   }
 
   Widget summary() {
     return Padding(
-      padding: EdgeInsets.only(
+      padding: const EdgeInsets.only(
         top: 7.0,
       ),
       child: Image.asset('assets/Order/summary.png'),
@@ -559,7 +590,7 @@ class OrderStatus extends StatelessWidget {
 
   Widget message() {
     return Padding(
-      padding: EdgeInsets.only(
+      padding: const EdgeInsets.only(
         top: 11.0,
       ),
       child: Image.asset('assets/Order/messageIcon2.png'),
@@ -568,14 +599,14 @@ class OrderStatus extends StatelessWidget {
 
   Widget marker() {
     return Padding(
-      padding: EdgeInsets.only(top: 8.0),
+      padding: const EdgeInsets.only(top: 8.0),
       child: Image.asset('assets/Order/locationMarker.png'),
     );
   }
 
   Widget location() {
     return Padding(
-      padding: EdgeInsets.only(top: 8.0),
+      padding: const EdgeInsets.only(top: 8.0),
       child: Image.asset('assets/Order/track.png'),
     );
   }

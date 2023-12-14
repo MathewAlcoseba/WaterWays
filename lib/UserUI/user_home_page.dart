@@ -6,7 +6,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:waterways/models/users.dart';
 
 class UserHomePage extends StatelessWidget {
-  const UserHomePage({super.key});
+  final Customer customer;
+
+  const UserHomePage({super.key, required this.customer});
 
   @override
   Widget build(BuildContext context) {
@@ -16,7 +18,9 @@ class UserHomePage extends StatelessWidget {
             backgroundColor: AppStyles.colorScheme.background,
             appBar: const PreferredSize(
               preferredSize: Size.fromHeight(75.0),
-              child: CustomAppBar(title: '',),
+              child: CustomAppBar(
+                title: '',
+              ),
             ),
             body: const Padding(
               padding: EdgeInsets.only(left: 16.0, right: 16.0),
@@ -104,6 +108,7 @@ class Tag extends StatelessWidget {
     );
   }
 }
+
 Future<List<Store>> getStores() async {
   List<Store> stores = [];
   try {

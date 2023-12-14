@@ -209,10 +209,12 @@ class _LoginState extends State<Login> {
             .collection('Customers')
             .doc(user.uid)
             .get();
-        //Customer customer = Customer.fromMap(customerDoc.data()!);
+        Customer customer = Customer.fromMap(customerDoc.data()!);
 
-        Navigator.of(context)
-            .push(MaterialPageRoute(builder: (context) => UserMainPage()));
+        Navigator.of(context).push(MaterialPageRoute(
+            builder: (context) => UserMainPage(
+                  customer: customer,
+                )));
       } else {
         _showLoginErrorDialog();
       }

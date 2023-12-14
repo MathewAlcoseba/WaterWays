@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:waterways/app_styles.dart';
+import 'package:waterways/models/users.dart';
 
 class UserNotificationsPage extends StatelessWidget {
-  const UserNotificationsPage({super.key});
+  final Customer customer;
+
+  const UserNotificationsPage({super.key, required this.customer});
 
   @override
   Widget build(BuildContext context) {

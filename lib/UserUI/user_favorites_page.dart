@@ -3,9 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:waterways/UserUI/user_home_page.dart';
 import 'package:waterways/app_styles.dart';
+import 'package:waterways/models/users.dart';
 
 class UserFavoritesPage extends StatelessWidget {
-  const UserFavoritesPage({super.key});
+  final Customer customer;
+
+  const UserFavoritesPage({super.key, required this.customer});
 
   @override
   Widget build(BuildContext context) {

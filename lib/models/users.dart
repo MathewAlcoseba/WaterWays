@@ -41,6 +41,23 @@ class Customer {
       'orders': orders?.map((order) => order.toMap()).toList(),
     };
   }
+
+  Customer.fromMap(Map<String, dynamic> map)
+      : custId = map['custId'] ?? '',
+        email = map['email'] ?? '',
+        password = map['password'] ?? '',
+        phone = map['phone'] ?? '',
+        firstname = map['firstname'] ?? '',
+        lastname = map['lastname'] ?? '',
+        address = map['address'] ?? '',
+        profileImg = map['profileImg'] ?? '',
+        coverImg = map['coverImg'] ?? '',
+        favorites = map['favorites'] != null
+            ? List<Store>.from(map['favorites'].map((x) => Store.fromMap(x)))
+            : null,
+        orders = map['orders'] != null
+            ? List<Order>.from(map['orders'].map((x) => Order.fromMap(x)))
+            : null;
 }
 
 class Store {

@@ -2,9 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:waterways/app_styles.dart';
 import 'dart:io';
 import 'package:image_picker/image_picker.dart';
+import 'package:waterways/models/users.dart';
 
 class UserProfilePage extends StatelessWidget {
-  const UserProfilePage({super.key});
+  final Customer customer;
+
+  const UserProfilePage({super.key, required this.customer});
 
   @override
   Widget build(BuildContext context) {
@@ -33,10 +36,10 @@ class UserProfilePage extends StatelessWidget {
                       Container(
                         width: double.infinity,
                         height: 180,
-                        decoration: const BoxDecoration(
+                        decoration: BoxDecoration(
                           color: Colors.grey,
                           image: DecorationImage(
-                            image: AssetImage(
+                            image: AssetImage(customer.coverImg ??
                                 'assets/Main/sample-profile-cover.png'),
                             fit: BoxFit.cover,
                           ),
@@ -83,7 +86,8 @@ class UserProfilePage extends StatelessWidget {
                         padding: const EdgeInsets.only(left: 16.0),
                         child: Row(
                           children: [
-                            Text('Boss AAh', style: AppStyles.headline2),
+                            Text(customer.firstname ?? '',
+                                style: AppStyles.headline2),
                             IconButton(
                               icon: Icon(
                                 Icons.arrow_forward_ios_rounded,
@@ -104,7 +108,7 @@ class UserProfilePage extends StatelessWidget {
                           style: AppStyles.bodyText2,
                         ),
                         subtitle: Text(
-                          'bossaamigo@gmail.com',
+                          customer.email ?? '',
                           style: AppStyles.bodyText3,
                           overflow: TextOverflow.ellipsis,
                         ),
@@ -125,7 +129,7 @@ class UserProfilePage extends StatelessWidget {
                       ),
                       buildListTile(
                         title: 'Phone',
-                        subtitle: '09950066821',
+                        subtitle: customer.phone ?? '',
                         onPressed: () {
                           showTextInputDialog(
                             context,
@@ -139,7 +143,7 @@ class UserProfilePage extends StatelessWidget {
                       ),
                       buildListTile(
                         title: 'Address',
-                        subtitle: '123 St., Capitol Site, Cebu City',
+                        subtitle: customer.address ?? '',
                         onPressed: () {
                           showTextInputDialog(
                             context,
@@ -208,8 +212,9 @@ class UserProfilePage extends StatelessWidget {
                         ),
                         color: AppStyles.colorScheme.primary,
                         shape: BoxShape.circle,
-                        image: const DecorationImage(
-                          image: AssetImage('assets/Main/sample-profile.png'),
+                        image: DecorationImage(
+                          image: AssetImage(customer.profileImg ??
+                              'assets/Main/sample-profile.png'),
                         ),
                       ),
                     ),

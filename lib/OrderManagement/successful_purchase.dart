@@ -2,12 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:waterways/OrderManagement/order_status.dart';
 
-void main() {
-  runApp(const SuccessfulPurchase(
-    title: '',
-  ));
-}
-
 class SuccessfulPurchase extends StatelessWidget {
   const SuccessfulPurchase({Key? key, required String title}) : super(key: key);
 

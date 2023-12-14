@@ -40,7 +40,7 @@ class OrderStatus extends StatelessWidget {
     FirebaseFirestore firestore = FirebaseFirestore.instance;
 
     try {
-      await firestore.collection('Orders').doc('T5rJY7yK01upXu0L03LT').update({
+      await firestore.collection('Orders').doc('MYa2aAfhtjfuKed3U3nd').update({
         'Status': false,
       });
     } catch (e) {
@@ -52,7 +52,7 @@ class OrderStatus extends StatelessWidget {
     return StreamBuilder<DocumentSnapshot>(
       stream: FirebaseFirestore.instance
           .collection('Orders')
-          .doc('T5rJY7yK01upXu0L03LT')
+          .doc('MYa2aAfhtjfuKed3U3nd')
           .snapshots(),
       builder: (context, snapshot) {
         if (snapshot.hasError) {
@@ -68,13 +68,17 @@ class OrderStatus extends StatelessWidget {
         String selectedOptions = orderData['selectedOptions'] ?? 'No selection';
         String totalPayment =
             (orderData['totalPayment'] as int? ?? 0).toString();
+        String productSubtotal =
+            (orderData['productSubtotal'] as int? ?? 0).toString();
+        String deliverySubtotal =
+            (orderData['deliverySubtotal'] as int? ?? 0).toString();
         String paymentOption =
             orderData['paymentOption'] ?? 'No delivery payemnt available';
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             itemCard(screenWidth, screenHeight, deliveryMethod, selectedOptions,
-                totalPayment),
+                totalPayment, deliverySubtotal, productSubtotal),
             CustomImageRow(),
             SizedBox(
               height: 15,
@@ -91,7 +95,8 @@ class OrderStatus extends StatelessWidget {
             buildTextSection3(screenHeight, screenWidth,
                 'Basak, Pardo, 123 Street', AppStyles.bodyText6),
             _buildOrderSummary(screenHeight, screenWidth),
-            textRow6(screenHeight, screenWidth),
+            textRow6(
+                screenHeight, screenWidth, deliverySubtotal, productSubtotal),
             buildTextSection3(screenHeight, screenWidth,
                 'Transaction Code: MYUI7821A-G2-90A', AppStyles.bodyText2),
             _buildViewChat(screenHeight, screenWidth),
@@ -114,9 +119,7 @@ class OrderStatus extends StatelessWidget {
   Widget buildTextSection2(
       double screenHeight, double screenWidth, String text, TextStyle style) {
     return Padding(
-      padding: EdgeInsets.only(
-          left: 15, // Set or reduce the left padding as needed
-          top: screenHeight * 0.02),
+      padding: EdgeInsets.only(left: 15, top: screenHeight * 0.02),
       child: Text(text, style: style),
     );
   }
@@ -153,8 +156,14 @@ class OrderStatus extends StatelessWidget {
     );
   }
 
-  Widget itemCard(double screenHeight, double screenWidth,
-      String deliveryMethod, String selectedOptions, totalPayment) {
+  Widget itemCard(
+      double screenHeight,
+      double screenWidth,
+      String deliveryMethod,
+      String selectedOptions,
+      totalPayment,
+      deliverySubtotal,
+      productSubtotal) {
     return Padding(
       padding: const EdgeInsets.only(top: 8.0, left: 10.0, bottom: 10.0),
       child: Stack(
@@ -173,8 +182,14 @@ class OrderStatus extends StatelessWidget {
                   ),
                 ],
               ),
-              child: cardFullDetails(screenHeight, screenWidth, deliveryMethod,
-                  selectedOptions, totalPayment)),
+              child: cardFullDetails(
+                  screenHeight,
+                  screenWidth,
+                  deliveryMethod,
+                  selectedOptions,
+                  totalPayment,
+                  deliverySubtotal,
+                  productSubtotal)),
           buildTextSection2(
               screenHeight, screenWidth, 'Aqua Atlan', AppStyles.headline2),
         ],
@@ -182,8 +197,14 @@ class OrderStatus extends StatelessWidget {
     );
   }
 
-  Widget cardDetails(double screenHeight, double screenWidth,
-      String deliveryMethod, String selectedOptions, totalPayment) {
+  Widget cardDetails(
+      double screenHeight,
+      double screenWidth,
+      String deliveryMethod,
+      String selectedOptions,
+      totalPayment,
+      deliverySubtotal,
+      productSubtotal) {
     return Padding(
       padding: const EdgeInsets.only(top: 45.0),
       child: Column(
@@ -206,8 +227,14 @@ class OrderStatus extends StatelessWidget {
     );
   }
 
-  Widget cardFullDetails(double screenHeight, double screenWidth,
-      String deliveryMethod, String selectedOptions, totalPayment) {
+  Widget cardFullDetails(
+      double screenHeight,
+      double screenWidth,
+      String deliveryMethod,
+      String selectedOptions,
+      totalPayment,
+      deliverySubtotal,
+      productSubtotal) {
     return Padding(
       padding: const EdgeInsets.only(top: 5.0, left: 10.0),
       child: Row(
@@ -217,7 +244,7 @@ class OrderStatus extends StatelessWidget {
             width: 8,
           ),
           cardDetails(screenHeight, screenWidth, deliveryMethod,
-              selectedOptions, totalPayment),
+              selectedOptions, totalPayment, deliverySubtotal, productSubtotal),
         ],
       ),
     );
@@ -268,17 +295,15 @@ class OrderStatus extends StatelessWidget {
           ElevatedButton(
             onPressed: () async {
               try {
-                // Call the cancelOrder function to update the status
                 await cancelOrder();
-                // Add any additional logic you want to perform after the update here
               } catch (e) {
                 print('Error canceling order: $e');
               }
             },
             style: ElevatedButton.styleFrom(
-              primary: Color(0xFF66AFFF), // Background color
+              primary: Color(0xFF007AFF),
               shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(10), // Border radius
+                borderRadius: BorderRadius.circular(10),
               ),
             ),
             child: Text(
@@ -340,31 +365,33 @@ class OrderStatus extends StatelessWidget {
     );
   }
 
-  Widget textCol2(double screenHeight, double screenWidth) {
+  Widget textCol2(double screenHeight, double screenWidth,
+      String deliverySubtotal, String productSubtotal) {
     return Padding(
       padding: const EdgeInsets.only(top: 10.0, left: 10.0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          buildTextSection3(
-              screenHeight, screenWidth, '720', AppStyles.bodyText6),
+          buildTextSection3(screenHeight, screenWidth, 'P $productSubtotal',
+              AppStyles.bodyText6),
           SizedBox(height: 5.00),
-          buildTextSection3(
-              screenHeight, screenWidth, '320', AppStyles.bodyText6),
+          buildTextSection3(screenHeight, screenWidth, 'P $deliverySubtotal',
+              AppStyles.bodyText6),
         ],
       ),
     );
   }
 
-  Widget textRow6(double screenHeight, double screenWidth) {
+  Widget textRow6(double screenHeight, double screenWidth,
+      String deliverySubtotal, String productSubtotal) {
     return Padding(
       padding: const EdgeInsets.only(top: 0.0),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           textCol1(screenHeight, screenWidth),
-          SizedBox(width: 185.00),
-          textCol2(screenHeight, screenWidth)
+          SizedBox(width: 130.00),
+          textCol2(screenHeight, screenWidth, deliverySubtotal, productSubtotal)
         ],
       ),
     );
@@ -432,9 +459,9 @@ class OrderStatus extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: <Widget>[
-                imageContainer('assets/Order/CircleChecked.png'),
-                imageContainer('assets/Order/CircleChecked.png'),
-                imageContainer('assets/Order/Circle3.png'),
+                imageContainer('assets/Order/Circle1.png'),
+                imageContainer('assets/Order/Circle 2W.png'),
+                imageContainer('assets/Order/Circle 3W.png'),
                 imageContainer('assets/Order/CircleW4.png'),
                 imageContainer('assets/Order/CircleW5.png'),
               ],

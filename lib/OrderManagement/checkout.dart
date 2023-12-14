@@ -5,20 +5,6 @@ import 'package:waterways/app_styles.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-// void main() {
-//   runApp(Checkout(
-//     title: '',
-//     selectedOptions: '',
-//     deliveryMethod: '',
-//     totalPrice: 0.0,
-//     showCupertinoPopupCallback: () {
-//       // Dummy callback function for initialization
-//       // print("Cupertino Popup Callback Triggered");
-//     },
-
-//   ));
-// }
-
 class Checkout extends StatefulWidget {
   const Checkout(
       {Key? key,

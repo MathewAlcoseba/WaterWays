@@ -404,7 +404,7 @@ class _OrderDetailsState extends State<OrderDetails> {
             return Text('No data available for this document.');
           }
         }
-        return CircularProgressIndicator(); // Loading indicator while waiting for the data
+        return CircularProgressIndicator();
       },
     );
   }
@@ -514,9 +514,9 @@ class _OrderDetailsState extends State<OrderDetails> {
         children: [
           stockIcon(),
           SizedBox(width: screenWidth * 0.02),
-          Text('In Stock:', style: AppStyles.bodyText1),
+          Text('In Stock: ', style: AppStyles.bodyText1),
           Text(waterInStock, style: AppStyles.bodyText1),
-          Text('Ltrs', style: AppStyles.bodyText1),
+          Text(' Ltrs', style: AppStyles.bodyText1),
         ],
       ),
     );

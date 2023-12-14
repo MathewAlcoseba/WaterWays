@@ -2,10 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:waterways/OrderManagement/order_status.dart';
 
-void main() {
-  runApp(PurchaseHistory(title: 'Purchase History'));
-}
-
 class PurchaseHistory extends StatelessWidget {
   const PurchaseHistory({Key? key, required this.title}) : super(key: key);
 

@@ -4,8 +4,6 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:waterways/OrderManagement/custom_appbar2.dart';
 import 'package:waterways/OrderManagement/custom_appbar_storedetails.dart';
 
-void main() => runApp(ChatApp());
-
 class ChatApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {

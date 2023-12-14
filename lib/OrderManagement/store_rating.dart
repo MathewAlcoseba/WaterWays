@@ -5,11 +5,6 @@ import 'package:waterways/OrderManagement/custom_appbar_storedetails.dart';
 import 'package:waterways/OrderManagement/order_details.dart';
 import 'package:waterways/app_styles.dart';
 
-
-void main() {
-  runApp(const StoreRating(title: ''));
-}
-
 class StoreRating extends StatelessWidget {
   const StoreRating({Key? key, required this.title}) : super(key: key);
   final String title;

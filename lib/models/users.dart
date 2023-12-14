@@ -44,42 +44,43 @@ class Customer {
 }
 
 class Store {
-  final String storeId;
-  final String email;
-  final String password;
-  final String phone;
-  final String storeName;
-  final String storeAddress;
-  List<Order>? orders;
-  final String profileImg;
-  final String coverImg;
-  final String storePhoto;
-  final String storeCoverPhoto;
-  final String storeBio;
-  final String storeHours;
-  final String storeRating;
-  final double waterInStock;
-  final double price;
-  final bool isAvailable;
+  late String storeId;
+  late String email;
+  late String password;
+  late String phone;
+  late String storeName;
+  late String storeAddress;
+  late List<Order>? orders;
+  late String profileImg;
+  late String coverImg;
+  late String storePhoto;
+  late String storeCoverPhoto;
+  late String storeBio;
+  late String storeHours;
+  late int storeRating;
+  late double waterInStock;
+  late double price;
+  late bool isAvailable;
 
-  Store(
-      {required this.storeId,
-      required this.email,
-      required this.password,
-      required this.phone,
-      required this.storeName,
-      required this.storeAddress,
-      required this.profileImg,
-      required this.coverImg,
-      required this.storePhoto,
-      required this.storeCoverPhoto,
-      required this.storeBio,
-      required this.storeHours,
-      required this.storeRating,
-      required this.waterInStock,
-      required this.price,
-      required this.isAvailable,
-      this.orders});
+  Store({
+    required this.storeId,
+    required this.email,
+    required this.password,
+    required this.phone,
+    required this.storeName,
+    required this.storeAddress,
+    required this.profileImg,
+    required this.coverImg,
+    required this.storePhoto,
+    required this.storeCoverPhoto,
+    required this.storeBio,
+    required this.storeHours,
+    required this.storeRating,
+    required this.waterInStock,
+    required this.price,
+    required this.isAvailable,
+    this.orders,
+  });
 
   Map<String, dynamic> toMap() {
     return {
@@ -101,6 +102,31 @@ class Store {
       'price': price,
       'isAvailable': isAvailable,
     };
+  }
+
+  Store.fromMap(Map<String, dynamic> map) {
+    print("Parsing store: $map");
+    storeId = map['storeId'] ?? '';
+    email = map['email'] ?? '';
+    password = map['password'] ?? '';
+    phone = map['phone'] ?? '';
+    storeName = map['storeName'] ?? '';
+    storeAddress = map['storeAddress'] ?? '';
+    profileImg = map['profileImg'] ?? '';
+    coverImg = map['coverImg'] ?? '';
+    storePhoto = map['storePhoto'] ?? '';
+    storeCoverPhoto = map['storeCoverPhoto'] ?? '';
+    storeBio = map['storeBio'] ?? '';
+    storeHours = map['storeHours'] ?? '';
+    storeRating = map['storeRating'] ?? '';
+    waterInStock = map['waterInStock']?.toDouble() ?? 0.0;
+    price = map['price']?.toDouble() ?? 0.0;
+    isAvailable = map['isAvailable'] ?? false;
+
+    if (map['orders'] != null) {
+      orders = List<Order>.from(
+          map['orders'].map((orderMap) => Order.fromMap(orderMap)));
+    }
   }
 }
 
@@ -151,4 +177,19 @@ class Order {
       'status': status,
     };
   }
+
+  Order.fromMap(Map<String, dynamic> map)
+      : orderId = map['orderId'],
+        customerId = map['customerId'],
+        storeId = map['storeId'],
+        timestamp = (map['timestamp'] as Timestamp).toDate(),
+        deliveryMethod = map['deliveryMethod'],
+        qty = map['qty'],
+        deliveryOption = map['deliveryOption'],
+        deliveryAddress = map['deliveryAddress'],
+        paymentOption = map['paymentOption'],
+        productSubtotal = map['productSubtotal'].toDouble(),
+        deliverySubtotal = map['deliverySubtotal'].toDouble(),
+        totalPayment = map['totalPayment'].toDouble(),
+        status = map['status'];
 }

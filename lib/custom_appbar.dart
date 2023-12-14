@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:waterways/app_styles.dart';
 
 class CustomAppBar extends StatelessWidget {
-  const CustomAppBar({super.key});
+  const CustomAppBar({super.key, required String title});
 
   @override
   Widget build(BuildContext context) {

@@ -33,7 +33,8 @@ class AppBarToHome extends StatelessWidget {
                   // Navigate to UserHomePage
                   Navigator.pushReplacement(
                     context,
-                    MaterialPageRoute(builder: (context) => const UserHomePage()),
+                    MaterialPageRoute(
+                        builder: (context) => const UserHomePage()),
                   );
                 },
                 child: Image.asset(

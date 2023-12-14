@@ -6,6 +6,7 @@ import 'package:waterways/UserUI/user_profile_page.dart';
 import 'package:waterways/UserUI/user_profile_drawer.dart';
 import 'package:waterways/app_styles.dart';
 import 'package:waterways/bottom_navbar.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class UserMainPage extends StatefulWidget {
   const UserMainPage({super.key});

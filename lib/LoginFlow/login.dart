@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:waterways/LoginFlow/forgot_password.dart';
 import 'package:waterways/LoginFlow/sign_up.dart';
+import 'package:waterways/UserUI/user_main_page.dart';
 
 class Login extends StatefulWidget {
   const Login({super.key});
@@ -125,7 +126,14 @@ class _LoginState extends State<Login> {
                       ),
                       minimumSize: Size(353, 50),
                     ),
-                    onPressed: isButtonEnabled ? () {} : null,
+                    onPressed: isButtonEnabled
+                        ? () {
+                            Navigator.of(context).push(
+                              MaterialPageRoute(
+                                  builder: (context) => UserMainPage()),
+                            );
+                          }
+                        : null,
                     child: Text(
                       'Log in',
                       style: GoogleFonts.inter(

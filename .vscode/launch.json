@@ -7,19 +7,22 @@
         {
             "name": "WaterWays",
             "request": "launch",
-            "type": "dart"
+            "type": "dart",
+            "cwd": "C:/Users/Mexl/Desktop/Mexl Files/College/3rd Year/Subjects/1st Sem/Mobile 1/Flutter Projects/WaterWays"
         },
         {
             "name": "WaterWays (profile mode)",
             "request": "launch",
             "type": "dart",
-            "flutterMode": "profile"
+            "flutterMode": "profile",
+            "cwd": "C:/Users/Mexl/Desktop/Mexl Files/College/3rd Year/Subjects/1st Sem/Mobile 1/Flutter Projects/WaterWays"
         },
         {
             "name": "WaterWays (release mode)",
             "request": "launch",
             "type": "dart",
-            "flutterMode": "release"
+            "flutterMode": "release",
+            "cwd": "C:/Users/Mexl/Desktop/Mexl Files/College/3rd Year/Subjects/1st Sem/Mobile 1/Flutter Projects/WaterWays"
         }
     ]
 }

@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:waterways/LoadingScreen/loading_screen.dart';
 import 'package:waterways/LoginFlow/SignupSuccess.dart';
+import 'package:waterways/LoginFlow/login.dart';
 import 'package:waterways/LoginFlow/login_or_create.dart';
 import 'package:waterways/LoginFlow/sign_up.dart';
 import 'package:waterways/LoginFlow/sign_up2.dart';
@@ -52,9 +53,7 @@ class MyApp extends StatelessWidget {
       home: SafeArea(
         child: Scaffold(
           backgroundColor: AppStyles.colorScheme.background,
-          body: SafeArea(
-            child: LoadingScreen(),
-          ),
+          body: SafeArea(child: UserHomePage()),
         ),
       ),
     );

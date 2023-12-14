@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:waterways/UserUI/stores_list_view.dart';
 import 'package:waterways/app_styles.dart';
 import 'package:waterways/custom_appbar.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:waterways/models/users.dart';
 
 class UserHomePage extends StatelessWidget {
   const UserHomePage({super.key});
@@ -101,4 +103,19 @@ class Tag extends StatelessWidget {
       ),
     );
   }
+}
+Future<List<Store>> getStores() async {
+  List<Store> stores = [];
+  try {
+    QuerySnapshot querySnapshot =
+        await FirebaseFirestore.instance.collection('Stores').get();
+
+    for (var doc in querySnapshot.docs) {
+      Store store = Store.fromMap(doc.data() as Map<String, dynamic>);
+      stores.add(store);
+    }
+  } catch (e) {
+    print(e);
+  }
+  return stores;
 }

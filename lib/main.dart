@@ -52,7 +52,7 @@ class MyApp extends StatelessWidget {
       home: SafeArea(
         child: Scaffold(
           backgroundColor: AppStyles.colorScheme.background,
-          body: SafeArea(child: UserHomePage()),
+          body: SafeArea(child: Login()),
         ),
       ),
     );

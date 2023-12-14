@@ -1,6 +1,8 @@
 import 'package:currency_symbols/currency_symbols.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:waterways/OrderManagement/order_details.dart';
+import 'package:waterways/StorePage/store_details.dart';
 import 'package:waterways/UserUI/user_home_page.dart';
 import 'package:waterways/app_styles.dart';
 import 'package:waterways/models/users.dart';
@@ -56,10 +58,14 @@ class AvailableStoresListView extends StatelessWidget {
                               topLeft: Radius.circular(16),
                               topRight: Radius.circular(16)),
                           child: Stack(children: [
-                            Image.asset(
-                              'assets/Main/AquaAtlan.png',
+                            Image.network(
+                              store.storeFeedMiniPhoto,
                               height: 190,
                               fit: BoxFit.cover,
+                              errorBuilder: (BuildContext context,
+                                  Object exception, StackTrace? stackTrace) {
+                                return Text('Could not load image');
+                              },
                             ),
                             Container(
                               height: 190,
@@ -124,7 +130,8 @@ class AvailableStoresListView extends StatelessWidget {
                                 ),
                                 Text(
                                   '${cSymbol("PHP")}' +
-                                      ' ${store.price.toString()}',
+                                      ' ${store.price.toStringAsFixed(2)}' +
+                                      ' / 1Ltr',
                                   style: GoogleFonts.roboto(
                                     fontSize: 15,
                                     fontWeight: FontWeight.w400,
@@ -160,15 +167,24 @@ class AvailableStoresListView extends StatelessWidget {
                               ),
                               onPressed: () {
                                 print('IconButton pressed!');
-                              }, //handle onPressed here
+                              },
                             ))),
                     Positioned(
-                      left: MediaQuery.of(context).size.width - 80,
+                      left: MediaQuery.of(context).size.width - 90,
                       top: 224,
-                      child: Icon(
-                        Icons.arrow_forward_rounded,
-                        color: AppStyles.colorScheme.inversePrimary,
-                        size: 28,
+                      child: IconButton(
+                        icon: Icon(
+                          Icons.arrow_forward_rounded,
+                          color: AppStyles.colorScheme.inversePrimary,
+                          size: 28,
+                        ),
+                        onPressed: () {
+                          Navigator.of(context).push(
+                            MaterialPageRoute(
+                                builder: (context) =>
+                                    OrderDetails(title: 'SampleTitle')),
+                          );
+                        },
                       ),
                     ),
                     Positioned(

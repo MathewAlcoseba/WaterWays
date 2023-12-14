@@ -72,6 +72,7 @@ class Store {
   late String coverImg;
   late String storePhoto;
   late String storeCoverPhoto;
+  late String storeFeedMiniPhoto;
   late String storeBio;
   late String storeHours;
   late int storeRating;
@@ -90,6 +91,7 @@ class Store {
     required this.coverImg,
     required this.storePhoto,
     required this.storeCoverPhoto,
+    required this.storeFeedMiniPhoto,
     required this.storeBio,
     required this.storeHours,
     required this.storeRating,
@@ -133,6 +135,7 @@ class Store {
     coverImg = map['coverImg'] ?? '';
     storePhoto = map['storePhoto'] ?? '';
     storeCoverPhoto = map['storeCoverPhoto'] ?? '';
+    storeFeedMiniPhoto = map['storeFeedMiniPhoto'] ?? '';
     storeBio = map['storeBio'] ?? '';
     storeHours = map['storeHours'] ?? '';
     storeRating = map['storeRating'] ?? '';

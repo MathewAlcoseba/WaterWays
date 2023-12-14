@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:waterways/LoginFlow/login.dart';
 import 'package:waterways/LoginFlow/sign_up_success.dart';
+import 'package:waterways/app_styles.dart';
 import 'package:waterways/firebase_service.dart';
 import 'package:waterways/models/users.dart';
 
@@ -182,7 +183,12 @@ class _SignUp2State extends State<SignUp2> {
                 ),
               ),
             ),
-            if (isLoading) const Center(child: CircularProgressIndicator()),
+            if (isLoading)
+              Center(
+                  child: CircularProgressIndicator(
+                color: AppStyles.colorScheme.secondary,
+                backgroundColor: AppStyles.colorScheme.primary.withOpacity(0.5),
+              )),
           ],
         ),
       ),

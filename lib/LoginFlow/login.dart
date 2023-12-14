@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_const_constructors
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -7,7 +8,9 @@ import 'package:waterways/LoginFlow/forgot_password.dart';
 import 'package:waterways/LoginFlow/sign_up.dart';
 import 'package:waterways/LoginFlow/sign_up_as.dart';
 import 'package:waterways/UserUI/user_main_page.dart';
+import 'package:waterways/app_styles.dart';
 import 'package:waterways/firebase_service.dart';
+import 'package:waterways/models/users.dart';
 
 class Login extends StatefulWidget {
   const Login({super.key});
@@ -175,12 +178,15 @@ class _LoginState extends State<Login> {
                     ],
                   ),
                   if (isLoading)
-                    Positioned.fill(
-                      child: Container(
-                        color: Colors.white.withOpacity(0.8),
-                        child: Center(child: CircularProgressIndicator()),
+                    Center(
+                        child: Padding(
+                      padding: const EdgeInsets.all(24.0),
+                      child: CircularProgressIndicator(
+                        color: AppStyles.colorScheme.secondary,
+                        backgroundColor:
+                            AppStyles.colorScheme.primary.withOpacity(0.5),
                       ),
-                    ),
+                    )),
                 ],
               )),
         ),
@@ -199,6 +205,12 @@ class _LoginState extends State<Login> {
           await firebaseService.signInWithEmailAndPassword(email, password);
 
       if (user != null) {
+        var customerDoc = await FirebaseFirestore.instance
+            .collection('Customers')
+            .doc(user.uid)
+            .get();
+        //Customer customer = Customer.fromMap(customerDoc.data()!);
+
         Navigator.of(context)
             .push(MaterialPageRoute(builder: (context) => UserMainPage()));
       } else {

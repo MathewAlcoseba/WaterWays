@@ -31,9 +31,15 @@ class _StoreDetailsState extends State<StoreDetails> {
   String searchQuery = "";
 
   @override
-  void initState() {
-    super.initState();
-    _searchController.addListener(_onSearchChanged);
+  // void initState() {
+  //   super.initState();
+  //   _searchController.addListener(_onSearchChanged);
+  // }
+
+  void onSearchSubmitted(String query) {
+    setState(() {
+      searchQuery = query;
+    });
   }
 
   void _onSearchChanged() {
@@ -50,8 +56,7 @@ class _StoreDetailsState extends State<StoreDetails> {
 
   @override
   void dispose() {
-    _searchController.removeListener(_onSearchChanged);
-    _searchController.dispose();
+    _searchController.dispose(); // Dispose the controller
     super.dispose();
   }
 
@@ -70,6 +75,7 @@ class _StoreDetailsState extends State<StoreDetails> {
                 child: CustomAppBar(
                   customer: widget.customer,
                   searchController: _searchController,
+                  onSearchSubmitted: onSearchSubmitted,
                 ),
               )
             : null,

@@ -3,7 +3,12 @@ import 'package:waterways/app_styles.dart';
 
 class CustomSearchBar extends StatelessWidget {
   final TextEditingController controller;
-  const CustomSearchBar({super.key, required this.controller});
+  final Function(String) onSearchSubmitted;
+  const CustomSearchBar({
+    super.key,
+    required this.controller,
+    required this.onSearchSubmitted,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -43,13 +48,13 @@ class CustomSearchBar extends StatelessWidget {
                     hintStyle: AppStyles.bodyText2.copyWith(
                         color: AppStyles.colorScheme.tertiary,
                         fontWeight: FontWeight.w500)),
+                onSubmitted: onSearchSubmitted,
               ),
             ),
             IconButton(
-              onPressed: () {},
-              icon: Image.asset(
-                'assets/Main/search2.png',
-              ),
+              onPressed: () => onSearchSubmitted(
+                  controller.text), // Trigger search on button press
+              icon: Image.asset('assets/Main/search2.png'),
             ),
           ],
         ),

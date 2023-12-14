@@ -17,13 +17,10 @@ class _UserHomePageState extends State<UserHomePage> {
   final TextEditingController _searchController = TextEditingController();
   String _searchQuery = "";
 
-  @override
-  void initState() {
-    super.initState();
-    _searchController.addListener(() {
-      setState(() {
-        _searchQuery = _searchController.text;
-      });
+  // This function will be triggered when the search is submitted
+  void _onSearchSubmitted(String query) {
+    setState(() {
+      _searchQuery = query;
     });
   }
 
@@ -43,7 +40,10 @@ class _UserHomePageState extends State<UserHomePage> {
           preferredSize: const Size.fromHeight(75.0),
           child: CustomAppBar(
             customer: widget.customer,
-            searchController: _searchController,
+            searchController:
+                _searchController, // Pass the controller to the CustomAppBar
+            onSearchSubmitted:
+                _onSearchSubmitted, // Pass the search submission function
           ),
         ),
         body: Padding(
@@ -53,7 +53,8 @@ class _UserHomePageState extends State<UserHomePage> {
             children: [
               AvailableStoresListView(
                 customer: widget.customer,
-                searchQuery: _searchController.text,
+                searchQuery:
+                    _searchQuery, // Use the state's _searchQuery for filtering
               ),
             ],
           ),
